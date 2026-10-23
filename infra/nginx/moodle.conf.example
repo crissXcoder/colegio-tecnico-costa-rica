@@ -1,0 +1,22 @@
+# Adaptar IP y nombres según VM y certificados instalados.
+server {
+  listen 192.168.50.1:80;
+  server_name moodle.colegio.test;
+  return 301 https://$host$request_uri;
+}
+server {
+  listen 192.168.50.1:443 ssl;
+  server_name moodle.colegio.test;
+  ssl_certificate /etc/nginx/certs/moodle.crt;
+  ssl_certificate_key /etc/nginx/certs/moodle.key;
+  ssl_protocols TLSv1.2 TLSv1.3;
+  client_max_body_size 100m;
+  location / {
+    proxy_pass http://127.0.0.1:8080;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-Proto https;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_read_timeout 300s;
+  }
+}

@@ -1,0 +1,11 @@
+// Ejemplo conceptual: integrar/ajustar dentro del ÚNICO bloque options existente.
+options {
+    directory "/var/cache/bind";
+    recursion yes;
+    allow-query { 127.0.0.1; 192.168.50.0/24; };
+    allow-recursion { 127.0.0.1; 192.168.50.0/24; };
+    listen-on { 127.0.0.1; 192.168.50.1; };
+    listen-on-v6 { none; };
+    forwarders { 1.1.1.1; 8.8.8.8; };
+    dnssec-validation auto;
+};
