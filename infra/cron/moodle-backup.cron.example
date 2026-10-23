@@ -1,2 +1,0 @@
-# Fragmento para crontab de root, reemplazar /opt/elevaquitas por ruta real.
-0 2 * * * /opt/elevaquitas/scripts/backup-db.sh >> /var/log/elevaquitas-backup.log 2>&1
