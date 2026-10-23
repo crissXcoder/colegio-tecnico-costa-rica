@@ -1,0 +1,10 @@
+$TTL 3600
+@ IN SOA ns1.colegio.test. admin.colegio.test. (
+  2026102301 ; serial: incrementar por cada edición
+  3600       ; refresh
+  900        ; retry
+  1209600    ; expire
+  3600 )     ; negative cache TTL
+@      IN NS ns1.colegio.test.
+ns1    IN A  192.168.50.1
+moodle IN A  192.168.50.1

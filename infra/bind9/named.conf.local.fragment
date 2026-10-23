@@ -1,0 +1,6 @@
+// Integrar en /etc/bind/named.conf.local sin destruir zonas existentes.
+zone "colegio.test" {
+    type master;
+    file "/etc/bind/db.colegio.test";
+    allow-transfer { none; };
+};

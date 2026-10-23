@@ -1,0 +1,24 @@
+# Bitácora operativa: historia del laboratorio sin perder el conocimiento
+
+Aquí se registra **lo que pasó realmente** en las reuniones del equipo: fecha, integrantes, VM, decisión, comando o clic, error, diagnóstico, solución, prueba posterior y cambio de documentación. Una captura no sustituye este texto; cada captura reside con su procedimiento y tiene una ficha EV que documenta qué demuestra.
+
+## Dos tipos de registros, dos responsabilidades
+
+### [`sesiones/`](sesiones/)
+
+- [`2026-10-23-estado-heredado.md`](sesiones/2026-10-23-estado-heredado.md): recoge el estado encontrado antes de construir el manual completo. Es **reconstrucción documental**, no prueba de presencia de los cinco participantes en una sesión ese día.
+- [`2026-10-22-reconstruccion-bitacora-v2.md`](sesiones/2026-10-22-reconstruccion-bitacora-v2.md): sintetiza acciones que aparecen fotografiadas en el Word actualizado, sin inventar horas de captura y enlazando a procedimientos.
+- [`plantillas/sesion.md`](../plantillas/sesion.md): modelo recomendado para futuras reuniones; registrar quién ejecutó cada parte y qué se corrigió en tiempo real.
+
+### [`incidentes/`](incidentes/)
+
+- [`INC-001-almacenamiento-lvm.md`](incidentes/INC-001-almacenamiento-lvm.md): disco raíz lleno, detección de espacio libre en LVM, ampliación y precauciones. La [evidencia EV-050](../docs/procedimientos/01-servidor-red/01-02/evidencias/EV-050.md) está adjunta al diagnóstico, no escondida en un catálogo general.
+- [`plantillas/incidente.md`](../plantillas/incidente.md): anotar síntomas, impacto, causa comprobada, alternativas, pasos ejecutados, rollback, responsables y verificación posterior.
+
+## Método durante las sesiones sin perder la distribución de trabajo
+
+Aunque se desarrollen las cinco VMs simultáneamente, cada bloque tiene **una persona responsable del documento y otra revisora**. Si un comando falla en alguna máquina, registrar la variante; no reescribir retrospectivamente capturas de otras máquinas para simular uniformidad. Un incidente nuevo genera `INC-002`, `INC-003`, etc. y enlaza el subpaso preciso.
+
+## Estado y confidencialidad
+
+La **fuente de estado** es [`ESTADO.md`](../docs/00-proyecto/ESTADO.md) junto con la [`matriz de requisitos`](../docs/00-proyecto/matriz-requisitos.md). El Word original puede contener información personal y permanece fuera de Git. El manifiesto de las 50 capturas sanitizadas se consulta en [`evidencias`](../evidencias/README.md), pero cada imagen se lee y explica en el paso correspondiente.

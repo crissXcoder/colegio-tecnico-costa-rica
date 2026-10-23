@@ -1,0 +1,33 @@
+# Credenciales, llaves y certificados privados
+.env
+.env.*
+!.env.example
+!.env.https.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+**/secrets/**
+# Backup/exportación y datos privados
+*.sql
+*.sql.gz
+*.dump
+*.tar
+*.tar.gz
+*.bak
+*.zip
+backups/
+evidencias/privadas/
+**/moodledata/
+**/mariadb_data/
+# Artefactos locales y temporales
+.DS_Store
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+*.swp
+.tmp/
+logs/
+# La carpeta de bitácora pública contiene exclusivamente capturas revisadas.
