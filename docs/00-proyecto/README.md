@@ -12,7 +12,7 @@ Linux Mint usa una **red interna VirtualBox** sin NAT propio. Ubuntu Server tien
 
 ```mermaid
 flowchart TD
-  Client[Linux Mint: navegador y pruebas] -->|DNS a puerto 53| DNS[BIND9: moodle.colegio.test]
+  Client[Linux Mint: navegador y pruebas] -->|DNS a puerto 53| DNS[BIND9: moodle.ctcr.test]
   Client -->|HTTPS 443| NG[Nginx: TLS y proxy]
   NG -->|localhost:8080| LMS[Moodle Docker 4.5.15]
   LMS -->|bridge Docker| DB[MariaDB Docker 11.4.13]

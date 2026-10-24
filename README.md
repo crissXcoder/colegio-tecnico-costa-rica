@@ -16,6 +16,7 @@ El proyecto también demuestra administración Linux: Ubuntu Server en VirtualBo
 
 | Necesidad real | Inicio recomendado | Qué aprenderé/haré |
 |---|---|---|
+| **Necesito los datos exactos (usuarios, cursos, cohortes, FTP, dominio)** | [Datos maestros](docs/00-proyecto/DATOS-MAESTROS.md) → [Contenido de los cursos](docs/00-proyecto/CONTENIDO-CURSOS.md) | Qué crear y con qué nombre en cada VM, idéntico para los cinco. |
 | **Soy externo al equipo y quiero entender el sistema** | [Contexto y arquitectura](docs/00-proyecto/README.md) → [mapa de documentación](docs/README.md) | Por qué existe cada servicio, qué está construido, qué falta, cuáles son los archivos confiables. |
 | **Estoy con los otros cuatro integrantes ejecutando el siguiente paso** | [Manual operativo paso a paso](docs/procedimientos/README.md) → [comandos rápidos](docs/operacion/COPIAR-PEGAR.md) | El comando completo, en qué VM correrlo, resultado que esperar y foto histórica del mismo paso. |
 | **Quiero saber exactamente lo que se probó y cómo lo documentamos** | [Estado del grupo](docs/00-proyecto/ESTADO.md) → [catálogo de pruebas](evidencias/CATALOGO-CAPTURAS.md) → [bitácora](bitacora/README.md) | Diferencia entre ejecución histórica y aceptación, evidencia original contextualizada y pendientes por máquina. |

@@ -77,11 +77,11 @@ sudo nano /etc/bind/named.conf.options
 Copiar *un único bloque options adaptado*, desde [`infra/bind9/named.conf.options.fragment`](../../infra/bind9/named.conf.options.fragment); integrar [`named.conf.local.fragment`](../../infra/bind9/named.conf.local.fragment) al archivo existente y copiar la zona **solo después de adaptar IP**:
 
 ```bash
-sudo install -m 644 infra/bind9/db.colegio.test /etc/bind/db.colegio.test
+sudo install -m 644 infra/bind9/db.ctcr.test /etc/bind/db.ctcr.test
 sudo named-checkconf
-sudo named-checkzone colegio.test /etc/bind/db.colegio.test
+sudo named-checkzone ctcr.test /etc/bind/db.ctcr.test
 sudo systemctl restart named
-dig @192.168.50.1 moodle.colegio.test +short
+dig @192.168.50.1 moodle.ctcr.test +short
 ```
 
 En Mint, **sin añadir NAT** (verificar nombre de conexión con `nmcli connection show`):
@@ -91,7 +91,7 @@ nmcli connection show
 sudo nmcli connection modify "Wired connection 1" ipv4.dns "192.168.50.1"
 sudo nmcli connection modify "Wired connection 1" ipv4.ignore-auto-dns yes
 sudo nmcli device reapply enp0s3
-getent hosts moodle.colegio.test
+getent hosts moodle.ctcr.test
 ```
 
 ## D. HTTPS Nginx — antes de tocar Compose, copia de seguridad
@@ -103,18 +103,18 @@ sudo ss -lntup | grep -E ':(80|443|8080) ' || true
 sudo apt install -y nginx openssl
 sudo mkdir -p /etc/nginx/certs
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:3072 \
-  -keyout /etc/nginx/certs/moodle.key \
-  -out /etc/nginx/certs/moodle.crt \
-  -subj "/C=CR/O=Colegio Tecnico/CN=moodle.colegio.test" \
-  -addext "subjectAltName=DNS:moodle.colegio.test"
-sudo chmod 600 /etc/nginx/certs/moodle.key
+  -keyout /etc/nginx/certs/ctcr.key \
+  -out /etc/nginx/certs/ctcr.crt \
+  -subj "/C=CR/O=Colegio Tecnico/CN=moodle.ctcr.test" \
+  -addext "subjectAltName=DNS:moodle.ctcr.test"
+sudo chmod 600 /etc/nginx/certs/ctcr.key
 test ! -f /etc/nginx/sites-available/moodle || sudo cp -a /etc/nginx/sites-available/moodle "/etc/nginx/sites-available/moodle.pre-elevaquitas-$(date +%Y%m%d%H%M%S)"
 sudo install -m 644 infra/nginx/moodle.conf.example /etc/nginx/sites-available/moodle
 sudo ln -sfn /etc/nginx/sites-available/moodle /etc/nginx/sites-enabled/moodle
 sudo nginx -t
 ```
 
-Antes de habilitar, ajustar **el `.env` PRIVADO existente** según [`infra/compose/.env.https.example`](../../infra/compose/.env.https.example): `MOODLE_URL=https://moodle.colegio.test`, `MOODLE_BIND_IP=127.0.0.1`, `MOODLE_SSL_PROXY=auto`. Verificar la configuración efectiva y generar backups antes de recrear Moodle. No regenerar contraseñas. La configuración Nginx espera `127.0.0.1:8080`. **Si el Compose real todavía está en `~/proyecto-moodle`, adaptar ese archivo y no ejecutar el Compose del repositorio hasta validar volúmenes/nombre e imagen.**
+Antes de habilitar, ajustar **el `.env` PRIVADO existente** según [`infra/compose/.env.https.example`](../../infra/compose/.env.https.example): `MOODLE_URL=https://moodle.ctcr.test`, `MOODLE_BIND_IP=127.0.0.1`, `MOODLE_SSL_PROXY=yes`. Verificar la configuración efectiva y generar backups antes de recrear Moodle. No regenerar contraseñas. La configuración Nginx espera `127.0.0.1:8080`. **Si el Compose real todavía está en `~/proyecto-moodle`, adaptar ese archivo y no ejecutar el Compose del repositorio hasta validar volúmenes/nombre e imagen.**
 
 ```bash
 # Después de actualizar la URL del Compose ACTIVO y guardar un backup, aplicar la misma stack:
@@ -123,25 +123,23 @@ Antes de habilitar, ajustar **el `.env` PRIVADO existente** según [`infra/compo
 # sudo docker compose -p proyecto-moodle --env-file infra/compose/.env -f infra/compose/compose.yaml up -d
 sudo systemctl reload nginx
 sudo nginx -t
-curl -kI --resolve moodle.colegio.test:443:192.168.50.1 https://moodle.colegio.test
-openssl x509 -in /etc/nginx/certs/moodle.crt -noout -dates -subject -ext subjectAltName
+curl -kI --resolve moodle.ctcr.test:443:192.168.50.1 https://moodle.ctcr.test
+openssl x509 -in /etc/nginx/certs/ctcr.crt -noout -dates -subject -ext subjectAltName
 ```
 
 **No interpretar `curl -k` como confianza validada del certificado.** Se usa solo en el laboratorio para comprobar transporte.
 
 ## E. FTPS y permisos
 
-En Ubuntu, lista de usuarios de ejemplo definida por el grupo; ejecutar cada `adduser` únicamente si no existe:
+En Ubuntu, las seis cuentas FTP están definidas en [DATOS-MAESTROS](../00-proyecto/DATOS-MAESTROS.md) (sección 9); ejecutar cada `adduser` únicamente si no existe:
 
 ```bash
-getent passwd ftpadmin || true
-getent passwd ftpdocencia || true
-getent passwd ftpinformatica || true
+for u in marta.jimenez carlos.mendez sofia.hernandez jose.ramirez valeria.sanchez diego.fernandez; do getent passwd "$u" || true; done
 sudo apt install -y vsftpd
 sudo cp -a /etc/vsftpd.conf "/etc/vsftpd.conf.pre-elevaquitas-$(date +%Y%m%d%H%M%S)"
 ```
 
-**Los cinco `adduser`, la preparación de `/srv/ftp` y la lista PAM están documentados completos en [09-02/09-03/09-04](../procedimientos/09-ftps-vsftpd/README.md).** No automatizarlos en VMs con cuentas de los laboratorios anteriores. Usar el [`vsftpd.conf.example`](../../infra/vsftpd/vsftpd.conf.example) corregido que incluye `user_sub_token=$USER`; probar lectura, subida y denegación de borrado ajeno.
+**Los seis `adduser`, la preparación de `/srv/ftp` y la lista PAM están documentados completos en [09-02/09-03/09-04](../procedimientos/09-ftps-vsftpd/README.md).** No automatizarlos en VMs con cuentas de los laboratorios anteriores. Usar el [`vsftpd.conf.example`](../../infra/vsftpd/vsftpd.conf.example) corregido que incluye `user_sub_token=$USER`; probar lectura, subida y denegación de borrado ajeno.
 
 ## F. Respaldo y restauración
 

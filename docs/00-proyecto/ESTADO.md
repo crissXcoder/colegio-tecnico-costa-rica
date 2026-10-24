@@ -17,6 +17,10 @@
 | Documento final | plantilla disponible | texto final, citas, diagrama y anexos |
 | Demostración | no demostrada | ensayo, verificaciones cruzadas |
 
+## Datos maestros (2026-10-24)
+
+Se acordó por el grupo un conjunto único de datos (dominio `moodle.ctcr.test`, cursos `CTCR-*-101`, 9 usuarios `@ctcr.example`, cohortes `CTCR-COH-*`, 6 cuentas FTP): [DATOS-MAESTROS](DATOS-MAESTROS.md) y [CONTENIDO-CURSOS](CONTENIDO-CURSOS.md). Es **to-be**: ninguna fila de arriba cambia de estado por esto. As-is observado en la VM con capturas: cohorte `CTCR-COH-ADM` (EV-042) y usuarios `sofia.hernandez`, `valeria.sanchez` (EV-040); el resto no está demostrado. Las VMs que ya usan `moodle.colegio.test` deben migrar la zona y el certificado.
+
 ## Último error documentado
 
 INC-001: falta de espacio en `/` con LVM subutilizado; se amplió de ~12 a ~23 GB y se liberaron imágenes sin uso. Revisar capacidad por VM y crecimiento futuro de Docker antes de seguir.

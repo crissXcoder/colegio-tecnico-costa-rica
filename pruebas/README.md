@@ -11,7 +11,7 @@ Este directorio registra **pruebas funcionales y negativas**, no impresiones de 
 | T-03 | Tres cursos completos | Inventariar 2 recursos auténticos + 1 cuestionario por curso. Desde estudiante completar actividad y desde profesor visualizar nota. |
 | T-04 | Aislamiento entre departamentos | Cuenta de Informática entra a URL de Administración y se rechaza. Repetir matriz cruzada 3×3, incluyendo archivos y actividades, no solo índice de cursos. |
 | T-05 | Rol profesor limitado | Profesor puede gestionar su curso y no ejecutar administración global. El superusuario no sirve como cuenta negativa. |
-| T-06 | DNS | `dig @192.168.50.1 moodle.colegio.test A +short` desde Mint devuelve IP del servidor. |
+| T-06 | DNS | `dig @192.168.50.1 moodle.ctcr.test A +short` desde Mint devuelve IP del servidor. |
 | T-07 | HTTPS | Certificado con SAN, conexión cifrada por nombre, HTTP→HTTPS, recursos Moodle sin errores de contenido o redirección. |
 | T-08 | FTPS | Cuenta A sube archivo propio; B no puede leer/modificar/borrar archivo de A; registrar código/error real y cuentas ficticias. |
 | T-09 | Backups | Cron programado y ejecutado, SQL válido, importado en DB separada, recuento de tablas; plan de moodledata. |

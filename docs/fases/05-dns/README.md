@@ -1,4 +1,4 @@
-# Zona autoritativa colegio.test — alcance, decisiones y trazabilidad
+# Zona autoritativa ctcr.test — alcance, decisiones y trazabilidad
 
 ## Qué resuelve esta fase en el Colegio Técnico
 
@@ -16,7 +16,7 @@ Antes de aplicar algo aquí revisar el [estado real](../../00-proyecto/ESTADO.md
 
 ## Qué se comprueba al cerrar
 
-**Comando o acción representativa:** `named-checkconf`, `named-checkzone`, `dig @192.168.50.1 moodle.colegio.test`. **Resultado requerido:** prueba observada en una VM identificada, con contraste entre esperado y obtenido. Cuando corresponda, incluir prueba negativa (denegación) y demostrar que el cambio no afecta los demás servicios. Una captura de configuración abierta no es una prueba funcional.
+**Comando o acción representativa:** `named-checkconf`, `named-checkzone`, `dig @192.168.50.1 moodle.ctcr.test`. **Resultado requerido:** prueba observada en una VM identificada, con contraste entre esperado y obtenido. Cuando corresponda, incluir prueba negativa (denegación) y demostrar que el cambio no afecta los demás servicios. Una captura de configuración abierta no es una prueba funcional.
 
 ## Responsable, revisión y evidencia
 

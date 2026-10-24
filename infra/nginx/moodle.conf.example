@@ -1,14 +1,14 @@
 # Adaptar IP y nombres según VM y certificados instalados.
 server {
   listen 192.168.50.1:80;
-  server_name moodle.colegio.test;
+  server_name moodle.ctcr.test;
   return 301 https://$host$request_uri;
 }
 server {
   listen 192.168.50.1:443 ssl;
-  server_name moodle.colegio.test;
-  ssl_certificate /etc/nginx/certs/moodle.crt;
-  ssl_certificate_key /etc/nginx/certs/moodle.key;
+  server_name moodle.ctcr.test;
+  ssl_certificate /etc/nginx/certs/ctcr.crt;
+  ssl_certificate_key /etc/nginx/certs/ctcr.key;
   ssl_protocols TLSv1.2 TLSv1.3;
   client_max_body_size 100m;
   location / {

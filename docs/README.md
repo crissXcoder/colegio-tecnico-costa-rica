@@ -6,6 +6,7 @@ El repositorio separa **cuatro tipos de conocimiento** que no deben confundirse:
 
 | Lector | Comenzar por | Qué encontrará |
 |---|---|---|
+| Integrante que va a crear cuentas, cursos o FTP | [`DATOS-MAESTROS`](00-proyecto/DATOS-MAESTROS.md) y [`CONTENIDO-CURSOS`](00-proyecto/CONTENIDO-CURSOS.md) | Fuente única de nombres, usuarios, cohortes, matriz de acceso, cuentas FTP, dominio y las 15 preguntas. |
 | Docente o auditor externo | [`00-proyecto`](00-proyecto/README.md) | Escenario, arquitectura, requisitos, versiones, matriz de trazabilidad, estado y limitaciones. |
 | Integrante que sigue la reunión | [`procedimientos`](procedimientos/README.md) | Orden exacto, comandos completos, interfaz Moodle, precauciones, captura dentro de cada paso. |
 | Responsable de un bloque | [`fases`](fases/README.md) | Resultado que debe entregar, decisiones relevantes, criterios de aceptación, responsable/revisor. |

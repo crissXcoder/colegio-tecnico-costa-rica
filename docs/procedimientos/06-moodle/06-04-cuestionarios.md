@@ -23,7 +23,7 @@ Este complemento convierte las pantallas 27–37 de la bitácora en un **recorri
 
 ## Prerrequisitos y contexto
 
-Entrar en Moodle desde Mint con cuenta autorizada para editar el curso. Asegurarse de que el curso ya existe, pertenece a la categoría correcta y dispone de sus recursos. Para el laboratorio se propuso `ADM101`, `DOC101` e `INF101`; comprobar los nombres reales antes de editar.
+Entrar en Moodle desde Mint con cuenta autorizada para editar el curso. Asegurarse de que el curso ya existe, pertenece a la categoría correcta y dispone de sus recursos. Los cursos son `CTCR-ADM-101`, `CTCR-DOC-101` y `CTCR-INF-101`, con preguntas y claves en [CONTENIDO-CURSOS](../../00-proyecto/CONTENIDO-CURSOS.md); comprobar los nombres reales antes de editar.
 
 ## Recorrido completo y puntos de control
 
@@ -40,9 +40,9 @@ Entrar en Moodle desde Mint con cuenta autorizada para editar el curso. Asegurar
 
 | Curso | Recursos reales | Cuestionario | Intento de estudiante | Docente ve calificación |
 |---|---:|---|---|---|
-| ADM101 | 2 mínimo | Por verificar | Por verificar | Por verificar |
-| DOC101 | 2 mínimo | Por verificar | Por verificar | Por verificar |
-| INF101 | 2 mínimo | Por verificar | Por verificar | Por verificar |
+| CTCR-ADM-101 | 2 mínimo | Por verificar | Por verificar | Por verificar |
+| CTCR-DOC-101 | 2 mínimo | Por verificar | Por verificar | Por verificar |
+| CTCR-INF-101 | 2 mínimo | Por verificar | Por verificar | Por verificar |
 
 Cada celda debe respaldarse con una captura nueva, identificada por curso y VM. Evitar información personal de estudiantes; utilizar cuentas ficticias del laboratorio.
 
