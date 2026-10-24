@@ -1,6 +1,6 @@
 // Integrar en /etc/bind/named.conf.local sin destruir zonas existentes.
-zone "ctcr.test" {
+zone "ctcr" {
     type master;
-    file "/etc/bind/db.ctcr.test";
+    file "/etc/bind/db.ctcr";
     allow-transfer { none; };
 };

@@ -4,7 +4,7 @@
 
 ## Por qué existe este bloque
 
-La zona `ctcr.test` publica `moodle.ctcr.test -> 192.168.50.1`. Mint enviará consultas al DNS del servidor, exclusivamente por la red interna.
+La zona `ctcr` publica `aulavirtual.ctcr -> 192.168.50.1`. Mint enviará consultas al DNS del servidor, exclusivamente por la red interna.
 
 Este bloque no es un listado de archivos: proporciona la **secuencia operativa**, el vínculo entre decisiones, configuraciones reales y evidencia, y el criterio con el que una persona ajena al equipo puede saber si el servicio funciona. Para comprender el recorrido general se recomienda comenzar por el [README principal](../../../README.md) y el [estado del proyecto](../../00-proyecto/ESTADO.md).
 

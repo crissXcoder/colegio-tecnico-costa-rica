@@ -77,11 +77,11 @@ sudo nano /etc/bind/named.conf.options
 Copiar *un único bloque options adaptado*, desde [`infra/bind9/named.conf.options.fragment`](../../infra/bind9/named.conf.options.fragment); integrar [`named.conf.local.fragment`](../../infra/bind9/named.conf.local.fragment) al archivo existente y copiar la zona **solo después de adaptar IP**:
 
 ```bash
-sudo install -m 644 infra/bind9/db.ctcr.test /etc/bind/db.ctcr.test
+sudo install -m 644 infra/bind9/db.ctcr /etc/bind/db.ctcr
 sudo named-checkconf
-sudo named-checkzone ctcr.test /etc/bind/db.ctcr.test
+sudo named-checkzone ctcr /etc/bind/db.ctcr
 sudo systemctl restart named
-dig @192.168.50.1 moodle.ctcr.test +short
+dig @192.168.50.1 aulavirtual.ctcr +short
 ```
 
 En Mint, **sin añadir NAT** (verificar nombre de conexión con `nmcli connection show`):
@@ -91,7 +91,7 @@ nmcli connection show
 sudo nmcli connection modify "Wired connection 1" ipv4.dns "192.168.50.1"
 sudo nmcli connection modify "Wired connection 1" ipv4.ignore-auto-dns yes
 sudo nmcli device reapply enp0s3
-getent hosts moodle.ctcr.test
+getent hosts aulavirtual.ctcr
 ```
 
 ## D. HTTPS Nginx — antes de tocar Compose, copia de seguridad
@@ -105,8 +105,8 @@ sudo mkdir -p /etc/nginx/certs
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:3072 \
   -keyout /etc/nginx/certs/ctcr.key \
   -out /etc/nginx/certs/ctcr.crt \
-  -subj "/C=CR/O=Colegio Tecnico/CN=moodle.ctcr.test" \
-  -addext "subjectAltName=DNS:moodle.ctcr.test"
+  -subj "/C=CR/O=Colegio Tecnico/CN=aulavirtual.ctcr" \
+  -addext "subjectAltName=DNS:aulavirtual.ctcr"
 sudo chmod 600 /etc/nginx/certs/ctcr.key
 test ! -f /etc/nginx/sites-available/moodle || sudo cp -a /etc/nginx/sites-available/moodle "/etc/nginx/sites-available/moodle.pre-elevaquitas-$(date +%Y%m%d%H%M%S)"
 sudo install -m 644 infra/nginx/moodle.conf.example /etc/nginx/sites-available/moodle
@@ -114,7 +114,7 @@ sudo ln -sfn /etc/nginx/sites-available/moodle /etc/nginx/sites-enabled/moodle
 sudo nginx -t
 ```
 
-Antes de habilitar, ajustar **el `.env` PRIVADO existente** según [`infra/compose/.env.https.example`](../../infra/compose/.env.https.example): `MOODLE_URL=https://moodle.ctcr.test`, `MOODLE_BIND_IP=127.0.0.1`, `MOODLE_SSL_PROXY=yes`. Verificar la configuración efectiva y generar backups antes de recrear Moodle. No regenerar contraseñas. La configuración Nginx espera `127.0.0.1:8080`. **Si el Compose real todavía está en `~/proyecto-moodle`, adaptar ese archivo y no ejecutar el Compose del repositorio hasta validar volúmenes/nombre e imagen.**
+Antes de habilitar, ajustar **el `.env` PRIVADO existente** según [`infra/compose/.env.https.example`](../../infra/compose/.env.https.example): `MOODLE_URL=https://aulavirtual.ctcr`, `MOODLE_BIND_IP=127.0.0.1`, `MOODLE_SSL_PROXY=yes`. Verificar la configuración efectiva y generar backups antes de recrear Moodle. No regenerar contraseñas. La configuración Nginx espera `127.0.0.1:8080`. **Si el Compose real todavía está en `~/proyecto-moodle`, adaptar ese archivo y no ejecutar el Compose del repositorio hasta validar volúmenes/nombre e imagen.**
 
 ```bash
 # Después de actualizar la URL del Compose ACTIVO y guardar un backup, aplicar la misma stack:
@@ -123,7 +123,7 @@ Antes de habilitar, ajustar **el `.env` PRIVADO existente** según [`infra/compo
 # sudo docker compose -p proyecto-moodle --env-file infra/compose/.env -f infra/compose/compose.yaml up -d
 sudo systemctl reload nginx
 sudo nginx -t
-curl -kI --resolve moodle.ctcr.test:443:192.168.50.1 https://moodle.ctcr.test
+curl -kI --resolve aulavirtual.ctcr:443:192.168.50.1 https://aulavirtual.ctcr
 openssl x509 -in /etc/nginx/certs/ctcr.crt -noout -dates -subject -ext subjectAltName
 ```
 

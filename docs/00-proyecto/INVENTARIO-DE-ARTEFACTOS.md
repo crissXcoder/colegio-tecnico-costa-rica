@@ -35,7 +35,7 @@ Este inventario es para **incorporar lectores ajenos al grupo**: cada archivo ti
 - **[`evidencias/CATALOGO-CAPTURAS.md`](../../evidencias/CATALOGO-CAPTURAS.md)** — Índice narrativo agrupado por paso con enlaces a fichas EV, nunca almacén único de imágenes.
 - **[`evidencias/manifiesto-detallado.csv`](../../evidencias/manifiesto-detallado.csv)** — Índice estructurado con ID/archivo/paso/fuente/página/estado/hash de las 50 imágenes.
 - **[`evidencias/manifiesto.csv`](../../evidencias/manifiesto.csv)** — Manifiesto compatible con los consumidores de v2; mantiene campos sincronizados.
-- **[`infra/bind9/db.ctcr.test`](../../infra/bind9/db.ctcr.test)** — Archivo autoritativo de zona ctcr.test con registro NS, SOA y A hacia Ubuntu interno.
+- **[`infra/bind9/db.ctcr`](../../infra/bind9/db.ctcr)** — Archivo autoritativo de zona ctcr con registro NS, SOA y A hacia Ubuntu interno.
 - **[`infra/bind9/named.conf.local.fragment`](../../infra/bind9/named.conf.local.fragment)** — Fragmento de declaración de zona para integrar en el named.conf.local existente.
 - **[`infra/bind9/named.conf.options.fragment`](../../infra/bind9/named.conf.options.fragment)** — Fragmento de escucha, DNS de reenvío y restricción de recursión/consulta a la red interna.
 - **[`infra/compose/.env.example`](../../infra/compose/.env.example)** — Esquema público de variables de instalación HTTP inicial; debe contener nombres y ejemplos, jamás secretos reales.

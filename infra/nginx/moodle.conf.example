@@ -1,12 +1,12 @@
 # Adaptar IP y nombres según VM y certificados instalados.
 server {
   listen 192.168.50.1:80;
-  server_name moodle.ctcr.test;
+  server_name aulavirtual.ctcr;
   return 301 https://$host$request_uri;
 }
 server {
   listen 192.168.50.1:443 ssl;
-  server_name moodle.ctcr.test;
+  server_name aulavirtual.ctcr;
   ssl_certificate /etc/nginx/certs/ctcr.crt;
   ssl_certificate_key /etc/nginx/certs/ctcr.key;
   ssl_protocols TLSv1.2 TLSv1.3;

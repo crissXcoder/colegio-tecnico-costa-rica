@@ -7,7 +7,7 @@
 | Carpeta | Función, archivo crítico y comportamiento esperado | Cómo comprobar |
 |---|---|---|
 | [`compose/`](compose/README.md) | `compose.yaml` define Moodle+MariaDB, red y volúmenes. `.env.example` documenta nombres de variables; `.env.https.example` la transición segura a proxy. | `docker compose ... config --quiet`, `ps`, `images`, `volume ls`. |
-| [`bind9/`](bind9/README.md) | `named.conf.options.fragment` restringe recursión/consultas; `named.conf.local.fragment` declara zona; `db.ctcr.test` traduce dominio a IP interna. | `named-checkconf`, `named-checkzone`, `dig`. |
+| [`bind9/`](bind9/README.md) | `named.conf.options.fragment` restringe recursión/consultas; `named.conf.local.fragment` declara zona; `db.ctcr` traduce dominio a IP interna. | `named-checkconf`, `named-checkzone`, `dig`. |
 | [`nginx/`](nginx/README.md) | `moodle.conf.example` escucha 80/443, certifica dominio local y reenvía a 127.0.0.1:8080. | `nginx -t`, SAN del certificado, `curl -I`. |
 | [`vsftpd/`](vsftpd/README.md) | `vsftpd.conf.example` asegura FTPS, chroot y directorios separados por cuenta. | login FTPS, subida y acceso cruzado denegado. |
 | [`cron/`](cron/README.md) | `moodle-backup.cron.example` invoca `scripts/backup-db.sh` en horario y escribe log. | `crontab -l`, dump creado y restauración de ensayo. |

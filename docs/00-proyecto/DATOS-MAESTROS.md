@@ -20,7 +20,7 @@ Todo es ficticio y para simulación académica. Los correos usan el dominio rese
 | Año académico | 2026 |
 | Idioma / zona horaria | Español / `America/Costa_Rica` |
 | URL inicial (HTTP, antes del paso 8) | `http://192.168.50.1:8080` |
-| URL final (HTTPS) | `https://moodle.ctcr.test` |
+| URL final (HTTPS) | `https://aulavirtual.ctcr` |
 | Colores | Azul `#17365D` · Gris claro `#F3F6FA` · Blanco `#FFFFFF` · Verde acento `#27806B` |
 
 Resumen de la página principal:
@@ -133,10 +133,10 @@ Pruebas complementarias (RX-01 y calificación):
 | Dato | Valor |
 |---|---|
 | Servidor (Ubuntu), red interna | `192.168.50.1` |
-| Dominio / FQDN de Moodle | `ctcr.test` / `moodle.ctcr.test` |
-| Servidor de nombres | `ns1.ctcr.test` → `192.168.50.1` |
-| Archivo de zona | `/etc/bind/db.ctcr.test` ([plantilla](../../infra/bind9/db.ctcr.test)) |
-| Certificado | `/etc/nginx/certs/ctcr.crt` y `/etc/nginx/certs/ctcr.key` (CN y SAN `moodle.ctcr.test`) |
+| Dominio / FQDN de Moodle | `ctcr` / `aulavirtual.ctcr` |
+| Servidor de nombres | `ns1.ctcr` → `192.168.50.1` |
+| Archivo de zona | `/etc/bind/db.ctcr` ([plantilla](../../infra/bind9/db.ctcr)) |
+| Certificado | `/etc/nginx/certs/ctcr.crt` y `/etc/nginx/certs/ctcr.key` (CN y SAN `aulavirtual.ctcr`) |
 | Sitio Nginx | `/etc/nginx/sites-available/ctcr-moodle` ([plantilla](../../infra/nginx/moodle.conf.example)) |
 | Puerto de Moodle tras HTTPS | `127.0.0.1:8080` (ya no se publica en `192.168.50.1:8080`) |
 | Proyecto Compose | `proyecto-moodle` (siempre `-p proyecto-moodle`) |
