@@ -8,8 +8,8 @@
 | Docker Engine/Compose | evidencia parcial | versión e instalación en las cinco VMs |
 | Contenedores Moodle + MariaDB | evidencia y capturas de una VM | digest, salud y `ps` por entorno |
 | Volúmenes de Moodle/DB | evidencia y capturas de una VM | prueba completa de persistencia incluyendo contenidos y archivos |
-| Personalización y cursos | ejecución parcial evidenciada | 3 × (2 recursos reales + 1 actividad evaluable) |
-| Roles/cohortes/matrículas | capturas de creación de usuarios y tres cohortes en bitácora actualizada (págs. 18–21); falta prueba de matrículas/aislamiento | matriz 3x3 verificada y prueba de URL de recurso ajeno |
+| Personalización y cursos | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-051..EV-055 (3 categorías, 3 cursos y 3×(2 recursos + 1 quiz de 100 pts)) |
+| Roles/cohortes/matrículas | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-056..EV-062 (9 usuarios, 3 cohortes, bloqueo sin automatriculación, intento de estudiante y calificador) |
 | DNS BIND9 | no demostrado en bitácora | consultas desde Linux Mint |
 | Nginx/HTTPS | no demostrado en bitácora | `nginx -t`, TLS SAN correcto, Moodle por FQDN |
 | vsftpd/FTPS | no demostrado en bitácora | cinco cuentas y prueba de negación de lectura/escritura/borrado |

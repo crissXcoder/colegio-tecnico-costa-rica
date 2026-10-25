@@ -68,15 +68,18 @@ Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no
 - **[EV-047 — Información institucional del Colegio](../docs/procedimientos/06-moodle/06-01/evidencias/EV-047.md)** (p. 22): Se observa en Moodle la pantalla correspondiente a «Información institucional del Colegio»; evidencia que el grupo navegó/configuró esta sección del LMS. **Limitación:** No valida por sí sola todos los cursos, rol de profesor, políticas de seguridad ni separación de accesos.
 - **[EV-048 — Administración del sitio](../docs/procedimientos/06-moodle/06-01/evidencias/EV-048.md)** (p. 23): Se observa en Moodle la pantalla correspondiente a «Administración del sitio»; evidencia que el grupo navegó/configuró esta sección del LMS. **Limitación:** No valida por sí sola todos los cursos, rol de profesor, políticas de seguridad ni separación de accesos.
 - **[EV-049 — Menú de apariencia de Moodle](../docs/procedimientos/06-moodle/06-01/evidencias/EV-049.md)** (p. 23): Se observa en Moodle la pantalla correspondiente a «Menú de apariencia de Moodle»; evidencia que el grupo navegó/configuró esta sección del LMS. **Limitación:** No valida por sí sola todos los cursos, rol de profesor, políticas de seguridad ni separación de accesos.
+- **[EV-051 — Personalización de la portada institucional](../docs/procedimientos/06-moodle/06-01/evidencias/EV-051.md)**: Portada principal mostrando «Colegio Técnico de Costa Rica», tema Boost corporativo y catálogo de cursos.
 
 ### [06-02 — PASO 06.02 — Crear las categorías de cursos](../docs/procedimientos/06-moodle/06-02.md)
 
 - **[EV-020 — Categorías de Administración, Docencia e Informática](../docs/procedimientos/06-moodle/06-02/evidencias/EV-020.md)** (p. 9): Se observa en Moodle la pantalla correspondiente a «Categorías de Administración, Docencia e Informática»; evidencia que el grupo navegó/configuró esta sección del LMS. **Limitación:** No valida por sí sola todos los cursos, rol de profesor, políticas de seguridad ni separación de accesos.
+- **[EV-052 — Categorías departamentales creadas en Moodle](../docs/procedimientos/06-moodle/06-02/evidencias/EV-052.md)**: Estructura de Administración (DEP-ADM), Docencia (DEP-DOC) e Informática (DEP-INF).
 
 ### [06-03 — PASO 06.03 — Crear los tres cursos](../docs/procedimientos/06-moodle/06-03.md)
 
 - **[EV-021 — Gestión de cursos en Moodle](../docs/procedimientos/06-moodle/06-03/evidencias/EV-021.md)** (p. 10): Se observa en Moodle la pantalla correspondiente a «Gestión de cursos en Moodle»; evidencia que el grupo navegó/configuró esta sección del LMS. **Limitación:** No valida por sí sola todos los cursos, rol de profesor, políticas de seguridad ni separación de accesos.
 - **[EV-022 — Edición del curso de Docencia](../docs/procedimientos/06-moodle/06-03/evidencias/EV-022.md)** (p. 10): Se observa en Moodle la pantalla correspondiente a «Edición del curso de Docencia»; evidencia que el grupo navegó/configuró esta sección del LMS. **Limitación:** No valida por sí sola todos los cursos, rol de profesor, políticas de seguridad ni separación de accesos.
+- **[EV-053 — Cursos institucionales asignados a sus categorías](../docs/procedimientos/06-moodle/06-03/evidencias/EV-053.md)**: Cursos CTCR-ADM-101, CTCR-DOC-101 y CTCR-INF-101 correctamente clasificados.
 
 ### [06-04 — PASO 06.04 — Agregar los recursos y actividades](../docs/procedimientos/06-moodle/06-04.md)
 
@@ -95,12 +98,15 @@ Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no
 - **[EV-035 — Ponderación de respuesta correcta](../docs/procedimientos/06-moodle/06-04/evidencias/EV-035.md)** (p. 16): Se observa en Moodle la pantalla correspondiente a «Ponderación de respuesta correcta»; evidencia que el grupo navegó/configuró esta sección del LMS. **Limitación:** No confirma por sí sola dos recursos genuinos y una actividad evaluable terminada en cada uno de los tres cursos, ni un intento de estudiante calificado.
 - **[EV-036 — Vista del cuestionario creado](../docs/procedimientos/06-moodle/06-04/evidencias/EV-036.md)** (p. 17): Se observa en Moodle la pantalla correspondiente a «Vista del cuestionario creado»; evidencia que el grupo navegó/configuró esta sección del LMS. **Limitación:** No confirma por sí sola dos recursos genuinos y una actividad evaluable terminada en cada uno de los tres cursos, ni un intento de estudiante calificado.
 - **[EV-037 — Vista del cuestionario después de crear las preguntas](../docs/procedimientos/06-moodle/06-04/evidencias/EV-037.md)** (p. 17): Se observa en Moodle la pantalla correspondiente a «Vista del cuestionario después de crear las preguntas»; evidencia que el grupo navegó/configuró esta sección del LMS. **Limitación:** No confirma por sí sola dos recursos genuinos y una actividad evaluable terminada en cada uno de los tres cursos, ni un intento de estudiante calificado.
+- **[EV-054 — Estructura académica de tres secciones en Informática](../docs/procedimientos/06-moodle/06-04/evidencias/EV-054.md)**: Curso CTCR-INF-101 con PDF institucional, Página interactiva y Cuestionario.
+- **[EV-055 — Configuración y banco de preguntas del cuestionario](../docs/procedimientos/06-moodle/06-04/evidencias/EV-055.md)**: Cuestionario con 5 preguntas a 20 pts (100 total) y aprobación en 70.
 
 ### [06-05 — PASO 06.05 — Crear los usuarios de prueba](../docs/procedimientos/06-moodle/06-05.md)
 
 - **[EV-038 — Navegación de administración a cuentas de usuario](../docs/procedimientos/06-moodle/06-05/evidencias/EV-038.md)** (p. 18): Se observa en Moodle la pantalla correspondiente a «Navegación de administración a cuentas de usuario»; evidencia que el grupo navegó/configuró esta sección del LMS. **Limitación:** No comprueba roles efectivos por contexto ni que las contraseñas/identidades sean adecuadas; requiere ensayo con cuentas no privilegiadas.
 - **[EV-039 — Formulario de creación de usuario Moodle](../docs/procedimientos/06-moodle/06-05/evidencias/EV-039.md)** (p. 18): Se aprecia el flujo de administración de cuentas/cohortes con secciones ocultadas por privacidad; el área tapada no sirve como prueba legible de su contenido. **Limitación:** No comprueba roles efectivos por contexto ni que las contraseñas/identidades sean adecuadas; requiere ensayo con cuentas no privilegiadas.
 - **[EV-040 — Lista ampliada de cuentas de usuario](../docs/procedimientos/06-moodle/06-05/evidencias/EV-040.md)** (p. 19): Se aprecia el flujo de administración de cuentas/cohortes con secciones ocultadas por privacidad; el área tapada no sirve como prueba legible de su contenido. **Limitación:** No comprueba roles efectivos por contexto ni que las contraseñas/identidades sean adecuadas; requiere ensayo con cuentas no privilegiadas.
+- **[EV-056 — Cuentas departamentales registradas en Moodle](../docs/procedimientos/06-moodle/06-05/evidencias/EV-056.md)**: Las 9 identidades institucionales con nombres completos reales y correo institucional.
 
 ### [06-06 — PASO 06.06 — Crear las cohortes departamentales](../docs/procedimientos/06-moodle/06-06.md)
 
@@ -108,6 +114,18 @@ Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no
 - **[EV-042 — Creación de una cohorte](../docs/procedimientos/06-moodle/06-06/evidencias/EV-042.md)** (p. 20): Se observa en Moodle la pantalla correspondiente a «Creación de una cohorte»; evidencia que el grupo navegó/configuró esta sección del LMS. **Limitación:** No valida la sincronización de matrícula ni aislamiento. Las cohortes no restringen el acceso por sí solas.
 - **[EV-043 — Lista de cohortes departamentales](../docs/procedimientos/06-moodle/06-06/evidencias/EV-043.md)** (p. 20): Se aprecia el flujo de administración de cuentas/cohortes con secciones ocultadas por privacidad; el área tapada no sirve como prueba legible de su contenido. **Limitación:** No valida la sincronización de matrícula ni aislamiento. Las cohortes no restringen el acceso por sí solas.
 - **[EV-044 — Gestión de usuarios asignados a cohortes](../docs/procedimientos/06-moodle/06-06/evidencias/EV-044.md)** (p. 21): Se aprecia el flujo de administración de cuentas/cohortes con secciones ocultadas por privacidad; el área tapada no sirve como prueba legible de su contenido. **Limitación:** No valida la sincronización de matrícula ni aislamiento. Las cohortes no restringen el acceso por sí solas.
+- **[EV-057 — Cohortes institucionales creadas a nivel de sistema](../docs/procedimientos/06-moodle/06-06/evidencias/EV-057.md)**: Cohortes CTCR-COH-ADM, CTCR-COH-DOC y CTCR-COH-INF con 2 estudiantes cada una.
+
+### [06-07 — PASO 06.07 — Configurar la matrícula por cohorte](../docs/procedimientos/06-moodle/06-07.md)
+
+- **[EV-058 — Matrícula autorizada por cohorte y profesor manual](../docs/procedimientos/06-moodle/06-07/evidencias/EV-058.md)**: Participantes de CTCR-INF-101 con roles asignados estrictamente (cohorte estudiantes, profesor manual).
+
+### [06-08 — PASO 06.08 — Comprobar el aislamiento](../docs/procedimientos/06-moodle/06-08.md)
+
+- **[EV-059 — Acceso legítimo de estudiante a su curso departamental](../docs/procedimientos/06-moodle/06-08/evidencias/EV-059.md)**: Marta Jiménez ingresando con éxito a CTCR-ADM-101.
+- **[EV-060 — Denegación estricta de acceso a curso ajeno](../docs/procedimientos/06-moodle/06-08/evidencias/EV-060.md)**: Bloqueo explícito «No se puede matricular en este curso» al intentar acceder a CTCR-INF-101.
+- **[EV-061 — Evaluación completada por estudiante](../docs/procedimientos/06-moodle/06-08/evidencias/EV-061.md)**: Intento finalizado por Valeria Sánchez con 100.00 / 100.00.
+- **[EV-062 — Informe del calificador visualizado por profesor](../docs/procedimientos/06-moodle/06-08/evidencias/EV-062.md)**: Daniel Vargas revisando la nota de Valeria Sánchez en el calificador.
 
 ## Alta de evidencias nuevas
 
