@@ -1,4 +1,4 @@
-# Catálogo maestro de evidencias históricas — Elevaquitas
+# Catálogo maestro de evidencias históricas — CTCR / Elevaquitas
 
 > Este catálogo es un **índice**, no un depósito de imágenes. Cada captura reside en `docs/procedimientos/<fase>/<paso>/evidencias/` junto al paso al que pertenece, con ficha propia, explicación, origen y límites probatorios.
 
@@ -6,7 +6,7 @@
 
 Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no verifica automáticamente persistencia, autorización, seguridad ni reproducibilidad en cinco VMs. La validación de aceptación requiere resultados observados de las pruebas definidas en cada paso.
 
-## Ubicación y significado de las 50 capturas
+## Ubicación y significado de las 74 capturas (EV-001 a EV-074)
 
 ### [01-01 — PASO 01.01 — Topología NAT e interna y verificación entre Ubuntu y Mint](../docs/procedimientos/01-servidor-red/01-01.md)
 
@@ -70,16 +70,22 @@ Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no
 - **[EV-049 — Menú de apariencia de Moodle](../docs/procedimientos/06-moodle/06-01/evidencias/EV-049.md)** (p. 23): Se observa en Moodle la pantalla correspondiente a «Menú de apariencia de Moodle»; evidencia que el grupo navegó/configuró esta sección del LMS. **Limitación:** No valida por sí sola todos los cursos, rol de profesor, políticas de seguridad ni separación de accesos.
 - **[EV-051 — Personalización de la portada institucional](../docs/procedimientos/06-moodle/06-01/evidencias/EV-051.md)**: Portada principal mostrando «Colegio Técnico de Costa Rica», tema Boost corporativo y catálogo de cursos.
 
+  ![EV-051](../docs/procedimientos/06-moodle/06-01/evidencias/EV-051.webp)
+
 ### [06-02 — PASO 06.02 — Crear las categorías de cursos](../docs/procedimientos/06-moodle/06-02.md)
 
 - **[EV-020 — Categorías de Administración, Docencia e Informática](../docs/procedimientos/06-moodle/06-02/evidencias/EV-020.md)** (p. 9): Se observa en Moodle la pantalla correspondiente a «Categorías de Administración, Docencia e Informática»; evidencia que el grupo navegó/configuró esta sección del LMS. **Limitación:** No valida por sí sola todos los cursos, rol de profesor, políticas de seguridad ni separación de accesos.
 - **[EV-052 — Categorías departamentales creadas en Moodle](../docs/procedimientos/06-moodle/06-02/evidencias/EV-052.md)**: Estructura de Administración (DEP-ADM), Docencia (DEP-DOC) e Informática (DEP-INF).
+
+  ![EV-052](../docs/procedimientos/06-moodle/06-02/evidencias/EV-052.webp)
 
 ### [06-03 — PASO 06.03 — Crear los tres cursos](../docs/procedimientos/06-moodle/06-03.md)
 
 - **[EV-021 — Gestión de cursos en Moodle](../docs/procedimientos/06-moodle/06-03/evidencias/EV-021.md)** (p. 10): Se observa en Moodle la pantalla correspondiente a «Gestión de cursos en Moodle»; evidencia que el grupo navegó/configuró esta sección del LMS. **Limitación:** No valida por sí sola todos los cursos, rol de profesor, políticas de seguridad ni separación de accesos.
 - **[EV-022 — Edición del curso de Docencia](../docs/procedimientos/06-moodle/06-03/evidencias/EV-022.md)** (p. 10): Se observa en Moodle la pantalla correspondiente a «Edición del curso de Docencia»; evidencia que el grupo navegó/configuró esta sección del LMS. **Limitación:** No valida por sí sola todos los cursos, rol de profesor, políticas de seguridad ni separación de accesos.
 - **[EV-053 — Cursos institucionales asignados a sus categorías](../docs/procedimientos/06-moodle/06-03/evidencias/EV-053.md)**: Cursos CTCR-ADM-101, CTCR-DOC-101 y CTCR-INF-101 correctamente clasificados.
+
+  ![EV-053](../docs/procedimientos/06-moodle/06-03/evidencias/EV-053.webp)
 
 ### [06-04 — PASO 06.04 — Agregar los recursos y actividades](../docs/procedimientos/06-moodle/06-04.md)
 
@@ -99,7 +105,12 @@ Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no
 - **[EV-036 — Vista del cuestionario creado](../docs/procedimientos/06-moodle/06-04/evidencias/EV-036.md)** (p. 17): Se observa en Moodle la pantalla correspondiente a «Vista del cuestionario creado»; evidencia que el grupo navegó/configuró esta sección del LMS. **Limitación:** No confirma por sí sola dos recursos genuinos y una actividad evaluable terminada en cada uno de los tres cursos, ni un intento de estudiante calificado.
 - **[EV-037 — Vista del cuestionario después de crear las preguntas](../docs/procedimientos/06-moodle/06-04/evidencias/EV-037.md)** (p. 17): Se observa en Moodle la pantalla correspondiente a «Vista del cuestionario después de crear las preguntas»; evidencia que el grupo navegó/configuró esta sección del LMS. **Limitación:** No confirma por sí sola dos recursos genuinos y una actividad evaluable terminada en cada uno de los tres cursos, ni un intento de estudiante calificado.
 - **[EV-054 — Estructura académica de tres secciones en Informática](../docs/procedimientos/06-moodle/06-04/evidencias/EV-054.md)**: Curso CTCR-INF-101 con PDF institucional, Página interactiva y Cuestionario.
+
+  ![EV-054](../docs/procedimientos/06-moodle/06-04/evidencias/EV-054.webp)
+
 - **[EV-055 — Configuración y banco de preguntas del cuestionario](../docs/procedimientos/06-moodle/06-04/evidencias/EV-055.md)**: Cuestionario con 5 preguntas a 20 pts (100 total) y aprobación en 70.
+
+  ![EV-055](../docs/procedimientos/06-moodle/06-04/evidencias/EV-055.webp)
 
 ### [06-05 — PASO 06.05 — Crear los usuarios de prueba](../docs/procedimientos/06-moodle/06-05.md)
 
@@ -107,6 +118,8 @@ Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no
 - **[EV-039 — Formulario de creación de usuario Moodle](../docs/procedimientos/06-moodle/06-05/evidencias/EV-039.md)** (p. 18): Se aprecia el flujo de administración de cuentas/cohortes con secciones ocultadas por privacidad; el área tapada no sirve como prueba legible de su contenido. **Limitación:** No comprueba roles efectivos por contexto ni que las contraseñas/identidades sean adecuadas; requiere ensayo con cuentas no privilegiadas.
 - **[EV-040 — Lista ampliada de cuentas de usuario](../docs/procedimientos/06-moodle/06-05/evidencias/EV-040.md)** (p. 19): Se aprecia el flujo de administración de cuentas/cohortes con secciones ocultadas por privacidad; el área tapada no sirve como prueba legible de su contenido. **Limitación:** No comprueba roles efectivos por contexto ni que las contraseñas/identidades sean adecuadas; requiere ensayo con cuentas no privilegiadas.
 - **[EV-056 — Cuentas departamentales registradas en Moodle](../docs/procedimientos/06-moodle/06-05/evidencias/EV-056.md)**: Las 9 identidades institucionales con nombres completos reales y correo institucional.
+
+  ![EV-056](../docs/procedimientos/06-moodle/06-05/evidencias/EV-056.webp)
 
 ### [06-06 — PASO 06.06 — Crear las cohortes departamentales](../docs/procedimientos/06-moodle/06-06.md)
 
@@ -116,61 +129,181 @@ Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no
 - **[EV-044 — Gestión de usuarios asignados a cohortes](../docs/procedimientos/06-moodle/06-06/evidencias/EV-044.md)** (p. 21): Se aprecia el flujo de administración de cuentas/cohortes con secciones ocultadas por privacidad; el área tapada no sirve como prueba legible de su contenido. **Limitación:** No valida la sincronización de matrícula ni aislamiento. Las cohortes no restringen el acceso por sí solas.
 - **[EV-057 — Cohortes institucionales creadas a nivel de sistema](../docs/procedimientos/06-moodle/06-06/evidencias/EV-057.md)**: Cohortes CTCR-COH-ADM, CTCR-COH-DOC y CTCR-COH-INF con 2 estudiantes cada una.
 
+  ![EV-057](../docs/procedimientos/06-moodle/06-06/evidencias/EV-057.webp)
+
 ### [06-07 — PASO 06.07 — Configurar la matrícula por cohorte](../docs/procedimientos/06-moodle/06-07.md)
 
 - **[EV-058 — Matrícula autorizada por cohorte y profesor manual](../docs/procedimientos/06-moodle/06-07/evidencias/EV-058.md)**: Participantes de CTCR-INF-101 con roles asignados estrictamente (cohorte estudiantes, profesor manual).
 
+  ![EV-058](../docs/procedimientos/06-moodle/06-07/evidencias/EV-058.webp)
+
 ### [06-08 — PASO 06.08 — Comprobar el aislamiento](../docs/procedimientos/06-moodle/06-08.md)
 
 - **[EV-059 — Acceso legítimo de estudiante a su curso departamental](../docs/procedimientos/06-moodle/06-08/evidencias/EV-059.md)**: Marta Jiménez ingresando con éxito a CTCR-ADM-101.
+
+  ![EV-059](../docs/procedimientos/06-moodle/06-08/evidencias/EV-059.webp)
+
 - **[EV-060 — Denegación estricta de acceso a curso ajeno](../docs/procedimientos/06-moodle/06-08/evidencias/EV-060.md)**: Bloqueo explícito «No se puede matricular en este curso» al intentar acceder a CTCR-INF-101.
+
+  ![EV-060](../docs/procedimientos/06-moodle/06-08/evidencias/EV-060.webp)
+
 - **[EV-061 — Evaluación completada por estudiante](../docs/procedimientos/06-moodle/06-08/evidencias/EV-061.md)**: Intento finalizado por Valeria Sánchez con 100.00 / 100.00.
+
+  ![EV-061](../docs/procedimientos/06-moodle/06-08/evidencias/EV-061.webp)
+
 - **[EV-062 — Informe del calificador visualizado por profesor](../docs/procedimientos/06-moodle/06-08/evidencias/EV-062.md)**: Daniel Vargas revisando la nota de Valeria Sánchez en el calificador.
+
+  ![EV-062](../docs/procedimientos/06-moodle/06-08/evidencias/EV-062.webp)
 
 ## Bloque 07 — DNS privado BIND9
 
+### [07-01 — PASO 07.01 — Instalar BIND9](../docs/procedimientos/07-dns-bind9/07-01.md)
+
+- **[EV-063 — Validación sintáctica de opciones y zonas en BIND9](../docs/procedimientos/07-dns-bind9/07-05/evidencias/EV-063.md)**: Instalación de BIND9 (`9.20.24`), estado `active` del servicio y delimitación del socket en `192.168.50.1:53` conviviendo limpiamente con `systemd-resolved` en loopback.
+
+  ![EV-063](../docs/procedimientos/07-dns-bind9/07-05/evidencias/EV-063.webp)
+
+### [07-02 — PASO 07.02 — Crear la zona institucional](../docs/procedimientos/07-dns-bind9/07-02.md)
+
+- **[EV-063 — Validación sintáctica de opciones y zonas en BIND9](../docs/procedimientos/07-dns-bind9/07-05/evidencias/EV-063.md)**: Declaración de la zona autoritativa directa `ctcr` en `/etc/bind/named.conf.local` y archivo de zona `/etc/bind/db.ctcr` con registros SOA, NS, A (`aulavirtual`) y CNAME (`moodle`).
+
+  ![EV-063](../docs/procedimientos/07-dns-bind9/07-05/evidencias/EV-063.webp)
+
+### [07-03 — PASO 07.03 — Crear la zona de pruebas](../docs/procedimientos/07-dns-bind9/07-03.md)
+
+- **[EV-063 — Validación sintáctica de opciones y zonas en BIND9](../docs/procedimientos/07-dns-bind9/07-05/evidencias/EV-063.md)**: Declaración de la zona de compatibilidad de pruebas `ctcr.test` y archivo `/etc/bind/db.ctcr.test` apuntando a `192.168.50.1`.
+
+  ![EV-063](../docs/procedimientos/07-dns-bind9/07-05/evidencias/EV-063.webp)
+
+### [07-04 — PASO 07.04 — Comprobar la sintaxis](../docs/procedimientos/07-dns-bind9/07-04.md)
+
+- **[EV-063 — Validación sintáctica de opciones y zonas en BIND9](../docs/procedimientos/07-dns-bind9/07-05/evidencias/EV-063.md)**: Validación sintáctica de opciones y zonas con `named-checkconf` y `named-checkzone`, arrojando estado `OK` y serial 2026102801.
+
+  ![EV-063](../docs/procedimientos/07-dns-bind9/07-05/evidencias/EV-063.webp)
+
 ### [07-05 — PASO 07.05 — Validar BIND9](../docs/procedimientos/07-dns-bind9/07-05.md)
 
-- **[EV-063 — Validación sintáctica de opciones y zonas en BIND9](../docs/procedimientos/07-dns-bind9/07-05/evidencias/EV-063.md)**: Validación de `named-checkconf` (código 0) y `named-checkzone ctcr /etc/bind/db.ctcr` (`OK`, serial `2026102401`), estado del servicio `active (running)` y socket en `192.168.50.1:53`.
+- **[EV-063 — Validación sintáctica de opciones y zonas en BIND9](../docs/procedimientos/07-dns-bind9/07-05/evidencias/EV-063.md)**: Validación de `named-checkconf` (código 0) y `named-checkzone ctcr /etc/bind/db.ctcr` (`OK`, serial `2026102801`), estado del servicio `active (running)` y socket en `192.168.50.1:53`.
+
+  ![EV-063](../docs/procedimientos/07-dns-bind9/07-05/evidencias/EV-063.webp)
 
 ### [07-06 — PASO 07.06 — Probar el DNS desde Ubuntu](../docs/procedimientos/07-dns-bind9/07-06.md)
 
 - **[EV-064 — Comprobación de resolución DNS local en Ubuntu Server](../docs/procedimientos/07-dns-bind9/07-06/evidencias/EV-064.md)**: Consultas `dig @192.168.50.1 aulavirtual.ctcr +short` y `ns1.ctcr` devolviendo `192.168.50.1`, con registro SOA autoritativo.
 
+  ![EV-064](../docs/procedimientos/07-dns-bind9/07-06/evidencias/EV-064.webp)
+
 ### [07-07 — PASO 07.07 — Configurar Linux Mint para utilizar BIND9](../docs/procedimientos/07-dns-bind9/07-07.md)
 
 - **[EV-065 — Configuración y resolución DNS remota desde Linux Mint](../docs/procedimientos/07-dns-bind9/07-07/evidencias/EV-065.md)**: Resolución exitosa en Mint mediante `dig` y `getent ahostsv4 aulavirtual.ctcr` apuntando a `192.168.50.1`, con ping al 0% de pérdida.
+
+  ![EV-065](../docs/procedimientos/07-dns-bind9/07-07/evidencias/EV-065.webp)
+
 - **[EV-066 — Captura de escritorio de Linux Mint resolviendo el dominio institucional](../docs/procedimientos/07-dns-bind9/07-07/evidencias/EV-066.md)**: Vista completa de escritorio Cinnamon en Linux Mint demostrando resolución y conectividad hacia el Aula Virtual.
+
+  ![EV-066](../docs/procedimientos/07-dns-bind9/07-07/evidencias/EV-066.webp)
 
 ## Bloque 08 — Nginx, VirtualHost y HTTPS
 
+### [08-01 — PASO 08.01 — Instalar Nginx](../docs/procedimientos/08-https-nginx/08-01.md)
+
+- **[EV-067 — Instalación de Nginx, Certificado SAN y Sintaxis](../docs/procedimientos/08-https-nginx/08-04/evidencias/EV-067.md)**: Instalación y comprobación de versión de Nginx (`nginx/1.28.3 (Ubuntu)`), verificación del servicio en ejecución (`active`), creación del certificado X.509 con SAN institucional y validación sintáctica global (`nginx -t`).
+
+  ![EV-067](../docs/procedimientos/08-https-nginx/08-04/evidencias/EV-067.webp)
+
+### [08-02 — PASO 08.02 — Crear el certificado](../docs/procedimientos/08-https-nginx/08-02.md)
+
+- **[EV-067 — Instalación de Nginx, Certificado SAN y Sintaxis](../docs/procedimientos/08-https-nginx/08-04/evidencias/EV-067.md)**: Generación del certificado X.509 en `/etc/nginx/certs/aulavirtual.ctcr.crt` y clave RSA 3072 protegida (`0600`), comprobación mediante OpenSSL de la extensión SAN con dominios `aulavirtual.ctcr` y `moodle.ctcr.test`.
+
+  ![EV-067](../docs/procedimientos/08-https-nginx/08-04/evidencias/EV-067.webp)
+
+### [08-03 — PASO 08.03 — Crear el VirtualHost](../docs/procedimientos/08-https-nginx/08-03.md)
+
+- **[EV-067 — Instalación de Nginx, Certificado SAN y Sintaxis](../docs/procedimientos/08-https-nginx/08-04/evidencias/EV-067.md)**: Configuración del VirtualHost en `/etc/nginx/sites-available/aulavirtual.ctcr` definiendo la redirección HTTP 301 a HTTPS y el bloque SSL con proxy reverso hacia el backend Moodle en `127.0.0.1:8080`.
+
+  ![EV-067](../docs/procedimientos/08-https-nginx/08-04/evidencias/EV-067.webp)
+
 ### [08-04 — PASO 08.04 — Habilitar el sitio](../docs/procedimientos/08-https-nginx/08-04.md)
 
-- **[EV-067 — Instalación de Nginx, Certificado SAN y Sintaxis](../docs/procedimientos/08-https-nginx/08-04/evidencias/EV-067.md)**: Nginx 1.28.3, certificado X.509 con SAN `aulavirtual.ctcr` y `moodle.ctcr.test`, VirtualHost en sites-available y verificación `nginx -t` exitosa.
+- **[EV-067 — Instalación de Nginx, Certificado SAN y Sintaxis](../docs/procedimientos/08-https-nginx/08-04/evidencias/EV-067.md)**: Enlace simbólico en `sites-enabled`, eliminación de `default`, verificación sintáctica exitosa con `nginx -t` y reinicio del servicio Nginx sin colisiones de puerto.
+
+  ![EV-067](../docs/procedimientos/08-https-nginx/08-04/evidencias/EV-067.webp)
+
+### [08-05 — PASO 08.05 — Cambiar la URL de Moodle](../docs/procedimientos/08-https-nginx/08-05.md)
+
+- **[EV-068 — Docker Compose HTTPS, wwwroot Efectiva y Pruebas Curl](../docs/procedimientos/08-https-nginx/08-06/evidencias/EV-068.md)**: Actualización de `compose.yaml` vinculando el servicio Moodle exclusivamente a `127.0.0.1:8080:8080`, definición de `MOODLE_URL=https://aulavirtual.ctcr` y `MOODLE_SSL_PROXY=yes`, con comprobación interna de `$CFG->wwwroot` y `$CFG->sslproxy`.
+
+  ![EV-068](../docs/procedimientos/08-https-nginx/08-06/evidencias/EV-068.webp)
 
 ### [08-06 — PASO 08.06 — Probar HTTPS desde Ubuntu](../docs/procedimientos/08-https-nginx/08-06.md)
 
 - **[EV-068 — Docker Compose HTTPS, wwwroot Efectiva y Pruebas Curl](../docs/procedimientos/08-https-nginx/08-06/evidencias/EV-068.md)**: Moodle enlazado a `127.0.0.1:8080`, variable `MOODLE_URL=https://aulavirtual.ctcr`, verificación wwwroot y curl local comprobando redirección 301 en puerto 80 y respuesta 200 OK en 443.
 
+  ![EV-068](../docs/procedimientos/08-https-nginx/08-06/evidencias/EV-068.webp)
+
 ### [08-07 — PASO 08.07 — Abrir Moodle desde Linux Mint](../docs/procedimientos/08-https-nginx/08-07.md)
 
 - **[EV-069 — Navegación Web en Mozilla Firefox bajo HTTPS](../docs/procedimientos/08-https-nginx/08-07/evidencias/EV-069.md)**: Acceso exitoso a `https://aulavirtual.ctcr/` en Firefox desde Linux Mint mostrando portada y cursos institucionales bajo TLS.
+
+  ![EV-069](../docs/procedimientos/08-https-nginx/08-07/evidencias/EV-069.webp)
+
 - **[EV-070 — Captura Visual de Escritorio en Linux Mint y Pruebas Curl](../docs/procedimientos/08-https-nginx/08-07/evidencias/EV-070.md)**: Entorno Cinnamon en Linux Mint ejecutando pruebas de terminal con redirección 301 a HTTPS y respuesta 200 OK.
+
+  ![EV-070](../docs/procedimientos/08-https-nginx/08-07/evidencias/EV-070.webp)
 
 ## Bloque 09 — Transferencia de archivos FTPS aislada
 
+### [09-01 — PASO 09.01 — Instalar el servicio](../docs/procedimientos/09-ftps-vsftpd/09-01.md)
+
+- **[EV-071 — Cuentas de Sistema, vsftpd 3.0.5 y Carpetas Privadas](../docs/procedimientos/09-ftps-vsftpd/09-03/evidencias/EV-071.md)**: Identificación de los 6 funcionarios departamentales, instalación de `vsftpd: version 3.0.5` y creación de cuentas institucionales.
+
+  ![EV-071](../docs/procedimientos/09-ftps-vsftpd/09-03/evidencias/EV-071.webp)
+
+### [09-02 — PASO 09.02 — Crear usuarios FTP](../docs/procedimientos/09-ftps-vsftpd/09-02.md)
+
+- **[EV-071 — Cuentas de Sistema, vsftpd 3.0.5 y Carpetas Privadas](../docs/procedimientos/09-ftps-vsftpd/09-03/evidencias/EV-071.md)**: Creación de las 6 cuentas departamentales con `useradd` y asignación de shell restrictiva `/usr/sbin/nologin`.
+
+  ![EV-071](../docs/procedimientos/09-ftps-vsftpd/09-03/evidencias/EV-071.webp)
+
 ### [09-03 — PASO 09.03 — Crear los directorios separados](../docs/procedimientos/09-ftps-vsftpd/09-03.md)
 
-- **[EV-071 — Cuentas de Sistema, vsftpd 3.0.5 y Carpetas Privadas](../docs/procedimientos/09-ftps-vsftpd/09-03/evidencias/EV-071.md)**: 6 cuentas departamentales creadas con shell restrictiva `/usr/sbin/nologin` habilitada en PAM, directorios `/srv/ftp/<usuario>/archivos` con permisos `0700` y lista blanca `/etc/vsftpd.user_list`.
+- **[EV-071 — Cuentas de Sistema, vsftpd 3.0.5 y Carpetas Privadas](../docs/procedimientos/09-ftps-vsftpd/09-03/evidencias/EV-071.md)**: Estructura de enjaulamiento chroot con raíz `/srv/ftp/<usuario>` en `0755` (`root:root`) y subcarpetas `/srv/ftp/<usuario>/archivos` en `0700` (`<usuario>:<usuario>`).
+
+  ![EV-071](../docs/procedimientos/09-ftps-vsftpd/09-03/evidencias/EV-071.webp)
+
+### [09-04 — PASO 09.04 — Crear una lista de usuarios permitidos](../docs/procedimientos/09-ftps-vsftpd/09-04.md)
+
+- **[EV-071 — Cuentas de Sistema, vsftpd 3.0.5 y Carpetas Privadas](../docs/procedimientos/09-ftps-vsftpd/09-03/evidencias/EV-071.md)**: Lista blanca en `/etc/vsftpd.user_list` conteniendo las seis cuentas institucionales autorizadas e inclusión de `/usr/sbin/nologin` en `/etc/shells` para permitir autenticación PAM.
+
+  ![EV-071](../docs/procedimientos/09-ftps-vsftpd/09-03/evidencias/EV-071.webp)
+
+### [09-05 — PASO 09.05 — Configurar vsftpd](../docs/procedimientos/09-ftps-vsftpd/09-05.md)
+
+- **[EV-072 — Carga FTPS TLSv1.3 y Aislamiento en el Sistema de Archivos](../docs/procedimientos/09-ftps-vsftpd/09-07/evidencias/EV-072.md)**: Configuración en `/etc/vsftpd.conf` con `user_sub_token=$USER`, `local_root=/srv/ftp/$USER`, puertos pasivos `40000:40010` y forzado de TLSv1.3.
+
+  ![EV-072](../docs/procedimientos/09-ftps-vsftpd/09-07/evidencias/EV-072.webp)
+
+### [09-06 — PASO 09.06 — Reiniciar FTP](../docs/procedimientos/09-ftps-vsftpd/09-06.md)
+
+- **[EV-072 — Carga FTPS TLSv1.3 y Aislamiento en el Sistema de Archivos](../docs/procedimientos/09-ftps-vsftpd/09-07/evidencias/EV-072.md)**: Servicio `vsftpd` activo bajo systemd escuchando en el socket `192.168.50.1:21`.
+
+  ![EV-072](../docs/procedimientos/09-ftps-vsftpd/09-07/evidencias/EV-072.webp)
 
 ### [09-07 — PASO 09.07 — Probar un usuario FTP](../docs/procedimientos/09-ftps-vsftpd/09-07.md)
 
 - **[EV-072 — Carga FTPS TLSv1.3 y Aislamiento en el Sistema de Archivos](../docs/procedimientos/09-ftps-vsftpd/09-07/evidencias/EV-072.md)**: Carga exitosa por FTPS explícito bajo TLSv1.3 y denegación estricta de permisos (`Permiso denegado`) al intentar acceder o leer archivos de otro departamento en Ubuntu Server.
 
+  ![EV-072](../docs/procedimientos/09-ftps-vsftpd/09-07/evidencias/EV-072.webp)
+
 ### [09-08 — PASO 09.08 — Comprobar que los permisos funcionan](../docs/procedimientos/09-ftps-vsftpd/09-08.md)
 
 - **[EV-073 — Pruebas Remotas FTPS TLSv1.3 y Bloqueo de Escape Chroot](../docs/procedimientos/09-ftps-vsftpd/09-08/evidencias/EV-073.md)**: Transferencias remotas seguras desde Linux Mint y respuesta `550 Failed to change directory` ante intento de directory traversal hacia carpetas ajenas.
+
+  ![EV-073](../docs/procedimientos/09-ftps-vsftpd/09-08/evidencias/EV-073.webp)
+
 - **[EV-074 — Entorno de Pruebas y Transferencia FTPS en Escritorio](../docs/procedimientos/09-ftps-vsftpd/09-08/evidencias/EV-074.md)**: Captura de escritorio Cinnamon en Linux Mint ejecutando pruebas de conexión, descarga y rechazo chroot por FTPS.
+
+  ![EV-074](../docs/procedimientos/09-ftps-vsftpd/09-08/evidencias/EV-074.webp)
 
 ## Alta de evidencias nuevas
 
