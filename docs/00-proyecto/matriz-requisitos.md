@@ -5,7 +5,7 @@
 | RC-01 | Zona propia BIND9 | 05-dns | `dig @192.168.50.1 aulavirtual.ctcr A +short` desde Mint | CUMPLE (verificado local EV-063..EV-066) |
 | RC-02 | VirtualHost/HTTPS dominio | 06-https | GET HTTPS y TLS SAN correctos | CUMPLE (verificado local EV-067..EV-070) |
 | RC-03 | Moodle+DB Docker, volumen, versiones fijas | 02-contenedores | `compose ps`, digest y persistencia tras recrear | Evidencia parcial |
-| RC-04 | FTP usuario por integrante/rol, aislamiento | 07-ftp | 6 cuentas por funcionario; leer/sobrescribir/borrar ajeno rechazado (FTPS y `sudo -u` en Ubuntu) | Pendiente |
+| RC-04 | FTP usuario por integrante/rol, aislamiento | 07-ftp | 6 cuentas por funcionario; leer/sobrescribir/borrar ajeno rechazado (FTPS y `sudo -u` en Ubuntu) | CUMPLE (verificado local EV-071..EV-074) |
 | RC-05 | Respaldo Cron y restauración | 08-respaldos | dump y restauración verificadas | Pendiente |
 | RC-06 | Documentación reproducible | todas + entrega | tercero reproduce sin asistencia | En proceso |
 | RE-01 | Tres cursos reales, 2 recursos + 1 actividad cada uno | 03-moodle | inventario de 9 elementos mínimos y pruebas | Evidencia parcial |

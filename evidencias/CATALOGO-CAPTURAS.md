@@ -157,6 +157,21 @@ Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no
 - **[EV-069 — Navegación Web en Mozilla Firefox bajo HTTPS](../docs/procedimientos/08-https-nginx/08-07/evidencias/EV-069.md)**: Acceso exitoso a `https://aulavirtual.ctcr/` en Firefox desde Linux Mint mostrando portada y cursos institucionales bajo TLS.
 - **[EV-070 — Captura Visual de Escritorio en Linux Mint y Pruebas Curl](../docs/procedimientos/08-https-nginx/08-07/evidencias/EV-070.md)**: Entorno Cinnamon en Linux Mint ejecutando pruebas de terminal con redirección 301 a HTTPS y respuesta 200 OK.
 
+## Bloque 09 — Transferencia de archivos FTPS aislada
+
+### [09-03 — PASO 09.03 — Crear los directorios separados](../docs/procedimientos/09-ftps-vsftpd/09-03.md)
+
+- **[EV-071 — Cuentas de Sistema, vsftpd 3.0.5 y Carpetas Privadas](../docs/procedimientos/09-ftps-vsftpd/09-03/evidencias/EV-071.md)**: 6 cuentas departamentales creadas con shell restrictiva `/usr/sbin/nologin` habilitada en PAM, directorios `/srv/ftp/<usuario>/archivos` con permisos `0700` y lista blanca `/etc/vsftpd.user_list`.
+
+### [09-07 — PASO 09.07 — Probar un usuario FTP](../docs/procedimientos/09-ftps-vsftpd/09-07.md)
+
+- **[EV-072 — Carga FTPS TLSv1.3 y Aislamiento en el Sistema de Archivos](../docs/procedimientos/09-ftps-vsftpd/09-07/evidencias/EV-072.md)**: Carga exitosa por FTPS explícito bajo TLSv1.3 y denegación estricta de permisos (`Permiso denegado`) al intentar acceder o leer archivos de otro departamento en Ubuntu Server.
+
+### [09-08 — PASO 09.08 — Comprobar que los permisos funcionan](../docs/procedimientos/09-ftps-vsftpd/09-08.md)
+
+- **[EV-073 — Pruebas Remotas FTPS TLSv1.3 y Bloqueo de Escape Chroot](../docs/procedimientos/09-ftps-vsftpd/09-08/evidencias/EV-073.md)**: Transferencias remotas seguras desde Linux Mint y respuesta `550 Failed to change directory` ante intento de directory traversal hacia carpetas ajenas.
+- **[EV-074 — Entorno de Pruebas y Transferencia FTPS en Escritorio](../docs/procedimientos/09-ftps-vsftpd/09-08/evidencias/EV-074.md)**: Captura de escritorio Cinnamon en Linux Mint ejecutando pruebas de conexión, descarga y rechazo chroot por FTPS.
+
 ## Alta de evidencias nuevas
 
 No reutilizar IDs EV-001–EV-050. Guardar una imagen junto al paso correspondiente, crear una ficha con procedencia, comando/acción, esperado, observado, privacidad, fecha, host y revisor, registrar SHA-256 y actualizar `manifiesto-detallado.csv`. Si no se ha ejecutado una prueba, dejar estado **pendiente**.

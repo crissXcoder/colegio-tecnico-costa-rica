@@ -11,7 +11,7 @@
 | PHP | 8.3 en imagen Moodle | acuerdo previo | ejecutar `php -v` en contenedor |
 | BIND9 | 9.20.24 | BIND 9.20.24-1ubuntu0.4 instalado en VM #1 | Verificado con `named -v` (Paso 7) |
 | Nginx | 1.28.3 | `nginx/1.28.3 (Ubuntu)` (paquete `1.28.3-2ubuntu1.12`) en VM #1 | Verificado con `nginx -v` (Paso 8, EV-067) |
-| vsftpd | por determinar | sin pruebas suficientes | capturar versión al configurar |
+| vsftpd | 3.0.5 | `vsftpd: version 3.0.5` en VM #1 | Verificado con `vsftpd -v` (Paso 9, EV-071) |
 
 ## Seguridad (2026-10-23)
 

@@ -12,7 +12,7 @@
 | Roles/cohortes/matrículas | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-056..EV-062 (9 usuarios, 3 cohortes, bloqueo sin automatriculación, intento de estudiante y calificador) |
 | DNS BIND9 | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-063..EV-066 (BIND 9.20.24, named-checkconf/checkzone OK, resolución local dig y cliente Mint ping/dig 0% pérdida) |
 | Nginx/HTTPS | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-067..EV-070 (Nginx 1.28.3, SAN aulavirtual.ctcr, 301 a HTTPS, curl 200 OK y Firefox cliente) |
-| vsftpd/FTPS | no demostrado en bitácora | cinco cuentas y prueba de negación de lectura/escritura/borrado |
+| vsftpd/FTPS | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-071..EV-074 (vsftpd 3.0.5, 6 cuentas departamentales nologin, TLSv1.3, enjaulamiento chroot 0700 y error 550 ante escape) |
 | Cron, respaldo y restauración | no demostrado | cron, copia generada, restauración real y validación |
 | Documento final | plantilla disponible | texto final, citas, diagrama y anexos |
 | Demostración | no demostrada | ensayo, verificaciones cruzadas |

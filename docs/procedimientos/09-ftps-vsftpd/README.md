@@ -1,6 +1,6 @@
 # Transferencia de archivos FTPS aislada — manual de operación
 
-**Bloque:** `09-ftps-vsftpd` · **Capturas históricas integradas:** 0 · **Estado:** evidencia local parcial o documentación proyectada, no validación cruzada del grupo.
+**Bloque:** `09-ftps-vsftpd` · **Capturas históricas integradas:** 4 (`EV-071`..`EV-074`) · **Estado:** verificado localmente (VM #1 Server y VM #2 Mint).
 
 ## Por qué existe este bloque
 
@@ -18,14 +18,14 @@ Este bloque no es un listado de archivos: proporciona la **secuencia operativa**
 
 | Guía | Qué se obtiene y cómo verificarlo | Captura vinculada |
 |---|---|---|
-| [09-01: Instalar el servicio](09-01.md) | Ejecutar el procedimiento y comparar su resultado observado con el comportamiento descrito, adjuntando salida verificable. |  |
-| [09-02: Crear usuarios FTP](09-02.md) | Ejecutar el procedimiento y comparar su resultado observado con el comportamiento descrito, adjuntando salida verificable. |  |
-| [09-03: Crear los directorios separados](09-03.md) | Ejecutar el procedimiento y comparar su resultado observado con el comportamiento descrito, adjuntando salida verificable. |  |
-| [09-04: Crear una lista de usuarios permitidos](09-04.md) | Ejecutar el procedimiento y comparar su resultado observado con el comportamiento descrito, adjuntando salida verificable. |  |
-| [09-05: Configurar vsftpd](09-05.md) | Cada usuario FTPS confinado en su directorio con sustitución $USER activa. |  |
-| [09-06: Reiniciar FTP](09-06.md) | Ejecutar el procedimiento y comparar su resultado observado con el comportamiento descrito, adjuntando salida verificable. |  |
-| [09-07: Probar un usuario FTP](09-07.md) | Ejecutar el procedimiento y comparar su resultado observado con el comportamiento descrito, adjuntando salida verificable. |  |
-| [09-08: Comprobar que los permisos funcionan](09-08.md) | Intento de modificar o eliminar archivo ajeno recibe denegación real. |  |
+| [09-01: Instalar el servicio](09-01.md) | Identificación de 6 funcionarios departamentales y definición de roles. | Verificada en [09-03](09-03.md) |
+| [09-02: Crear usuarios FTP](09-02.md) | Instalación de vsftpd 3.0.5 y creación de cuentas con shell `/usr/sbin/nologin`. | Verificada en [09-03](09-03.md) |
+| [09-03: Crear los directorios separados](09-03.md) | Creación de `/srv/ftp/$u/archivos` con permisos `0700` y raíz en `0755` (`root:root`). | [EV-071](09-03/evidencias/EV-071.md) |
+| [09-04: Crear una lista de usuarios permitidos](09-04.md) | Lista blanca en `/etc/vsftpd.user_list` y validación de PAM en `/etc/shells`. | Verificada en [09-03](09-03.md) |
+| [09-05: Configurar vsftpd](09-05.md) | Configuración de chroot, `user_sub_token=$USER`, TLSv1.3 forzado y pasivos 40000:40010. | Verificada en [09-07](09-07.md) |
+| [09-06: Reiniciar FTP](09-06.md) | Servicio vsftpd activo en systemd y atendiendo en socket `192.168.50.1:21`. | Verificada en [09-07](09-07.md) |
+| [09-07: Probar un usuario FTP](09-07.md) | Carga FTPS explícito bajo TLSv1.3 y denegación estricta en el filesystem local. | [EV-072](09-07/evidencias/EV-072.md) |
+| [09-08: Comprobar que los permisos funcionan](09-08.md) | Pruebas remotas desde Mint con descarga propia y rechazo chroot `550 Failed to change directory`. | [EV-073](09-08/evidencias/EV-073.md), [EV-074](09-08/evidencias/EV-074.md) |
 
 Cada guía incluye el procedimiento completo procedente de la fuente compartida, comandos originales, correcciones de seguridad, comprobaciones, imágenes históricas **en su propia carpeta** y una ficha por captura (`EV-XXX.md`). Las guías sin imágenes existentes tienen una sección explícita de evidencia pendiente. No deben asociarse screenshots de otros servicios solo para llenar un hueco.
 

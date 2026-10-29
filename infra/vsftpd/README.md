@@ -14,4 +14,6 @@
 
 Comparar con `/etc/vsftpd.conf` real y guardar copia. Crear cuentas **únicamente si no existen**, bloquear shell de acceso interactivo, preparar `/srv/ftp/<usuario>/archivos`, permisos y lista blanca. Revisar compatibilidad PAM de `/usr/sbin/nologin` con el sistema; probar con una cuenta antes de crear las cinco. El [manual 09](../../docs/procedimientos/09-ftps-vsftpd/README.md) contiene comandos de creación y pruebas curl sin incrustar contraseñas.
 
-**Prueba de aceptación:** usuario A sube y lee archivo propio; usuario B no puede descargar, sobrescribir ni borrar el archivo ajeno, incluso si intenta ruta traversal. Registrar salida exacta del rechazo, no solo permisos `ls -l`. Las capturas de esta prueba están **pendientes**.
+**Prueba de aceptación:** usuario A sube y lee archivo propio; usuario B no puede descargar, sobrescribir ni borrar el archivo ajeno, incluso si intenta ruta traversal. Registrar salida exacta del rechazo, no solo permisos `ls -l`.
+
+**Estado verificado localmente:** fase 09 comprobada con 6 cuentas departamentales con shell restrictiva `/usr/sbin/nologin`, enjaulamiento chroot en `/srv/ftp/$USER/archivos` (`0700`), FTPS forzado con TLSv1.3, subida legítima de archivos y bloqueo estricto ante intentos de escape chroot con error `550 Failed to change directory`, respaldada por las evidencias `EV-071`, `EV-072`, `EV-073` y `EV-074`.

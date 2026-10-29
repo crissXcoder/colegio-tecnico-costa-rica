@@ -18,6 +18,8 @@ Antes de aplicar algo aquí revisar el [estado real](../../00-proyecto/ESTADO.md
 
 **Comando o acción representativa:** `systemctl status vsftpd`, `curl --ssl-reqd` (sin credenciales embebidas). **Resultado requerido:** prueba observada en una VM identificada, con contraste entre esperado y obtenido. Cuando corresponda, incluir prueba negativa (denegación) y demostrar que el cambio no afecta los demás servicios. Una captura de configuración abierta no es una prueba funcional.
 
+**Estado de la fase:** **VERIFICADO LOCALMENTE (VM #1 Server y VM #2 Mint)**. Fase 09 ejecutada y validada con 4 evidencias (`EV-071`, `EV-072`, `EV-073`, `EV-074`), bitácora de sesión [2026-10-28-sesion-paso9-ftps-vsftpd.md](../../../bitacora/sesiones/2026-10-28-sesion-paso9-ftps-vsftpd.md) e incidentes [INC-007](../../../bitacora/incidentes/INC-007-vsftpd-adduser-name-regex-failure.md), [INC-008](../../../bitacora/incidentes/INC-008-vsftpd-pam-shells-nologin-denial.md), [INC-009](../../../bitacora/incidentes/INC-009-vsftpd-user-sub-token-omission-bug.md) e [INC-010](../../../bitacora/incidentes/INC-010-vsftpd-writable-root-chroot-500.md).
+
 ## Responsable, revisión y evidencia
 
 El equipo de cinco desarrolla en sesiones sincronizadas. Para mantener responsabilidad real, la persona asignada a esta fase deja el procedimiento y la evidencia; otra persona ejecuta/revisa independientemente. Identidades por asignar en [`responsabilidades`](../../00-proyecto/responsabilidades.md). Las sesiones van a [`bitacora/sesiones`](../../../bitacora/README.md); errores a incidencias.

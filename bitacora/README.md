@@ -6,6 +6,7 @@ Aquí se registra **lo que pasó realmente** en las reuniones del equipo: fecha,
 
 ### [`sesiones/`](sesiones/)
 
+- [`2026-10-28-sesion-paso9-ftps-vsftpd.md`](sesiones/2026-10-28-sesion-paso9-ftps-vsftpd.md): ejecución técnica del Bloque 09 (FTPS con vsftpd y enjaulamiento), creación de 6 cuentas departamentales, TLSv1.3, pruebas de aislamiento local y remoto, y evidencias `EV-071` a `EV-074`.
 - [`2026-10-28-sesion-paso8-https-nginx.md`](sesiones/2026-10-28-sesion-paso8-https-nginx.md): ejecución técnica del Bloque 08 (Nginx HTTPS Reverse Proxy), certificado SSL con SAN, integración de Moodle, pruebas de redirección y evidencias `EV-067` a `EV-070`.
 - [`2026-10-28-sesion-paso7-dns-bind9.md`](sesiones/2026-10-28-sesion-paso7-dns-bind9.md): ejecución técnica del Bloque 07 (DNS privado BIND9), configuración de zona `ctcr`, resolución en Ubuntu Server y Linux Mint, e integración de evidencias `EV-063` a `EV-066`.
 - [`2026-10-23-estado-heredado.md`](sesiones/2026-10-23-estado-heredado.md): recoge el estado encontrado antes de construir el manual completo. Es **reconstrucción documental**, no prueba de presencia de los cinco participantes en una sesión ese día.
@@ -14,6 +15,10 @@ Aquí se registra **lo que pasó realmente** en las reuniones del equipo: fecha,
 
 ### [`incidentes/`](incidentes/)
 
+- [`INC-010-vsftpd-writable-root-chroot-500.md`](incidentes/INC-010-vsftpd-writable-root-chroot-500.md): error 500 OOPS en vsftpd por raíz de usuario escribible dentro de chroot; separación estricta de raíz (`0755` `root:root`) y subcarpeta `archivos` (`0700` `<user>:<user>`).
+- [`INC-009-vsftpd-user-sub-token-omission-bug.md`](incidentes/INC-009-vsftpd-user-sub-token-omission-bug.md): fallo de expansión de `$USER` en `local_root` por omisión de `user_sub_token=$USER` en `vsftpd.conf`.
+- [`INC-008-vsftpd-pam-shells-nologin-denial.md`](incidentes/INC-008-vsftpd-pam-shells-nologin-denial.md): rechazo de autenticación PAM de usuarios con shell `/usr/sbin/nologin` por ausencia de la shell en `/etc/shells`.
+- [`INC-007-vsftpd-adduser-name-regex-failure.md`](incidentes/INC-007-vsftpd-adduser-name-regex-failure.md): rechazo de nombres de usuario con punto (`marta.jimenez`) en `adduser` por expresión regular por defecto.
 - [`INC-006-zip-command-not-found.md`](incidentes/INC-006-zip-command-not-found.md): comando `zip` ausente en imagen base de Ubuntu Server 26.04 durante empaquetado de entregables.
 - [`INC-005-moodle-cli-script-constant.md`](incidentes/INC-005-moodle-cli-script-constant.md): bloqueo en PHP CLI al requerir `config.php` de Moodle sin definir la constante `CLI_SCRIPT`.
 - [`INC-004-apache2-nginx-port-collision.md`](incidentes/INC-004-apache2-nginx-port-collision.md): colisión de puertos 80 y 443 entre Apache2 y Nginx; resolución con desactivación permanente de Apache2.
