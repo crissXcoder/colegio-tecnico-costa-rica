@@ -127,6 +127,21 @@ Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no
 - **[EV-061 — Evaluación completada por estudiante](../docs/procedimientos/06-moodle/06-08/evidencias/EV-061.md)**: Intento finalizado por Valeria Sánchez con 100.00 / 100.00.
 - **[EV-062 — Informe del calificador visualizado por profesor](../docs/procedimientos/06-moodle/06-08/evidencias/EV-062.md)**: Daniel Vargas revisando la nota de Valeria Sánchez en el calificador.
 
+## Bloque 07 — DNS privado BIND9
+
+### [07-05 — PASO 07.05 — Validar BIND9](../docs/procedimientos/07-dns-bind9/07-05.md)
+
+- **[EV-063 — Validación sintáctica de opciones y zonas en BIND9](../docs/procedimientos/07-dns-bind9/07-05/evidencias/EV-063.md)**: Validación de `named-checkconf` (código 0) y `named-checkzone ctcr /etc/bind/db.ctcr` (`OK`, serial `2026102401`), estado del servicio `active (running)` y socket en `192.168.50.1:53`.
+
+### [07-06 — PASO 07.06 — Probar el DNS desde Ubuntu](../docs/procedimientos/07-dns-bind9/07-06.md)
+
+- **[EV-064 — Comprobación de resolución DNS local en Ubuntu Server](../docs/procedimientos/07-dns-bind9/07-06/evidencias/EV-064.md)**: Consultas `dig @192.168.50.1 aulavirtual.ctcr +short` y `ns1.ctcr` devolviendo `192.168.50.1`, con registro SOA autoritativo.
+
+### [07-07 — PASO 07.07 — Configurar Linux Mint para utilizar BIND9](../docs/procedimientos/07-dns-bind9/07-07.md)
+
+- **[EV-065 — Configuración y resolución DNS remota desde Linux Mint](../docs/procedimientos/07-dns-bind9/07-07/evidencias/EV-065.md)**: Resolución exitosa en Mint mediante `dig` y `getent ahostsv4 aulavirtual.ctcr` apuntando a `192.168.50.1`, con ping al 0% de pérdida.
+- **[EV-066 — Captura de escritorio de Linux Mint resolviendo el dominio institucional](../docs/procedimientos/07-dns-bind9/07-07/evidencias/EV-066.md)**: Vista completa de escritorio Cinnamon en Linux Mint demostrando resolución y conectividad hacia el Aula Virtual.
+
 ## Alta de evidencias nuevas
 
 No reutilizar IDs EV-001–EV-050. Guardar una imagen junto al paso correspondiente, crear una ficha con procedencia, comando/acción, esperado, observado, privacidad, fecha, host y revisor, registrar SHA-256 y actualizar `manifiesto-detallado.csv`. Si no se ha ejecutado una prueba, dejar estado **pendiente**.

@@ -21,6 +21,6 @@ sudo named-checkzone ctcr /etc/bind/db.ctcr
 # Solo si pasan validaciones: sudo systemctl restart named
 ```
 
-Ejecutar desde la raíz del repositorio cuando se indica `infra/...`. Después de reiniciar, verificar `dig @192.168.50.1 aulavirtual.ctcr A +short` **desde Mint**, no solamente desde Ubuntu. El [paso 07-07](../../docs/procedimientos/07-dns-bind9/07-07.md) documenta NetworkManager y la evidencia pendiente.
+Ejecutar desde la raíz del repositorio cuando se indica `infra/...`. Después de reiniciar, verificar `dig @192.168.50.1 aulavirtual.ctcr A +short` **desde Mint**, no solamente desde Ubuntu. El [paso 07-07](../../docs/procedimientos/07-dns-bind9/07-07.md) documenta la resolución en el cliente y las evidencias capturadas.
 
-**Sin pruebas históricas adjuntas** a esta fase: los resultados esperados no equivalen a un servicio DNS ya construido.
+**Estado verificado localmente:** fase 07 comprobada con validación sintáctica (`named-checkconf`, `named-checkzone`), resolución local en Ubuntu Server (`dig @127.0.0.1` y `dig @192.168.50.1`), y resolución autoritativa y de navegación desde Linux Mint (`dig` y `nslookup`), respaldada por las evidencias `EV-063`, `EV-064`, `EV-065` y `EV-066`.

@@ -2,7 +2,7 @@
 
 | ID | Requisito oficial | Fase | Prueba de aceptación | Estado |
 | --- | --- | --- | --- | --- |
-| RC-01 | Zona propia BIND9 | 05-dns | `dig @192.168.50.1 aulavirtual.ctcr A +short` desde Mint | Pendiente |
+| RC-01 | Zona propia BIND9 | 05-dns | `dig @192.168.50.1 aulavirtual.ctcr A +short` desde Mint | CUMPLE (verificado local EV-063..EV-066) |
 | RC-02 | VirtualHost/HTTPS dominio | 06-https | GET HTTPS y TLS SAN correctos | Pendiente |
 | RC-03 | Moodle+DB Docker, volumen, versiones fijas | 02-contenedores | `compose ps`, digest y persistencia tras recrear | Evidencia parcial |
 | RC-04 | FTP usuario por integrante/rol, aislamiento | 07-ftp | 6 cuentas por funcionario; leer/sobrescribir/borrar ajeno rechazado (FTPS y `sudo -u` en Ubuntu) | Pendiente |

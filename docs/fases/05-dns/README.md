@@ -18,6 +18,8 @@ Antes de aplicar algo aquí revisar el [estado real](../../00-proyecto/ESTADO.md
 
 **Comando o acción representativa:** `named-checkconf`, `named-checkzone`, `dig @192.168.50.1 aulavirtual.ctcr`. **Resultado requerido:** prueba observada en una VM identificada, con contraste entre esperado y obtenido. Cuando corresponda, incluir prueba negativa (denegación) y demostrar que el cambio no afecta los demás servicios. Una captura de configuración abierta no es una prueba funcional.
 
+**Estado de la fase:** **VERIFICADO LOCALMENTE (VM #1 Server y VM #2 Mint)**. Procedimiento ejecutado y validado con 4 evidencias (`EV-063`, `EV-064`, `EV-065`, `EV-066`), bitácora de sesión [2026-10-28-sesion-paso7-dns-bind9.md](../../../bitacora/sesiones/2026-10-28-sesion-paso7-dns-bind9.md) e incidente documentado [INC-002](../../../bitacora/incidentes/INC-002-bind9-systemd-resolved-port53.md).
+
 ## Responsable, revisión y evidencia
 
 El equipo de cinco desarrolla en sesiones sincronizadas. Para mantener responsabilidad real, la persona asignada a esta fase deja el procedimiento y la evidencia; otra persona ejecuta/revisa independientemente. Identidades por asignar en [`responsabilidades`](../../00-proyecto/responsabilidades.md). Las sesiones van a [`bitacora/sesiones`](../../../bitacora/README.md); errores a incidencias.

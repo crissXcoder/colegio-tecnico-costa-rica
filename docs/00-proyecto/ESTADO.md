@@ -10,7 +10,7 @@
 | Volúmenes de Moodle/DB | evidencia y capturas de una VM | prueba completa de persistencia incluyendo contenidos y archivos |
 | Personalización y cursos | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-051..EV-055 (3 categorías, 3 cursos y 3×(2 recursos + 1 quiz de 100 pts)) |
 | Roles/cohortes/matrículas | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-056..EV-062 (9 usuarios, 3 cohortes, bloqueo sin automatriculación, intento de estudiante y calificador) |
-| DNS BIND9 | no demostrado en bitácora | consultas desde Linux Mint |
+| DNS BIND9 | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-063..EV-066 (BIND 9.20.24, named-checkconf/checkzone OK, resolución local dig y cliente Mint ping/dig 0% pérdida) |
 | Nginx/HTTPS | no demostrado en bitácora | `nginx -t`, TLS SAN correcto, Moodle por FQDN |
 | vsftpd/FTPS | no demostrado en bitácora | cinco cuentas y prueba de negación de lectura/escritura/borrado |
 | Cron, respaldo y restauración | no demostrado | cron, copia generada, restauración real y validación |
