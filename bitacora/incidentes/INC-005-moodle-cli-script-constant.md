@@ -35,5 +35,14 @@ sslproxy: '1'
 ```
 Confirmando que la recreación con `compose.yaml` regeneró correctamente la configuración de Moodle bajo esquema HTTPS.
 
+## Evidencia de resolución
+
+### EV-068 — Verificación PHP CLI de wwwroot y Sslproxy en Moodle
+
+![EV-068](../../docs/procedimientos/08-https-nginx/08-06/evidencias/EV-068.webp)
+
+- **Ficha descriptiva:** [EV-068.md](../../docs/procedimientos/08-https-nginx/08-06/evidencias/EV-068.md)
+- **Validación:** La captura registra la salida por terminal del script con `define("CLI_SCRIPT", true)` confirmando `wwwroot: https://aulavirtual.ctcr` y `sslproxy: '1'`.
+
 ## Prevención y documentación asociada
-- Documentado en `GEMINI.md` (Sección 10.6) y en `doc_paso8/sesion/2026-10-28-sesion-paso8-https-nginx.md`.
+- Documentado en la sesión de trabajo [`bitacora/sesiones/2026-10-28-sesion-paso8-https-nginx.md`](../sesiones/2026-10-28-sesion-paso8-https-nginx.md) y en el procedimiento [`docs/procedimientos/08-https-nginx/08-05.md`](../../docs/procedimientos/08-https-nginx/08-05.md).

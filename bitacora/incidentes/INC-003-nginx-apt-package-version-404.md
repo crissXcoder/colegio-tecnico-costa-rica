@@ -55,6 +55,15 @@ sudo apt install -y nginx=1.28.3-2ubuntu1.12 openssl
    # Salida: ii nginx 1.28.3-2ubuntu1.12 amd64 small, powerful, scalable web/proxy server
    ```
 
+## Evidencia de resolución
+
+### EV-067 — Instalación y Verificación de Nginx 1.28.3
+
+![EV-067](../../docs/procedimientos/08-https-nginx/08-04/evidencias/EV-067.webp)
+
+- **Ficha descriptiva:** [EV-067.md](../../docs/procedimientos/08-https-nginx/08-04/evidencias/EV-067.md)
+- **Validación:** La captura registra la salida de `nginx -v` confirmando la presencia de `nginx version: nginx/1.28.3 (Ubuntu)` y el estado activo del servicio en systemd.
+
 ## Prevención y documentación asociada
-- Documentado en `doc_paso8/sesion/2026-10-28-sesion-paso8-https-nginx.md`.
+- Documentado en la sesión de trabajo [`bitacora/sesiones/2026-10-28-sesion-paso8-https-nginx.md`](../sesiones/2026-10-28-sesion-paso8-https-nginx.md) y en el procedimiento [`docs/procedimientos/08-https-nginx/08-01.md`](../../docs/procedimientos/08-https-nginx/08-01.md).
 - Regla persistida: Verificar `apt-cache policy <paquete>` antes de forzar revisiones de build de Ubuntu cuando la versión upstream (`1.28.3`) es la requerida.

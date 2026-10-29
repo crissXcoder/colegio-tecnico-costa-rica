@@ -44,6 +44,15 @@ Esta arquitectura permite que:
    Confirmó `named` escuchando en `192.168.50.1:53` (TCP/UDP) y `systemd-resolved` en `127.0.0.53/54`.
 3. Prueba remota desde Linux Mint: `dig @192.168.50.1 aulavirtual.ctcr +short` devolvió inmediatamente `192.168.50.1`.
 
+## Evidencia de resolución
+
+### EV-063 — Inspección de Sockets y Coexistencia en Puerto 53
+
+![EV-063](../../docs/procedimientos/07-dns-bind9/07-05/evidencias/EV-063.webp)
+
+- **Ficha descriptiva:** [EV-063.md](../../docs/procedimientos/07-dns-bind9/07-05/evidencias/EV-063.md)
+- **Validación:** La captura demuestra que `named` escucha exclusivamente en `192.168.50.1:53` (TCP y UDP) mientras `systemd-resolved` permanece en las direcciones de loopback `127.0.0.53` y `127.0.0.54`, eliminando cualquier conflicto de puerto.
+
 ## Prevención y documentación asociada
-- Documentado en `doc_paso7/INFORME_PASO7_DNS_BIND9.md` y `doc_paso7/sesion/2026-10-28-sesion-paso7-dns-bind9.md`.
+- Documentado en la sesión de trabajo [`bitacora/sesiones/2026-10-28-sesion-paso7-dns-bind9.md`](../sesiones/2026-10-28-sesion-paso7-dns-bind9.md) y en el procedimiento [`docs/procedimientos/07-dns-bind9/07-01.md`](../../docs/procedimientos/07-dns-bind9/07-01.md).
 - Regla incorporada: Nunca configurar `listen-on { any; };` ni `127.0.0.1` en BIND9 en este entorno.

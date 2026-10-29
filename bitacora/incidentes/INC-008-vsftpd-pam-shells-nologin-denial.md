@@ -46,5 +46,15 @@ Esto satisface la comprobación de `pam_shells.so`, permitiendo la autenticació
    ssh marta.jimenez@192.168.50.1 # Responde: "This account is currently not available" y cierra inmediatamente la conexión.
    ```
 
+## Evidencia de resolución
+
+### EV-071 — Shell /usr/sbin/nologin en /etc/shells y Cuentas PAM
+
+![EV-071](../../docs/procedimientos/09-ftps-vsftpd/09-03/evidencias/EV-071.webp)
+
+- **Ficha descriptiva:** [EV-071.md](../../docs/procedimientos/09-ftps-vsftpd/09-03/evidencias/EV-071.md)
+- **Validación:** Comprueba la presencia de las cuentas con shell `/usr/sbin/nologin` y la lista blanca de vsftpd, validando la política PAM sin permitir acceso interactivo.
+
 ## Prevención y documentación asociada
-- Documentado en `GEMINI.md` (Sección 10.2) y `doc_paso9/INFORME_PASO9_FTPS_VSFTPD.md`.
+- Documentado en la sesión de trabajo [`bitacora/sesiones/2026-10-28-sesion-paso9-ftps-vsftpd.md`](../sesiones/2026-10-28-sesion-paso9-ftps-vsftpd.md) y en el procedimiento [`docs/procedimientos/09-ftps-vsftpd/09-04.md`](../../docs/procedimientos/09-ftps-vsftpd/09-04.md).
+- Regla persistida: Toda shell asignada a usuarios FTP debe existir explícitamente en `/etc/shells` para satisfacer `pam_shells.so`.

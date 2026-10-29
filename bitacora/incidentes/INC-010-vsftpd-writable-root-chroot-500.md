@@ -49,6 +49,22 @@ done
    ```
 3. Aislamiento POSIX verificado: otro usuario no puede acceder al subdirectorio debido a los permisos `0700`.
 
+## Evidencia de resolución
+
+### EV-071 — Permisos de Raíz Chroot y Subcarpeta de Trabajo
+
+![EV-071](../../docs/procedimientos/09-ftps-vsftpd/09-03/evidencias/EV-071.webp)
+
+- **Ficha descriptiva:** [EV-071.md](../../docs/procedimientos/09-ftps-vsftpd/09-03/evidencias/EV-071.md)
+- **Validación:** Comprueba que la raíz `/srv/ftp/<usuario>` pertenece a `root:root` con permisos `0755` y la subcarpeta `/srv/ftp/<usuario>/archivos` pertenece al usuario con `0700`.
+
+### EV-073 — Confinamiento Chroot y Rechazo a Intentos Traversal
+
+![EV-073](../../docs/procedimientos/09-ftps-vsftpd/09-08/evidencias/EV-073.webp)
+
+- **Ficha descriptiva:** [EV-073.md](../../docs/procedimientos/09-ftps-vsftpd/09-08/evidencias/EV-073.md)
+- **Validación:** Demuestra el confinamiento efectivo enjaulado, rechazando con error `550 Failed to change directory` cualquier intento de escape o acceso cruzado.
+
 ## Prevención y documentación asociada
-- Documentado en `GEMINI.md` (Sección 10.2), `doc_paso9/INFORME_PASO9_FTPS_VSFTPD.md` y `EV09_01_ubuntu_cuentas_y_carpetas_privadas.md`.
+- Documentado en la sesión de trabajo [`bitacora/sesiones/2026-10-28-sesion-paso9-ftps-vsftpd.md`](../sesiones/2026-10-28-sesion-paso9-ftps-vsftpd.md) y en el procedimiento [`docs/procedimientos/09-ftps-vsftpd/09-03.md`](../../docs/procedimientos/09-ftps-vsftpd/09-03.md).
 - Regla persistida: Nunca usar `allow_writeable_chroot=YES`; mantener siempre la raíz chroot propiedad de `root:root` y carpetas de subida internas propiedad del usuario.

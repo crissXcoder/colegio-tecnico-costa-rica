@@ -41,6 +41,15 @@ Con esta directiva activa, cuando el usuario `marta.jimenez` se autentica, vsftp
    ```
 2. Marta observa únicamente su carpeta de trabajo privada `/archivos` correspondiente a `/srv/ftp/marta.jimenez/archivos`, sin errores de directorio inexistente.
 
+## Evidencia de resolución
+
+### EV-072 — Enjaulamiento Dinámico y Transferencia Exitosa
+
+![EV-072](../../docs/procedimientos/09-ftps-vsftpd/09-07/evidencias/EV-072.webp)
+
+- **Ficha descriptiva:** [EV-072.md](../../docs/procedimientos/09-ftps-vsftpd/09-07/evidencias/EV-072.md)
+- **Validación:** Comprueba la carga de archivos sin error de directorio y la ubicación transparente del usuario en su propia carpeta enjaulada.
+
 ## Prevención y documentación asociada
-- Documentado en `GEMINI.md` (Sección 10.2) y en `doc_paso9/INFORME_PASO9_FTPS_VSFTPD.md`.
+- Documentado en la sesión de trabajo [`bitacora/sesiones/2026-10-28-sesion-paso9-ftps-vsftpd.md`](../sesiones/2026-10-28-sesion-paso9-ftps-vsftpd.md) y en el procedimiento [`docs/procedimientos/09-ftps-vsftpd/09-05.md`](../../docs/procedimientos/09-ftps-vsftpd/09-05.md).
 - Regla persistida: En vsftpd, siempre que se use `$USER` en `local_root`, debe precederlo `user_sub_token=$USER`.

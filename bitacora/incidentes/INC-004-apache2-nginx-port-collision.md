@@ -44,6 +44,15 @@ Esto liberó inmediatamente los sockets sin desinstalar Apache ni eliminar sus c
    ```
    Confirmó Nginx escuchando limpiamente en `192.168.50.1:80` y `192.168.50.1:443`.
 
+## Evidencia de resolución
+
+### EV-067 — Nginx Activo y Sin Colisión de Puertos Web
+
+![EV-067](../../docs/procedimientos/08-https-nginx/08-04/evidencias/EV-067.webp)
+
+- **Ficha descriptiva:** [EV-067.md](../../docs/procedimientos/08-https-nginx/08-04/evidencias/EV-067.md)
+- **Validación:** Comprueba la prueba sintáctica limpia de Nginx (`syntax is ok`, `test is successful`) y el servicio en estado `active`, operando en los puertos 80 y 443 tras desactivar Apache2.
+
 ## Prevención y documentación asociada
-- Documentado en `GEMINI.md` (Sección 6 y 10) y en `doc_paso8/INFORME_PASO8_HTTPS_NGINX.md`.
+- Documentado en la sesión de trabajo [`bitacora/sesiones/2026-10-28-sesion-paso8-https-nginx.md`](../sesiones/2026-10-28-sesion-paso8-https-nginx.md) y en el procedimiento [`docs/procedimientos/08-https-nginx/08-04.md`](../../docs/procedimientos/08-https-nginx/08-04.md).
 - Regla persistida: Apache2 debe permanecer inactivo mientras Nginx sea el frontend oficial del proyecto CTCR.

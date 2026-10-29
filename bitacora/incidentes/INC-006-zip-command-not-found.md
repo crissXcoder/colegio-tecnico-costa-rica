@@ -46,4 +46,5 @@ with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zipf:
    ```
 
 ## Prevención y documentación asociada
-- Estandarizado en el runbook operativo (`SKILL.md` Sección 9 y 10.7) para todos los pasos.
+- Documentado en la sesión de trabajo [`bitacora/sesiones/2026-10-28-sesion-paso8-https-nginx.md`](../sesiones/2026-10-28-sesion-paso8-https-nginx.md).
+- Estandarizado en el runbook operativo de entrega para empaquetado autónomo mediante la biblioteca estándar de Python sin dependencias externas.
