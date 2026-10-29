@@ -18,6 +18,8 @@ Antes de aplicar algo aquí revisar el [estado real](../../00-proyecto/ESTADO.md
 
 **Comando o acción representativa:** `nginx -t`, `openssl x509 -noout`, `curl -kI --resolve ...`. **Resultado requerido:** prueba observada en una VM identificada, con contraste entre esperado y obtenido. Cuando corresponda, incluir prueba negativa (denegación) y demostrar que el cambio no afecta los demás servicios. Una captura de configuración abierta no es una prueba funcional.
 
+**Estado de la fase:** **VERIFICADO LOCALMENTE (VM #1 Server y VM #2 Mint)**. Fase 08 ejecutada y validada con 4 evidencias (`EV-067`, `EV-068`, `EV-069`, `EV-070`), bitácora de sesión [2026-10-28-sesion-paso8-https-nginx.md](../../../bitacora/sesiones/2026-10-28-sesion-paso8-https-nginx.md) e incidentes [INC-003](../../../bitacora/incidentes/INC-003-nginx-apt-package-version-404.md), [INC-004](../../../bitacora/incidentes/INC-004-apache2-nginx-port-collision.md), [INC-005](../../../bitacora/incidentes/INC-005-moodle-cli-script-constant.md) e [INC-006](../../../bitacora/incidentes/INC-006-zip-command-not-found.md).
+
 ## Responsable, revisión y evidencia
 
 El equipo de cinco desarrolla en sesiones sincronizadas. Para mantener responsabilidad real, la persona asignada a esta fase deja el procedimiento y la evidencia; otra persona ejecuta/revisa independientemente. Identidades por asignar en [`responsabilidades`](../../00-proyecto/responsabilidades.md). Las sesiones van a [`bitacora/sesiones`](../../../bitacora/README.md); errores a incidencias.

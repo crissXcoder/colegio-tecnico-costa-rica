@@ -142,6 +142,21 @@ Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no
 - **[EV-065 — Configuración y resolución DNS remota desde Linux Mint](../docs/procedimientos/07-dns-bind9/07-07/evidencias/EV-065.md)**: Resolución exitosa en Mint mediante `dig` y `getent ahostsv4 aulavirtual.ctcr` apuntando a `192.168.50.1`, con ping al 0% de pérdida.
 - **[EV-066 — Captura de escritorio de Linux Mint resolviendo el dominio institucional](../docs/procedimientos/07-dns-bind9/07-07/evidencias/EV-066.md)**: Vista completa de escritorio Cinnamon en Linux Mint demostrando resolución y conectividad hacia el Aula Virtual.
 
+## Bloque 08 — Nginx, VirtualHost y HTTPS
+
+### [08-04 — PASO 08.04 — Habilitar el sitio](../docs/procedimientos/08-https-nginx/08-04.md)
+
+- **[EV-067 — Instalación de Nginx, Certificado SAN y Sintaxis](../docs/procedimientos/08-https-nginx/08-04/evidencias/EV-067.md)**: Nginx 1.28.3, certificado X.509 con SAN `aulavirtual.ctcr` y `moodle.ctcr.test`, VirtualHost en sites-available y verificación `nginx -t` exitosa.
+
+### [08-06 — PASO 08.06 — Probar HTTPS desde Ubuntu](../docs/procedimientos/08-https-nginx/08-06.md)
+
+- **[EV-068 — Docker Compose HTTPS, wwwroot Efectiva y Pruebas Curl](../docs/procedimientos/08-https-nginx/08-06/evidencias/EV-068.md)**: Moodle enlazado a `127.0.0.1:8080`, variable `MOODLE_URL=https://aulavirtual.ctcr`, verificación wwwroot y curl local comprobando redirección 301 en puerto 80 y respuesta 200 OK en 443.
+
+### [08-07 — PASO 08.07 — Abrir Moodle desde Linux Mint](../docs/procedimientos/08-https-nginx/08-07.md)
+
+- **[EV-069 — Navegación Web en Mozilla Firefox bajo HTTPS](../docs/procedimientos/08-https-nginx/08-07/evidencias/EV-069.md)**: Acceso exitoso a `https://aulavirtual.ctcr/` en Firefox desde Linux Mint mostrando portada y cursos institucionales bajo TLS.
+- **[EV-070 — Captura Visual de Escritorio en Linux Mint y Pruebas Curl](../docs/procedimientos/08-https-nginx/08-07/evidencias/EV-070.md)**: Entorno Cinnamon en Linux Mint ejecutando pruebas de terminal con redirección 301 a HTTPS y respuesta 200 OK.
+
 ## Alta de evidencias nuevas
 
 No reutilizar IDs EV-001–EV-050. Guardar una imagen junto al paso correspondiente, crear una ficha con procedencia, comando/acción, esperado, observado, privacidad, fecha, host y revisor, registrar SHA-256 y actualizar `manifiesto-detallado.csv`. Si no se ha ejecutado una prueba, dejar estado **pendiente**.

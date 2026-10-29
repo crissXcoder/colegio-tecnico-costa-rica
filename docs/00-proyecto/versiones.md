@@ -10,7 +10,8 @@
 | MariaDB | 11.4.13 | imágenes y logs en bitácora | Guardar tag y digest |
 | PHP | 8.3 en imagen Moodle | acuerdo previo | ejecutar `php -v` en contenedor |
 | BIND9 | 9.20.24 | BIND 9.20.24-1ubuntu0.4 instalado en VM #1 | Verificado con `named -v` (Paso 7) |
-| Nginx, vsftpd | por determinar | sin pruebas suficientes | capturar versión al configurar |
+| Nginx | 1.28.3 | `nginx/1.28.3 (Ubuntu)` (paquete `1.28.3-2ubuntu1.12`) en VM #1 | Verificado con `nginx -v` (Paso 8, EV-067) |
+| vsftpd | por determinar | sin pruebas suficientes | capturar versión al configurar |
 
 ## Seguridad (2026-10-23)
 

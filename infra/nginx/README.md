@@ -18,4 +18,4 @@ En el estado final Mint navega a `https://aulavirtual.ctcr` por puerto 443. El a
 4. Adaptar **el Compose efectivamente instalado** para `MOODLE_URL=https://aulavirtual.ctcr` y backend `127.0.0.1:8080`; consultar [paso 08-05](../../docs/procedimientos/08-https-nginx/08-05.md).
 5. Desde Mint probar HTTPS, nombre, certificado y sesiones. `curl -k` solo evita verificación de CA en laboratorio: **no certifica que el cliente confíe realmente en el certificado**.
 
-La [guía 08 completa](../../docs/procedimientos/08-https-nginx/README.md) contiene comandos exactos, validación y plan para no romper una instalación con datos. **No hay capturas históricas aprobadas de HTTPS** en la bitácora recibida.
+**Estado verificado localmente:** fase 08 comprobada con instalación de Nginx 1.28.3, certificado SAN `aulavirtual.ctcr`, VirtualHost con redirección 301 y proxy SSL a 127.0.0.1:8080, validación sintáctica (`nginx -t`), y navegación en Mozilla Firefox desde Linux Mint, respaldada por las evidencias `EV-067`, `EV-068`, `EV-069` y `EV-070`.

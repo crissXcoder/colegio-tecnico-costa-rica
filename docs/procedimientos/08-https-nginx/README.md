@@ -1,6 +1,6 @@
 # Nginx, VirtualHost y HTTPS — manual de operación
 
-**Bloque:** `08-https-nginx` · **Capturas históricas integradas:** 0 · **Estado:** evidencia local parcial o documentación proyectada, no validación cruzada del grupo.
+**Bloque:** `08-https-nginx` · **Capturas históricas integradas:** 4 (`EV-067`..`EV-070`) · **Estado:** verificado localmente (VM #1 Server y VM #2 Mint).
 
 ## Por qué existe este bloque
 
@@ -18,13 +18,13 @@ Este bloque no es un listado de archivos: proporciona la **secuencia operativa**
 
 | Guía | Qué se obtiene y cómo verificarlo | Captura vinculada |
 |---|---|---|
-| [08-01: Instalar Nginx](08-01.md) | Ejecutar el procedimiento y comparar su resultado observado con el comportamiento descrito, adjuntando salida verificable. |  |
-| [08-02: Crear el certificado](08-02.md) | Ejecutar el procedimiento y comparar su resultado observado con el comportamiento descrito, adjuntando salida verificable. |  |
-| [08-03: Crear el VirtualHost](08-03.md) | Ejecutar el procedimiento y comparar su resultado observado con el comportamiento descrito, adjuntando salida verificable. |  |
-| [08-04: Habilitar el sitio](08-04.md) | Ejecutar el procedimiento y comparar su resultado observado con el comportamiento descrito, adjuntando salida verificable. |  |
-| [08-05: Cambiar la URL de Moodle](08-05.md) | Moodle mantiene URL HTTPS canónica con backend solo en 127.0.0.1:8080. |  |
-| [08-06: Probar HTTPS desde Ubuntu](08-06.md) | Ejecutar el procedimiento y comparar su resultado observado con el comportamiento descrito, adjuntando salida verificable. |  |
-| [08-07: Abrir Moodle desde Linux Mint](08-07.md) | Ejecutar el procedimiento y comparar su resultado observado con el comportamiento descrito, adjuntando salida verificable. |  |
+| [08-01: Instalar Nginx](08-01.md) | Instalación de Nginx 1.28.3 y OpenSSL en Ubuntu Server; verificación con `nginx -v`. | Verificada en [08-04](08-04.md) |
+| [08-02: Crear el certificado](08-02.md) | Certificado autofirmado RSA 3072 con SAN `aulavirtual.ctcr` y clave privada protegida. | Verificada en [08-04](08-04.md) |
+| [08-03: Crear el VirtualHost](08-03.md) | VirtualHost con redirección 301 en puerto 80 y proxy SSL en 443 hacia 127.0.0.1:8080. | Verificada en [08-04](08-04.md) |
+| [08-04: Habilitar el sitio](08-04.md) | Validación sintáctica con `sudo nginx -t` (OK) y servicio activo en systemd. | [EV-067](08-04/evidencias/EV-067.md) |
+| [08-05: Cambiar la URL de Moodle](08-05.md) | Moodle mantiene URL HTTPS canónica con backend solo en 127.0.0.1:8080. | Verificada en [08-06](08-06.md) |
+| [08-06: Probar HTTPS desde Ubuntu](08-06.md) | Pruebas de curl verificando redirección 301 y respuesta 200 OK con cabecera Nginx. | [EV-068](08-06/evidencias/EV-068.md) |
+| [08-07: Abrir Moodle desde Linux Mint](08-07.md) | Navegación gráfica en Firefox a `https://aulavirtual.ctcr/` y pruebas curl en Cinnamon. | [EV-069](08-07/evidencias/EV-069.md), [EV-070](08-07/evidencias/EV-070.md) |
 
 Cada guía incluye el procedimiento completo procedente de la fuente compartida, comandos originales, correcciones de seguridad, comprobaciones, imágenes históricas **en su propia carpeta** y una ficha por captura (`EV-XXX.md`). Las guías sin imágenes existentes tienen una sección explícita de evidencia pendiente. No deben asociarse screenshots de otros servicios solo para llenar un hueco.
 
