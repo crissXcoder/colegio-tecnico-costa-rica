@@ -6,6 +6,7 @@ Aquí se registra **lo que pasó realmente** en las reuniones del equipo: fecha,
 
 ### [`sesiones/`](sesiones/)
 
+- [`2026-10-30-incorporacion-documentos-reales-cursos.md`](sesiones/2026-10-30-incorporacion-documentos-reales-cursos.md): estandarización e incorporación de documentos reales del Drive a los tres cursos en `documentos-cursos/` y en Moodle local (Paso 6.4), reemplazo de páginas por PDFs en la sección 2 y ajuste de nombres oficiales.
 - [`2026-10-30-documentacion-paso6-moodle.md`](sesiones/2026-10-30-documentacion-paso6-moodle.md): documentación completa del Bloque 06 (Moodle): capturas re-saneadas EV-039/040/043/044, evidencias nuevas `EV-075` a `EV-095`, ocultación de correos personales y registro de INC-011.
 
 - [`2026-10-28-sesion-paso9-ftps-vsftpd.md`](sesiones/2026-10-28-sesion-paso9-ftps-vsftpd.md): ejecución técnica del Bloque 09 (FTPS con vsftpd y enjaulamiento), creación de 6 cuentas departamentales, TLSv1.3, pruebas de aislamiento local y remoto, y evidencias `EV-071` a `EV-074`.

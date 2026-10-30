@@ -8,7 +8,7 @@
 | Docker Engine/Compose | evidencia parcial | versión e instalación en las cinco VMs |
 | Contenedores Moodle + MariaDB | evidencia y capturas de una VM | digest, salud y `ps` por entorno |
 | Volúmenes de Moodle/DB | evidencia y capturas de una VM | prueba completa de persistencia incluyendo contenidos y archivos |
-| Personalización y cursos | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-051..EV-055 (3 categorías, 3 cursos y 3×(2 recursos + 1 quiz de 100 pts)) |
+| Personalización y cursos | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-051..EV-055 (3 categorías, 3 cursos y 3×(2 recursos + 1 quiz de 100 pts)); actualizados con documentos reales del Drive en documentos-cursos/ y en Moodle (2026-10-30) |
 | Roles/cohortes/matrículas | verificado local (VM #1 Server + VM #2 Mint) | Verificado con EV-056..EV-062 (9 usuarios, 3 cohortes, bloqueo sin automatriculación, intento de estudiante y calificador). Recorrido del grupo EV-075..EV-095 (2026-10-30): métodos de matrícula de los 3 cursos, profesora denegada en otro curso y PDF ajeno denegado por URL directa; INC-011 resuelto. Falta: matriz 3×3 completa y prueba `/admin/` con profesor |
 | DNS BIND9 | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-063..EV-066 (BIND 9.20.24, named-checkconf/checkzone OK, resolución local dig y cliente Mint ping/dig 0% pérdida) |
 | Nginx/HTTPS | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-067..EV-070 (Nginx 1.28.3, SAN aulavirtual.ctcr, 301 a HTTPS, curl 200 OK y Firefox cliente) |

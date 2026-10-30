@@ -51,9 +51,9 @@ Formato Temas, 3 secciones, visibilidad Mostrar, inicio 21/10/2026.
 | Sección 1 | Fundamentos de gestión documental | Principios de evaluación educativa | Fundamentos de ciberseguridad |
 | Sección 2 | Clasificación y custodia de expedientes | Diseño de instrumentos | Prevención y gestión de incidentes |
 | Sección 3 | Evaluación de conocimientos | Evaluación de conocimientos | Evaluación de conocimientos |
-| Recurso 1 (sección 1) | Archivo PDF | Archivo PDF | Archivo PDF |
-| Recurso 2 (sección 2) | Página | Página | Página |
-| Actividad (sección 3) | Cuestionario | Cuestionario | Cuestionario |
+| Recurso 1 (sección 1) | Archivo PDF (`01-Manual_Archivo_Institucional.pdf`) | Presentación PDF (`01-Presentacion_Docencia_Evaluacion_Formativa.pdf`) | Archivo PDF (`01-Guia_Contrasenas_Seguras_Manual_Seguridad_Digital.pdf`) |
+| Recurso 2 (sección 2) | Archivo PDF (`02-Guia_Clasificacion_Documental.pdf`) | Archivo PDF (`02-Guia_Elaboracion_Rubricas.pdf`) | Archivo PDF (`02-PDF_Phishing_Prevencion_Incidentes.pdf`) |
+| Actividad (sección 3) | Cuestionario sobre clasificación de expedientes | Cuestionario sobre evaluación | Cuestionario de seguridad informática |
 
 Los textos de descripción, nombres de recursos, contenido de las páginas y las 15 preguntas están en [CONTENIDO-CURSOS.md](CONTENIDO-CURSOS.md).
 
