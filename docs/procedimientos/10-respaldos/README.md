@@ -1,6 +1,6 @@
 # Copias verificables y restauración de ensayo — manual de operación
 
-**Bloque:** `10-respaldos` · **Capturas históricas integradas:** 0 · **Estado:** evidencia local parcial o documentación proyectada, no validación cruzada del grupo.
+**Bloque:** `10-respaldos` · **Capturas e integradas:** 4 (EV-096, EV-097, EV-098, EV-099) · **Estado:** Verificado y reproducido en VM #1 (Ubuntu Server).
 
 ## Por qué existe este bloque
 
@@ -18,13 +18,13 @@ Este bloque no es un listado de archivos: proporciona la **secuencia operativa**
 
 | Guía | Qué se obtiene y cómo verificarlo | Captura vinculada |
 |---|---|---|
-| [10-01: Crear el directorio de respaldos](10-01.md) | Ejecutar el procedimiento y comparar su resultado observado con el comportamiento descrito, adjuntando salida verificable. |  |
-| [10-02: Crear el script de respaldo](10-02.md) | Ejecutar el procedimiento y comparar su resultado observado con el comportamiento descrito, adjuntando salida verificable. |  |
-| [10-03: Dar permisos de ejecución](10-03.md) | Ejecutar el procedimiento y comparar su resultado observado con el comportamiento descrito, adjuntando salida verificable. |  |
-| [10-04: Ejecutar un respaldo manual](10-04.md) | Ejecutar el procedimiento y comparar su resultado observado con el comportamiento descrito, adjuntando salida verificable. |  |
-| [10-05: Programar Cron](10-05.md) | Ejecutar el procedimiento y comparar su resultado observado con el comportamiento descrito, adjuntando salida verificable. |  |
-| [10-06: Probar una restauración sin dañar Moodle](10-06.md) | Base de ensayo restaurada y consultada, base real intacta. |  |
-| [10-07: ¿Qué respaldamos y qué no?](10-07.md) | Ejecutar el procedimiento y comparar su resultado observado con el comportamiento descrito, adjuntando salida verificable. |  |
+| [10-01: Crear el directorio de respaldos](10-01.md) | Creación y protección con permisos estrictos (`chmod 700 /var/backups/moodle`). | Procedimiento preparatorio |
+| [10-02: Crear el script de respaldo](10-02.md) | Creación de `respaldo.sh` con `mariadb-dump`, tubería gzip y retención de 7 días. | [EV-096](10-02/evidencias/EV-096.md) |
+| [10-03: Dar permisos de ejecución](10-03.md) | Permisos `chmod 700` y validación sintáctica estricta con `bash -n`. | Verificado en flujo |
+| [10-04: Ejecutar un respaldo manual](10-04.md) | Ejecución manual exitosa, archivo `ctcr_moodle_*.sql.gz` y prueba de integridad con `gzip -t`. | [EV-097](10-04/evidencias/EV-097.md) |
+| [10-05: Programar Cron](10-05.md) | Zona horaria `America/Costa_Rica`, cron activo y programación diaria a las 02:00 AM. | [EV-098](10-05/evidencias/EV-098.md) |
+| [10-06: Probar una restauración sin dañar Moodle](10-06.md) | Base de ensayo restaurada y consultada (494 tablas, 100% de coincidencia), base real intacta. | [EV-099](10-06/evidencias/EV-099.md) |
+| [10-07: ¿Qué respaldamos y qué no?](10-07.md) | Documentación de delimitación de alcance entre esquema relacional SQL y volumen moodledata. | Política y estrategia |
 
 Cada guía incluye el procedimiento completo procedente de la fuente compartida, comandos originales, correcciones de seguridad, comprobaciones, imágenes históricas **en su propia carpeta** y una ficha por captura (`EV-XXX.md`). Las guías sin imágenes existentes tienen una sección explícita de evidencia pendiente. No deben asociarse screenshots de otros servicios solo para llenar un hueco.
 

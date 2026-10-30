@@ -6,6 +6,7 @@ Aquí se registra **lo que pasó realmente** en las reuniones del equipo: fecha,
 
 ### [`sesiones/`](sesiones/)
 
+- [`2026-10-30-sesion-paso10-respaldos-cron.md`](sesiones/2026-10-30-sesion-paso10-respaldos-cron.md): ejecución técnica del Bloque 10 (Respaldos automáticos con Cron y Restauración DRP), script `respaldo.sh` con MariaDB en Docker, retención de 7 días, crontab diario de root a las 02:00 AM CST, restauración de 494 tablas en `moodle_restore_test` y evidencias `EV-096` a `EV-099`.
 - [`2026-10-30-incorporacion-documentos-reales-cursos.md`](sesiones/2026-10-30-incorporacion-documentos-reales-cursos.md): estandarización e incorporación de documentos reales del Drive a los tres cursos en `documentos-cursos/` y en Moodle local (Paso 6.4), reemplazo de páginas por PDFs en la sección 2 y ajuste de nombres oficiales.
 - [`2026-10-30-documentacion-paso6-moodle.md`](sesiones/2026-10-30-documentacion-paso6-moodle.md): documentación completa del Bloque 06 (Moodle): capturas re-saneadas EV-039/040/043/044, evidencias nuevas `EV-075` a `EV-095`, ocultación de correos personales y registro de INC-011.
 
@@ -18,6 +19,7 @@ Aquí se registra **lo que pasó realmente** en las reuniones del equipo: fecha,
 
 ### [`incidentes/`](incidentes/)
 
+- [`INC-012-wildcard-expansion-permisos-0700.md`](incidentes/INC-012-wildcard-expansion-permisos-0700.md): fallo de expansión de comodines en carpetas con permisos 0700 bajo sudo; resolución con subshell de root `sudo sh -c 'gzip -t ...'`.
 - [`INC-011-moodle-matricula-cohorte-incorrecta.md`](incidentes/INC-011-moodle-matricula-cohorte-incorrecta.md): estudiantes de Docencia matriculados en el curso de Administración; «eliminado de la selección» no desmatricula; corrección en Métodos de matriculación.
 
 - [`INC-010-vsftpd-writable-root-chroot-500.md`](incidentes/INC-010-vsftpd-writable-root-chroot-500.md): error 500 OOPS en vsftpd por raíz de usuario escribible dentro de chroot; separación estricta de raíz (`0755` `root:root`) y subcarpeta `archivos` (`0700` `<user>:<user>`).

@@ -6,7 +6,7 @@
 | RC-02 | VirtualHost/HTTPS dominio | 06-https | GET HTTPS y TLS SAN correctos | CUMPLE (verificado local EV-067..EV-070) |
 | RC-03 | Moodle+DB Docker, volumen, versiones fijas | 02-contenedores | `compose ps`, digest y persistencia tras recrear | Evidencia parcial |
 | RC-04 | FTP usuario por integrante/rol, aislamiento | 07-ftp | 6 cuentas por funcionario; leer/sobrescribir/borrar ajeno rechazado (FTPS y `sudo -u` en Ubuntu) | CUMPLE (verificado local EV-071..EV-074) |
-| RC-05 | Respaldo Cron y restauración | 08-respaldos | dump y restauración verificadas | Pendiente |
+| RC-05 | Respaldo Cron y restauración | 08-respaldos | dump y restauración verificadas | CUMPLE (verificado local EV-096..EV-099) |
 | RC-06 | Documentación reproducible | todas + entrega | tercero reproduce sin asistencia | En proceso |
 | RE-01 | Tres cursos reales, 2 recursos + 1 actividad cada uno | 03-moodle | inventario de 9 elementos mínimos y pruebas | CUMPLE (verificado local; documentos reales oficiales incorporados en documentos-cursos/ y Moodle) |
 | RE-02 | Tres grupos/cohortes con acceso exclusivo | 04-autorizacion | matriz de accesos por usuario | Evidencia parcial (cohortes y participantes de los 3 cursos EV-057, EV-085..EV-089; INC-011 corregido; matriz 3×3 incompleta) |

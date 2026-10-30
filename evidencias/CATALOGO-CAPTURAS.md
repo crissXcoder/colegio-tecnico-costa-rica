@@ -6,7 +6,7 @@
 
 Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no verifica automáticamente persistencia, autorización, seguridad ni reproducibilidad en cinco VMs. La validación de aceptación requiere resultados observados de las pruebas definidas en cada paso.
 
-## Ubicación y significado de las 95 capturas (EV-001 a EV-095)
+## Ubicación y significado de las 99 capturas (EV-001 a EV-099)
 
 ### [01-01 — PASO 01.01 — Topología NAT e interna y verificación entre Ubuntu y Mint](../docs/procedimientos/01-servidor-red/01-01.md)
 
@@ -396,6 +396,30 @@ Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no
 - **[EV-074 — Entorno de Pruebas y Transferencia FTPS en Escritorio](../docs/procedimientos/09-ftps-vsftpd/09-08/evidencias/EV-074.md)**: Captura de escritorio Cinnamon en Linux Mint ejecutando pruebas de conexión, descarga y rechazo chroot por FTPS.
 
   ![EV-074](../docs/procedimientos/09-ftps-vsftpd/09-08/evidencias/EV-074.webp)
+
+### [10-02 — PASO 10.02 — Crear el script de respaldo](../docs/procedimientos/10-respaldos/10-02.md)
+
+- **[EV-096 — Creación y Sintaxis del Script de Respaldo](../docs/procedimientos/10-respaldos/10-02/evidencias/EV-096.md)**: Inspección de `/home/criss/proyecto-moodle/respaldo.sh` con permisos `0700`, volcado de MariaDB por tubería con compresión gzip, retención de 7 días y validación sintáctica `bash -n`.
+
+  ![EV-096](../docs/procedimientos/10-respaldos/10-02/evidencias/EV-096.webp)
+
+### [10-04 — PASO 10.04 — Ejecutar un respaldo manual](../docs/procedimientos/10-respaldos/10-04.md)
+
+- **[EV-097 — Respaldo Manual y Validación de Integridad Gzip](../docs/procedimientos/10-respaldos/10-04/evidencias/EV-097.md)**: Ejecución de `sudo ./respaldo.sh`, creación del archivo `ctcr_moodle_2026-10-30_16-46-51.sql.gz` (384 KB) en `/var/backups/moodle` y comprobación con `gzip -t`.
+
+  ![EV-097](../docs/procedimientos/10-respaldos/10-04/evidencias/EV-097.webp)
+
+### [10-05 — PASO 10.05 — Programar Cron](../docs/procedimientos/10-respaldos/10-05.md)
+
+- **[EV-098 — Programación Cron de Root y Zona Horaria Institucional](../docs/procedimientos/10-respaldos/10-05/evidencias/EV-098.md)**: Comprobación de zona horaria `America/Costa_Rica`, servicio cron activo y programación diaria a las 02:00 AM en crontab de root con redirección a log.
+
+  ![EV-098](../docs/procedimientos/10-respaldos/10-05/evidencias/EV-098.webp)
+
+### [10-06 — PASO 10.06 — Probar una restauración sin dañar Moodle](../docs/procedimientos/10-respaldos/10-06.md)
+
+- **[EV-099 — Restauración de Ensayo en moodle_restore_test y Validación de Tablas](../docs/procedimientos/10-respaldos/10-06/evidencias/EV-099.md)**: Creación de base de ensayo `moodle_restore_test`, descompresión e importación por tubería, comparación estructural con 494 tablas recuperadas (100% coincidencia) y posterior eliminación de la base de prueba.
+
+  ![EV-099](../docs/procedimientos/10-respaldos/10-06/evidencias/EV-099.webp)
 
 ## Alta de evidencias nuevas
 
