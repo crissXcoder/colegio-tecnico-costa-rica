@@ -6,7 +6,7 @@
 
 Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no verifica automáticamente persistencia, autorización, seguridad ni reproducibilidad en cinco VMs. La validación de aceptación requiere resultados observados de las pruebas definidas en cada paso.
 
-## Ubicación y significado de las 74 capturas (EV-001 a EV-074)
+## Ubicación y significado de las 95 capturas (EV-001 a EV-095)
 
 ### [01-01 — PASO 01.01 — Topología NAT e interna y verificación entre Ubuntu y Mint](../docs/procedimientos/01-servidor-red/01-01.md)
 
@@ -87,6 +87,10 @@ Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no
 
   ![EV-053](../docs/procedimientos/06-moodle/06-03/evidencias/EV-053.webp)
 
+- **[EV-075 — «Mis cursos» con los tres cursos departamentales](../docs/procedimientos/06-moodle/06-03/evidencias/EV-075.md)** (p. 25): Página «Mis cursos» (`my/courses.php`) del administrador con tres tarjetas: «Gestión Documental y Procesos Administrativos» (categoría Administración), «Planificación Didáctica y Evaluación de los Aprendizajes» (Docencia) y «Seguridad Digital y Protección de la Información» (Informática).
+
+  ![EV-075](../docs/procedimientos/06-moodle/06-03/evidencias/EV-075.webp)
+
 ### [06-04 — PASO 06.04 — Agregar los recursos y actividades](../docs/procedimientos/06-moodle/06-04.md)
 
 - **[EV-023 — Edición del curso de Informática](../docs/procedimientos/06-moodle/06-04/evidencias/EV-023.md)** (p. 10): Se observa en Moodle la pantalla correspondiente a «Edición del curso de Informática»; evidencia que el grupo navegó/configuró esta sección del LMS. **Limitación:** No confirma por sí sola dos recursos genuinos y una actividad evaluable terminada en cada uno de los tres cursos, ni un intento de estudiante calificado.
@@ -114,28 +118,100 @@ Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no
 
 ### [06-05 — PASO 06.05 — Crear los usuarios de prueba](../docs/procedimientos/06-moodle/06-05.md)
 
-- **[EV-038 — Navegación de administración a cuentas de usuario](../docs/procedimientos/06-moodle/06-05/evidencias/EV-038.md)** (p. 18): Se observa en Moodle la pantalla correspondiente a «Navegación de administración a cuentas de usuario»; evidencia que el grupo navegó/configuró esta sección del LMS. **Limitación:** No comprueba roles efectivos por contexto ni que las contraseñas/identidades sean adecuadas; requiere ensayo con cuentas no privilegiadas.
-- **[EV-039 — Formulario de creación de usuario Moodle](../docs/procedimientos/06-moodle/06-05/evidencias/EV-039.md)** (p. 18): Se aprecia el flujo de administración de cuentas/cohortes con secciones ocultadas por privacidad; el área tapada no sirve como prueba legible de su contenido. **Limitación:** No comprueba roles efectivos por contexto ni que las contraseñas/identidades sean adecuadas; requiere ensayo con cuentas no privilegiadas.
-- **[EV-040 — Lista ampliada de cuentas de usuario](../docs/procedimientos/06-moodle/06-05/evidencias/EV-040.md)** (p. 19): Se aprecia el flujo de administración de cuentas/cohortes con secciones ocultadas por privacidad; el área tapada no sirve como prueba legible de su contenido. **Limitación:** No comprueba roles efectivos por contexto ni que las contraseñas/identidades sean adecuadas; requiere ensayo con cuentas no privilegiadas.
+- **[EV-038 — Formulario «Crear un nuevo usuario»](../docs/procedimientos/06-moodle/06-05/evidencias/EV-038.md)** (p. 18): Formulario vacío de Moodle en `user/editadvanced.php?id=-1` (sitio todavía llamado «Colegio Tecnico»). Se ven los campos que hay que llenar para cada cuenta: nombre de usuario, método de identificación «Cuentas manuales», casilla «Generar contraseña y notificar al usuario», nueva contraseña con su política (mínimo 8 caracteres, 1 dígito, 1 minúscula, 1 mayúscula y 1 carácter especial), «Forzar cambio de contraseña», nombre, apellidos y dirección de correo.
+- **[EV-039 — Lista de usuarios después de guardar la primera cuenta](../docs/procedimientos/06-moodle/06-05/evidencias/EV-039.md)** (p. 18): En `admin/user.php` aparece el aviso verde «Cambios actualizados» y la tabla con dos cuentas: «Administrador Usuario» (`admin@example.com`, último acceso hace 58 segundos) y la cuenta personal de una integrante del grupo, cuyo correo se ocultó. Es el estado inmediatamente posterior a guardar el formulario de EV-038.
+
+  ![EV-039](../docs/procedimientos/06-moodle/06-05/evidencias/EV-039.webp)
+- **[EV-040 — Lista completa de cuentas institucionales](../docs/procedimientos/06-moodle/06-05/evidencias/EV-040.md)** (p. 19): Lista «Examinar lista de usuarios» del sitio «Colegio Técnico de Costa Rica» con 11 cuentas: el administrador, las 9 cuentas ficticias de DATOS-MAESTROS (Andrea Castillo Mora, Carlos Méndez Rojas, Daniel Vargas Chacón, Diego Fernández Ruiz, José Ramírez Salazar, Laura Rodríguez Vargas, Marta Jiménez Solano, Sofía Hernández Vega y Valeria Sánchez López, todas con correo `@ctcr.example`) y una cuenta personal de una integrante con el correo oculto. Todas las cuentas institucionales muestran «Nunca» como último acceso.
+
+  ![EV-040](../docs/procedimientos/06-moodle/06-05/evidencias/EV-040.webp)
 - **[EV-056 — Cuentas departamentales registradas en Moodle](../docs/procedimientos/06-moodle/06-05/evidencias/EV-056.md)**: Las 9 identidades institucionales con nombres completos reales y correo institucional.
 
   ![EV-056](../docs/procedimientos/06-moodle/06-05/evidencias/EV-056.webp)
+
+- **[EV-076 — Ruta a «Crear un nuevo usuario»](../docs/procedimientos/06-moodle/06-05/evidencias/EV-076.md)** (p. 17): Administración del sitio → pestaña **Usuarios** → bloque **Cuentas**, con una flecha roja sobre el enlace «Crear un nuevo usuario». En el mismo bloque se ven «Examinar lista de usuarios» y «Cohortes», que se usan en los pasos siguientes.
+
+  ![EV-076](../docs/procedimientos/06-moodle/06-05/evidencias/EV-076.webp)
 
 ### [06-06 — PASO 06.06 — Crear las cohortes departamentales](../docs/procedimientos/06-moodle/06-06.md)
 
 - **[EV-041 — Navegación a cohortes](../docs/procedimientos/06-moodle/06-06/evidencias/EV-041.md)** (p. 19): Se observa en Moodle la pantalla correspondiente a «Navegación a cohortes»; evidencia que el grupo navegó/configuró esta sección del LMS. **Limitación:** No valida la sincronización de matrícula ni aislamiento. Las cohortes no restringen el acceso por sí solas.
 - **[EV-042 — Creación de una cohorte](../docs/procedimientos/06-moodle/06-06/evidencias/EV-042.md)** (p. 20): Se observa en Moodle la pantalla correspondiente a «Creación de una cohorte»; evidencia que el grupo navegó/configuró esta sección del LMS. **Limitación:** No valida la sincronización de matrícula ni aislamiento. Las cohortes no restringen el acceso por sí solas.
-- **[EV-043 — Lista de cohortes departamentales](../docs/procedimientos/06-moodle/06-06/evidencias/EV-043.md)** (p. 20): Se aprecia el flujo de administración de cuentas/cohortes con secciones ocultadas por privacidad; el área tapada no sirve como prueba legible de su contenido. **Limitación:** No valida la sincronización de matrícula ni aislamiento. Las cohortes no restringen el acceso por sí solas.
-- **[EV-044 — Gestión de usuarios asignados a cohortes](../docs/procedimientos/06-moodle/06-06/evidencias/EV-044.md)** (p. 21): Se aprecia el flujo de administración de cuentas/cohortes con secciones ocultadas por privacidad; el área tapada no sirve como prueba legible de su contenido. **Limitación:** No valida la sincronización de matrícula ni aislamiento. Las cohortes no restringen el acceso por sí solas.
+- **[EV-043 — Tres cohortes creadas, todavía vacías](../docs/procedimientos/06-moodle/06-06/evidencias/EV-043.md)** (p. 20): Pantalla «Cohortes del sistema» (`cohort/index.php?contextid=1`) con las tres cohortes: Personal de Administración (`CTCR-COH-ADM`), Personal de Docencia (`CTCR-COH-DOC`) y Personal de Informática (`CTCR-COH-INF`). Las tres tienen «Tamaño de la cohorte» 0 y origen «Creada manualmente».
+
+  ![EV-043](../docs/procedimientos/06-moodle/06-06/evidencias/EV-043.webp)
+- **[EV-044 — Menú «Asignar» de la cohorte de Informática](../docs/procedimientos/06-moodle/06-06/evidencias/EV-044.md)** (p. 21): Lista de cohortes en un momento intermedio: `CTCR-COH-ADM` y `CTCR-COH-DOC` ya tienen 2 miembros y `CTCR-COH-INF` todavía 0. Está abierto el menú ⋮ de la cohorte de Informática (marca 1) con las opciones Ocultar, Editar, Borrar y **Asignar** (marca 2).
+
+  ![EV-044](../docs/procedimientos/06-moodle/06-06/evidencias/EV-044.webp)
 - **[EV-057 — Cohortes institucionales creadas a nivel de sistema](../docs/procedimientos/06-moodle/06-06/evidencias/EV-057.md)**: Cohortes CTCR-COH-ADM, CTCR-COH-DOC y CTCR-COH-INF con 2 estudiantes cada una.
 
   ![EV-057](../docs/procedimientos/06-moodle/06-06/evidencias/EV-057.webp)
+
+- **[EV-077 — Asignar miembros a la cohorte «Personal de Informática»](../docs/procedimientos/06-moodle/06-06/evidencias/EV-077.md)** (p. 21): Pantalla `cohort/assign.php?id=3` «Miembros de la cohorte 'Personal de Informática'». A la izquierda, «Usuarios actuales: Ninguno»; a la derecha, «Usuarios potenciales (11)». Está seleccionada Valeria Sánchez López (marca 1) y señalado el botón **◄ Añadir** (marca 2). Arriba, Moodle advierte en rojo que quitar usuarios de una cohorte puede darlos de baja de los cursos sincronizados.
+
+  ![EV-077](../docs/procedimientos/06-moodle/06-06/evidencias/EV-077.webp)
 
 ### [06-07 — PASO 06.07 — Configurar la matrícula por cohorte](../docs/procedimientos/06-moodle/06-07.md)
 
 - **[EV-058 — Matrícula autorizada por cohorte y profesor manual](../docs/procedimientos/06-moodle/06-07/evidencias/EV-058.md)**: Participantes de CTCR-INF-101 con roles asignados estrictamente (cohorte estudiantes, profesor manual).
 
   ![EV-058](../docs/procedimientos/06-moodle/06-07/evidencias/EV-058.webp)
+
+- **[EV-078 — Ubicar la sección «Matriculaciones» en Extensiones](../docs/procedimientos/06-moodle/06-07/evidencias/EV-078.md)** (p. 22): Administración del sitio → pestaña **Extensiones** (señalada). Más abajo, recuadrada, la sección **Matriculaciones** con los enlaces Gestionar plugins de matriculación, Acceso de invitados, Auto-matriculación, Matriculación manual y Sincronizar cohorte.
+
+  ![EV-078](../docs/procedimientos/06-moodle/06-07/evidencias/EV-078.webp)
+
+- **[EV-079 — Plugin «Sincronizar cohorte» habilitado a nivel de sitio](../docs/procedimientos/06-moodle/06-07/evidencias/EV-079.md)** (p. 23): «Categoría: Matriculaciones → Gestionar plugins de matriculación» (`admin/category.php?category=enrolments`). La tabla muestra Matriculación manual (3/3), Acceso de invitados (3/0), Auto-matriculación (3/0) y **Sincronizar cohorte (0/0)**, recuadrado y con el ojo de «Habilitar» activo, versión 2024100700. Los demás conectores (Base de datos externa, LDAP, CSV, pago, etc.) aparecen deshabilitados.
+
+  ![EV-079](../docs/procedimientos/06-moodle/06-07/evidencias/EV-079.webp)
+
+- **[EV-080 — Abrir «Participantes» del curso de Administración](../docs/procedimientos/06-moodle/06-07/evidencias/EV-080.md)** (p. 25): Curso «Gestión Documental y Procesos Administrativos» (`course/view.php?id=2`) con sus secciones (General, Fundamentos de gestión documental, Clasificación y custodia de expedientes, Evaluación de conocimientos) y la pestaña **Participantes** recuadrada.
+
+  ![EV-080](../docs/procedimientos/06-moodle/06-07/evidencias/EV-080.webp)
+
+- **[EV-081 — Menú hacia «Métodos de matriculación»](../docs/procedimientos/06-moodle/06-07/evidencias/EV-081.md)** (p. 26): En Participantes (`user/index.php?id=2`) está abierto el desplegable «Usuarios matriculados» (marca 1) y señalada la opción **Métodos de matriculación** (marca 2). En ese momento el único participante es Administrador Usuario con rol Profesor.
+
+  ![EV-081](../docs/procedimientos/06-moodle/06-07/evidencias/EV-081.webp)
+
+- **[EV-082 — Métodos de matriculación iniciales del curso](../docs/procedimientos/06-moodle/06-07/evidencias/EV-082.md)** (p. 26): `enrol/instances.php?id=2`: Matriculación manual (1 usuario), Acceso de invitados (0) y Auto-matriculación (Estudiante) (0). Las dos últimas filas aparecen en gris, es decir, desactivadas. Abajo está recuadrado el selector **Añadir método**.
+
+  ![EV-082](../docs/procedimientos/06-moodle/06-07/evidencias/EV-082.webp)
+
+- **[EV-083 — Elegir «Sincronizar cohorte» en «Añadir método»](../docs/procedimientos/06-moodle/06-07/evidencias/EV-083.md)** (p. 27): Desplegable «Añadir método» abierto con las opciones Elegir…, Auto-matriculación y **Sincronizar cohorte** (recuadrada).
+
+  ![EV-083](../docs/procedimientos/06-moodle/06-07/evidencias/EV-083.webp)
+
+- **[EV-084 — Formulario «Sincronizar cohorte» para Administración](../docs/procedimientos/06-moodle/06-07/evidencias/EV-084.md)** (p. 5): `enrol/editinstance.php?type=cohort&courseid=2` en el curso «Gestión Documental y Procesos Administrativos»: Activa = Sí, Cohorte = **Personal de Administración**, Asignar rol = **Estudiante**, Agregar al grupo = Ninguno, y el botón «Añadir método».
+
+  ![EV-084](../docs/procedimientos/06-moodle/06-07/evidencias/EV-084.webp)
+
+- **[EV-085 — Sincronización de cohorte creada (2 usuarios)](../docs/procedimientos/06-moodle/06-07/evidencias/EV-085.md)** (p. 28): Métodos de matriculación del curso de Administración: Matriculación manual (1), Acceso de invitados (0, desactivado), Auto-matriculación (Estudiante) (0, desactivada) y una nueva fila **«Sincronizar cohorte (Personal de Administración - Estudiante)» con 2 usuarios**.
+
+  ![EV-085](../docs/procedimientos/06-moodle/06-07/evidencias/EV-085.webp)
+
+- **[EV-086 — Matrícula manual de la profesora con rol «Profesor»](../docs/procedimientos/06-moodle/06-07/evidencias/EV-086.md)** (p. 28): «Gestionar inscripciones manuales» del curso de Administración. A la izquierda, «Usuarios matriculados (1)»: Administrador Usuario. Al centro, el selector «Asignar rol» abierto con Ninguno, Gestor, **Profesor** (recuadrado), Profesor sin permiso de edición y Estudiante, y el botón **◄ Añadir** recuadrado. A la derecha, «Usuarios no matriculados (10)».
+
+  ![EV-086](../docs/procedimientos/06-moodle/06-07/evidencias/EV-086.webp)
+
+- **[EV-087 — Participantes finales de Gestión Documental (ADM)](../docs/procedimientos/06-moodle/06-07/evidencias/EV-087.md)** (p. 29): Participantes del curso «Gestión Documental y Procesos Administrativos»: 4 participantes. Marta Jiménez Solano y Carlos Méndez Rojas como **Estudiante**, Laura Rodríguez Vargas como **Profesor** y Administrador Usuario como Estudiante. Ya no aparecen Sofía ni José (ver INC-011).
+
+  ![EV-087](../docs/procedimientos/06-moodle/06-07/evidencias/EV-087.webp)
+
+- **[EV-088 — Participantes finales de Planificación Didáctica (DOC)](../docs/procedimientos/06-moodle/06-07/evidencias/EV-088.md)** (p. 29): Participantes del curso «Planificación Didáctica y Evaluación de los Aprendizajes»: 4 participantes. Andrea Castillo Mora como **Profesor**, Sofía Hernández Vega y José Ramírez Salazar como **Estudiante** y Administrador Usuario como Estudiante.
+
+  ![EV-088](../docs/procedimientos/06-moodle/06-07/evidencias/EV-088.webp)
+
+- **[EV-089 — Participantes finales de Seguridad Digital (INF)](../docs/procedimientos/06-moodle/06-07/evidencias/EV-089.md)** (p. 30): Participantes del curso de Informática: 4 participantes. Diego Fernández Ruiz y Valeria Sánchez López como **Estudiante**, Administrador Usuario como Profesor y Daniel Vargas Chacón como **Profesor**.
+
+  ![EV-089](../docs/procedimientos/06-moodle/06-07/evidencias/EV-089.webp)
+
+- **[EV-090 — INC-011: estudiantes de Docencia matriculados en Administración](../docs/procedimientos/06-moodle/06-07/evidencias/EV-090.md)** (p. 7): Participantes del curso «Gestión Documental y Procesos Administrativos» con **6 participantes**: además de Marta, Carlos, Laura y el administrador, aparecen Sofía Hernández Vega y José Ramírez Salazar como Estudiante. Las casillas de Sofía y José están marcadas.
+
+  ![EV-090](../docs/procedimientos/06-moodle/06-07/evidencias/EV-090.webp)
+
+- **[EV-091 — INC-011: «eliminado de la selección» no desmatricula](../docs/procedimientos/06-moodle/06-07/evidencias/EV-091.md)** (p. 7): La misma lista tras intentar quitar a Sofía y José: Moodle muestra los avisos «Usuario 'Sofía Hernández Vega' eliminado de la selección», «Usuario 'José Ramírez Salazar' eliminado de la selección» y «No hay usuarios seleccionados», pero siguen apareciendo **6 participantes** encontrados.
+
+  ![EV-091](../docs/procedimientos/06-moodle/06-07/evidencias/EV-091.webp)
 
 ### [06-08 — PASO 06.08 — Comprobar el aislamiento](../docs/procedimientos/06-moodle/06-08.md)
 
@@ -154,6 +230,22 @@ Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no
 - **[EV-062 — Informe del calificador visualizado por profesor](../docs/procedimientos/06-moodle/06-08/evidencias/EV-062.md)**: Daniel Vargas revisando la nota de Valeria Sánchez en el calificador.
 
   ![EV-062](../docs/procedimientos/06-moodle/06-08/evidencias/EV-062.webp)
+
+- **[EV-092 — Profesora de Administración sin acceso al curso de Docencia](../docs/procedimientos/06-moodle/06-08/evidencias/EV-092.md)** (p. 30): Sesión de Laura Rodríguez Vargas (avatar «LR», profesora de Administración) abriendo el curso de Docencia: Moodle la redirige a `enrol/index.php?id=3` «Planificación Didáctica y Evaluación de los Aprendizajes – Opciones de matriculación», indica «Profesor: Andrea Castillo Mora» y el mensaje **«No se puede auto matricular en este curso»**, con un único botón «Continuar».
+
+  ![EV-092](../docs/procedimientos/06-moodle/06-08/evidencias/EV-092.webp)
+
+- **[EV-093 — El administrador copia la URL directa del PDF de Informática](../docs/procedimientos/06-moodle/06-08/evidencias/EV-093.md)** (p. 31): En la VM cliente (`linux_mint_clon`), con sesión de administrador, está abierto el PDF «Curso_Informatica_Seguridad_Basica.pdf» y seleccionada su URL directa: `http://192.168.50.1:8080/pluginfile.php/26/mod_resource/content/1/Curso_Informatica_Seguridad_Basica.pdf`. Debajo se ve parte del contenido («Propósito de la guía», «Al finalizar podrás»).
+
+  ![EV-093](../docs/procedimientos/06-moodle/06-08/evidencias/EV-093.webp)
+
+- **[EV-094 — Marta dentro de su curso de Administración](../docs/procedimientos/06-moodle/06-08/evidencias/EV-094.md)** (p. 31): Sesión de Marta Jiménez Solano (avatar «MJ») en `course/view.php?id=2`, «Gestión Documental y Procesos Administrativos». Ve Avisos, la sección «Clasificación y custodia de expedientes» con «Guía de clasificación documental» (PDF) y «Procedimiento institucional para la clasificación y custodia de expedientes», y «Evaluación de Gestión Documental Institucional». Su menú no muestra «Administración del sitio».
+
+  ![EV-094](../docs/procedimientos/06-moodle/06-08/evidencias/EV-094.webp)
+
+- **[EV-095 — Marta no puede abrir el PDF de Informática por URL directa](../docs/procedimientos/06-moodle/06-08/evidencias/EV-095.md)** (p. 32): Con la sesión de Marta («MJ») se pega la URL copiada en EV-093 (`pluginfile.php/26/mod_resource/content/1/Curso_Informatica_Seguridad_Basica.pdf`). Moodle no entrega el archivo: muestra la página de error «Colegio Técnico de Costa Rica — Lo sentimos, el archivo solicitado no se encuentra» con el enlace «Más información sobre este error» y el botón «Continuar».
+
+  ![EV-095](../docs/procedimientos/06-moodle/06-08/evidencias/EV-095.webp)
 
 ## Bloque 07 — DNS privado BIND9
 

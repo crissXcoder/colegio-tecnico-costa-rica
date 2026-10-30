@@ -6,6 +6,8 @@ Aquí se registra **lo que pasó realmente** en las reuniones del equipo: fecha,
 
 ### [`sesiones/`](sesiones/)
 
+- [`2026-10-30-documentacion-paso6-moodle.md`](sesiones/2026-10-30-documentacion-paso6-moodle.md): documentación completa del Bloque 06 (Moodle): capturas re-saneadas EV-039/040/043/044, evidencias nuevas `EV-075` a `EV-095`, ocultación de correos personales y registro de INC-011.
+
 - [`2026-10-28-sesion-paso9-ftps-vsftpd.md`](sesiones/2026-10-28-sesion-paso9-ftps-vsftpd.md): ejecución técnica del Bloque 09 (FTPS con vsftpd y enjaulamiento), creación de 6 cuentas departamentales, TLSv1.3, pruebas de aislamiento local y remoto, y evidencias `EV-071` a `EV-074`.
 - [`2026-10-28-sesion-paso8-https-nginx.md`](sesiones/2026-10-28-sesion-paso8-https-nginx.md): ejecución técnica del Bloque 08 (Nginx HTTPS Reverse Proxy), certificado SSL con SAN, integración de Moodle, pruebas de redirección y evidencias `EV-067` a `EV-070`.
 - [`2026-10-28-sesion-paso7-dns-bind9.md`](sesiones/2026-10-28-sesion-paso7-dns-bind9.md): ejecución técnica del Bloque 07 (DNS privado BIND9), configuración de zona `ctcr`, resolución en Ubuntu Server y Linux Mint, e integración de evidencias `EV-063` a `EV-066`.
@@ -14,6 +16,8 @@ Aquí se registra **lo que pasó realmente** en las reuniones del equipo: fecha,
 - [`plantillas/sesion.md`](../plantillas/sesion.md): modelo recomendado para futuras reuniones; registrar quién ejecutó cada parte y qué se corrigió en tiempo real.
 
 ### [`incidentes/`](incidentes/)
+
+- [`INC-011-moodle-matricula-cohorte-incorrecta.md`](incidentes/INC-011-moodle-matricula-cohorte-incorrecta.md): estudiantes de Docencia matriculados en el curso de Administración; «eliminado de la selección» no desmatricula; corrección en Métodos de matriculación.
 
 - [`INC-010-vsftpd-writable-root-chroot-500.md`](incidentes/INC-010-vsftpd-writable-root-chroot-500.md): error 500 OOPS en vsftpd por raíz de usuario escribible dentro de chroot; separación estricta de raíz (`0755` `root:root`) y subcarpeta `archivos` (`0700` `<user>:<user>`).
 - [`INC-009-vsftpd-user-sub-token-omission-bug.md`](incidentes/INC-009-vsftpd-user-sub-token-omission-bug.md): fallo de expansión de `$USER` en `local_root` por omisión de `user_sub_token=$USER` en `vsftpd.conf`.
