@@ -2,6 +2,8 @@
 
 El [`compose.yaml`](compose.yaml) es el **diseño compartido revisado** para ejecutar dos servicios separados. Moodle contiene Apache/PHP y se conecta a la base mediante la red bridge `backend`; MariaDB tiene volumen `mariadb_data` y **no publica 3306**. Moodle usa volúmenes `moodle_code` y `moodle_data`, que deben permanecer ligados al mismo nombre de proyecto Docker.
 
+> **Para la entrega del profesor no se usa este archivo.** El `docker-compose.yml` entregado es una copia sin editar del `compose.yaml` que corre en el servidor de la demostración, generada con [`scripts/armar-entrega.sh`](../../scripts/armar-entrega.sh). Diferencias conocidas entre este modelo y el servidor: el servidor usa la red `moodle_net`, la etiqueta `oksigenia/moodle:4.5.15` (ya alineada en `.env.example`) y, según las capturas (EV-119), contiene la variable `MOODLE_BD_TYPE` (con `BD`). Ver [PAQUETE-ENTREGA](../../docs/entrega/PAQUETE-ENTREGA.md) y P-15/P-16 en [PENDIENTES](../../docs/00-proyecto/PENDIENTES.md).
+
 ## Archivo por archivo
 
 - [`compose.yaml`](compose.yaml): configuración versionable de ambos servicios, dependencia `service_healthy`, red, nombres de volúmenes, puerto de Moodle y variables suministradas desde un archivo externo. **No se debe interpretar como copia exacta del Compose capturado en Word.**

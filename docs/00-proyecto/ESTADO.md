@@ -15,8 +15,12 @@
 | vsftpd/FTPS | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-071..EV-074 (vsftpd 3.0.5, 6 cuentas departamentales nologin, TLSv1.3, enjaulamiento chroot 0700 y error 550 ante escape) |
 | Cron, respaldo y restauración | verificado local (VM #1 Server) | Verificado íntegro con EV-096..EV-099 (script respaldo.sh 0700, volcado gzip 384 KB, cron diario 02:00 AM CST, restauración de 494 tablas en moodle_restore_test y DROP limpio) |
 | QA y Verificación Final (Paso 11) | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-100..EV-106 y matriz transversal en pruebas/MATRIZ-QA-FINAL.md (10/10 PASS: contenedores saludables, URL canónica, servicios systemd y puertos, iptables sin UFW, conectividad/DNS/HTTP 301/HTTPS en Mint, aislamiento departamental con rechazo a URL ajena, cuestionarios calificados 100/100, calificador docente, reinicio de contenedores, jaula FTPS y DRP con 494 tablas) |
-| Documento final | plantilla disponible | texto final, citas, diagrama y anexos |
-| Demostración | verificado en laboratorio | Batería 11.1 a 11.7 ensayada y lista para la defensa en vivo |
+| Firewall | verificado local (VM #1) con iptables; UFW no se usa | EV-102 y [ADR-0003](../decisiones/ADR-0003-firewall-iptables-sin-ufw.md). En otra VM del grupo UFW está instalado e **inactivo** (INC-018): no afirmar que UFW protege el servidor |
+| Paquete de entrega (`docker-compose.yml`, configuraciones, `crontab.txt`, `ufw.txt`, `hashes.txt`) | **pendiente** | Scripts listos (`armar-entrega.sh`, `restauracion-prueba.sh`, `verificar-servicios.sh`); falta instalarlos en el servidor, ejecutarlos y armar el paquete ([PAQUETE-ENTREGA](../entrega/PAQUETE-ENTREGA.md)) |
+| Segunda VM del grupo (`server@server`) | evidencia parcial | Pasos 7, 8 y 9 documentados con EV-107..EV-130 (documento del grupo, 54 págs.); sin paso 10 ni prueba FTPS cruzada; usuarios FTP con guion bajo (P-17, P-18) |
+| Servidor de la demostración | **por decidir** | Propuesta VM #1 ([ADR-0004](../decisiones/ADR-0004-servidor-unico-de-demostracion.md)); hay VMs con configuraciones distintas |
+| Documento final | plantilla disponible | texto final, citas, diagrama y anexos; comparativa ampliada sin fuentes citadas todavía |
+| Demostración | batería técnica verificada (pasos 11.1 a 11.7) | Guion en [GUIA-DEMO](../entrega/GUIA-DEMO.md); falta el ensayo cronometrado de 25 minutos. Lista completa en [PENDIENTES](PENDIENTES.md) |
 
 ## Datos maestros (2026-10-24)
 
@@ -24,6 +28,10 @@ Se acordó por el grupo un conjunto único de datos (dominio `aulavirtual.ctcr`,
 
 ## Último error documentado
 
+- INC-019: APT bloqueado por `unattended-upgrades` al instalar vsftpd en la VM `server@server` (31/10, desde el documento del grupo). INC-003, INC-005, INC-007 e INC-018 se ampliaron con lo ocurrido en esa VM.
+
+- INC-015 a INC-018 (incorporados el 31/10 desde el anexo técnico, de otra VM del grupo): 502 de Nginx durante la transición a HTTPS, vsftpd con valor inválido y directivas duplicadas, `curl (26)` por archivo local inexistente y UFW removido con configuración residual.
+- Riesgos que todavía no ocurrieron: [RIESGOS-Y-FALLOS-ANTICIPADOS](../operacion/RIESGOS-Y-FALLOS-ANTICIPADOS.md).
 - INC-014: excepción fatal por métodos deprecados en Question Engine API de Moodle 4.5 al automatizar la finalización de cuestionarios; resuelto adaptando llamadas a `$quizobj->get_structure()->get_slots()` y `question_engine::save_questions_usage_by_activity($quba)`.
 - INC-013: fallo de resolución DNS local de `aulavirtual.ctcr` en Ubuntu Server por aislamiento entre `systemd-resolved` y BIND9 LAN; resuelto mapeando en `/etc/hosts`.
 - INC-001: falta de espacio en `/` con LVM subutilizado; se amplió de ~12 a ~23 GB y se liberaron imágenes sin uso. Revisar capacidad por VM y crecimiento futuro de Docker antes de seguir.

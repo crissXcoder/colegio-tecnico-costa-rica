@@ -6,6 +6,9 @@ Aquí se registra **lo que pasó realmente** en las reuniones del equipo: fecha,
 
 ### [`sesiones/`](sesiones/)
 
+- [`2026-10-31-incorporacion-vm-server-pasos-7-9.md`](sesiones/2026-10-31-incorporacion-vm-server-pasos-7-9.md): capturas de los pasos 7, 8 y 9 de la VM `server@server` (EV-107 a EV-130), errores de esa VM (INC-019 y ampliación de INC-003/005/007/018), riesgos R-41 a R-46 y fuentes de la comparativa.
+
+- [`2026-10-31-preparacion-entrega.md`](sesiones/2026-10-31-preparacion-entrega.md): sesión documental para la entrega del 07/11: lineamientos del profesor, anexo técnico, scripts de restauración, verificación y armado del paquete, guía de la demo, preguntas técnicas, riesgos anticipados, ADR-0003/0004 e incidentes INC-015 a INC-018.
 - [`2026-10-30-sesion-paso11-verificacion-final-qa.md`](sesiones/2026-10-30-sesion-paso11-verificacion-final-qa.md): ejecución técnica del Bloque 11 (Verificación final del proyecto y QA transversal), pruebas cruzadas desde Ubuntu Server y Linux Mint, sockets de red, firewall iptables, aislamiento departamental con rechazo por URL directa, cuestionarios resueltos (100/100), libro de calificaciones docente, persistencia tras reinicio de contenedores, enjaulamiento FTPS, DRP con 494 tablas y evidencias `EV-100` a `EV-106`.
 - [`2026-10-30-sesion-paso10-respaldos-cron.md`](sesiones/2026-10-30-sesion-paso10-respaldos-cron.md): ejecución técnica del Bloque 10 (Respaldos automáticos con Cron y Restauración DRP), script `respaldo.sh` con MariaDB en Docker, retención de 7 días, crontab diario de root a las 02:00 AM CST, restauración de 494 tablas en `moodle_restore_test` y evidencias `EV-096` a `EV-099`.
 - [`2026-10-30-incorporacion-documentos-reales-cursos.md`](sesiones/2026-10-30-incorporacion-documentos-reales-cursos.md): estandarización e incorporación de documentos reales del Drive a los tres cursos en `documentos-cursos/` y en Moodle local (Paso 6.4), reemplazo de páginas por PDFs en la sección 2 y ajuste de nombres oficiales.
@@ -19,6 +22,13 @@ Aquí se registra **lo que pasó realmente** en las reuniones del equipo: fecha,
 - [`plantillas/sesion.md`](../plantillas/sesion.md): modelo recomendado para futuras reuniones; registrar quién ejecutó cada parte y qué se corrigió en tiempo real.
 
 ### [`incidentes/`](incidentes/)
+
+- [`INC-019-apt-bloqueado-unattended-upgrades.md`](incidentes/INC-019-apt-bloqueado-unattended-upgrades.md): `apt install vsftpd` esperando el bloqueo de `unattended-upgrades`; no borrar los archivos de bloqueo.
+
+- [`INC-018-ufw-paquete-removido-config-residual.md`](incidentes/INC-018-ufw-paquete-removido-config-residual.md): UFW aparecía con versión en `dpkg-query` pero estaba removido (`deinstall ok config-files`); reinstalado, siete reglas cargadas, **inactivo**.
+- [`INC-017-curl-26-archivo-local-inexistente.md`](incidentes/INC-017-curl-26-archivo-local-inexistente.md): `curl (26)` al subir por FTPS un archivo local que no existía; códigos de curl para distinguir errores locales de los del servidor.
+- [`INC-016-vsftpd-configuracion-invalida-y-duplicada.md`](incidentes/INC-016-vsftpd-configuracion-invalida-y-duplicada.md): `500 OOPS: bad bool value` y directivas duplicadas de otra práctica en `vsftpd.conf`; síntomas `curl (64)` y `wrong version number`.
+- [`INC-015-nginx-502-moodle-no-disponible.md`](incidentes/INC-015-nginx-502-moodle-no-disponible.md): 502 Bad Gateway mientras Moodle se recreaba con el puerto `127.0.0.1:8080`.
 
 - [`INC-014-moodle-question-engine-api-quiz-completion.md`](incidentes/INC-014-moodle-question-engine-api-quiz-completion.md): excepción fatal por métodos obsoletos en la API de Question Engine de Moodle 4.5; refactorización hacia `get_structure()->get_slots()` y `save_questions_usage_by_activity($quba)`.
 - [`INC-013-dns-local-loopback-systemd-resolved.md`](incidentes/INC-013-dns-local-loopback-systemd-resolved.md): fallo de resolución DNS de `aulavirtual.ctcr` en el propio servidor host por desacople de `systemd-resolved` y BIND9 LAN; resolución mediante `/etc/hosts`.

@@ -16,6 +16,12 @@ sudo docker compose ps
 
 Si hay fallos, revisar logs y recursos antes de `up -d`. **No se debe ejecutar `down -v`** bajo ningún supuesto como solución de arranque.
 
+Chequeo automático de solo lectura (servicios, contenedores, DNS, HTTPS, respaldos y espacio): `sudo ./verificar-servicios.sh ~/proyecto-moodle` ([`scripts/verificar-servicios.sh`](../../scripts/verificar-servicios.sh)).
+
+## A2. Fallos que todavía no ocurrieron pero pueden ocurrir
+
+[`RIESGOS-Y-FALLOS-ANTICIPADOS.md`](RIESGOS-Y-FALLOS-ANTICIPADOS.md) lista 46 casos (R-01 a R-46) con cómo detectarlos, qué hacer sin destruir datos y cómo prevenirlos: arranque y red, Docker, DNS y HTTPS, Moodle, FTPS, respaldos, firewall, entrega y presentación.
+
 ## B. Diagnóstico antes de un cambio
 
 [`COPIAR-PEGAR.md`](COPIAR-PEGAR.md) organiza comandos de inspección, instalación nueva y cambios por servicio, con instrucciones para evitar mostrar contraseñas. [`INVENTARIO-POR-INTEGRANTE.md`](INVENTARIO-POR-INTEGRANTE.md) registra lo que realmente tienen las cinco VMs, no solo la VM de la primera captura.

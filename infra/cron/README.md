@@ -1,8 +1,8 @@
 # Cron: respaldo automático, no solo un comando programado
 
-El archivo [`moodle-backup.cron.example`](moodle-backup.cron.example) contiene la frecuencia objetivo **02:00 cada día** y una redirección de salida a `/var/log/elevaquitas-backup.log`. La ruta `/opt/elevaquitas` es ilustrativa: **debe reemplazarse** por la ubicación real del repositorio y su script instalado, preferiblemente ruta absoluta.
+El archivo [`moodle-backup.cron.example`](moodle-backup.cron.example) contiene la línea **real** del crontab de root de la VM #1 (EV-098): todos los días a las **02:00**, `respaldo.sh` de la carpeta del proyecto, con salida a `/var/log/moodle-backup.log`. En otra VM, cambiar `/home/criss/proyecto-moodle` por su carpeta real (el anexo técnico menciona `/root/proyecto-moodle` y `/home/server`).
 
-La tarea invoca [`scripts/backup-db.sh`](../../scripts/backup-db.sh), que requiere acceso al Compose efectivo, `.env` privado y directorio protegido de respaldo. El script hace dump comprimido de MariaDB y retención; **no es por sí solo una copia completa de Moodle** porque Moodle también tiene un volumen `moodle_data` con archivos.
+En el servidor corre `respaldo.sh` (contenido en [10-02](../../docs/procedimientos/10-respaldos/10-02.md)), que genera `ctcr_moodle_<fecha>.sql.gz`. El script [`scripts/backup-db.sh`](../../scripts/backup-db.sh) del repositorio es una variante para el modelo de `infra/compose` (genera `moodle_<fecha>.sql.gz`); **no** es el que se entrega. La restauración de ensayo se hace con [`scripts/restauracion-prueba.sh`](../../scripts/restauracion-prueba.sh), que reconoce ambos nombres. Ninguno de los dos respaldos incluye el volumen `moodle_data` (archivos subidos); ver [10-07](../../docs/procedimientos/10-respaldos/10-07.md).
 
 ## Puesta en marcha después de validación manual
 

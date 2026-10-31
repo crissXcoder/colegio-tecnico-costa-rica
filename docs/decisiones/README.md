@@ -4,6 +4,8 @@ Los ADR explican opciones consideradas y consecuencias antes/después de impleme
 
 - [`ADR-0001-repositorio-unico.md`](ADR-0001-repositorio-unico.md): razón para mantener una fuente de verdad colaborativa y revisable, con trabajo distribuido pero sesiones conjuntas.
 - [`ADR-0002-proxy-https.md`](ADR-0002-proxy-https.md): razones y limitaciones de terminar TLS en Nginx frente a servir HTTPS dentro del contenedor Moodle.
+- [`ADR-0003-firewall-iptables-sin-ufw.md`](ADR-0003-firewall-iptables-sin-ufw.md): por qué no se activa UFW antes de la entrega y qué se entrega como `ufw.txt`.
+- [`ADR-0004-servidor-unico-de-demostracion.md`](ADR-0004-servidor-unico-de-demostracion.md) (**propuesta**): una sola VM para armar el paquete y presentar, porque hay VMs del grupo con configuraciones distintas.
 - [`plantillas/adr.md`](../../plantillas/adr.md): registrar contexto, alternativas, criterios, trade-offs, seguridad, consecuencias y cómo se verificó la decisión.
 
 ## Cuándo crear un ADR

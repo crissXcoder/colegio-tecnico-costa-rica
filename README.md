@@ -2,9 +2,9 @@
 
 **Universidad Nacional · EIF431O · Escenario 3 · Moodle LMS**  
 **Tipo de repositorio:** guía técnica reproducible + configuración versionada + bitácora de equipo + evidencia probatoria + preparación de entrega.  
-**Corte documental:** 23/10/2026. **Entrega prevista:** 7/11/2026.
+**Corte documental:** 31/10/2026. **Entrega:** sábado 07/11/2026, hasta las 7:59 a. m., y presentación de 25 minutos ese día.
 
-> **Estado operativo:** existen capturas históricas reales de Docker, MariaDB y trabajo dentro de Moodle, pero **no debe interpretarse la presencia de un comando como prueba de ejecución** ni una captura en una VM como un despliegue idéntico en cinco máquinas. La plataforma ya tiene datos: los cambios sensibles requieren inventario y respaldo.
+> **Estado operativo:** todos los servicios tienen evidencia en la VM #1 y los pasos 7 a 9 también en una segunda VM del grupo (130 evidencias). Lo que falta para la entrega está en [PENDIENTES](docs/00-proyecto/PENDIENTES.md): elegir el servidor de la demostración, armar el paquete desde él y ensayar. Una captura en una VM no prueba un despliegue idéntico en las cinco; la plataforma tiene datos: los cambios sensibles requieren inventario y respaldo.
 
 ## 1. Problema que resuelve
 
@@ -20,6 +20,8 @@ El proyecto también demuestra administración Linux: Ubuntu Server en VirtualBo
 | **Soy externo al equipo y quiero entender el sistema** | [Contexto y arquitectura](docs/00-proyecto/README.md) → [mapa de documentación](docs/README.md) | Por qué existe cada servicio, qué está construido, qué falta, cuáles son los archivos confiables. |
 | **Estoy con los otros cuatro integrantes ejecutando el siguiente paso** | [Manual operativo paso a paso](docs/procedimientos/README.md) → [comandos rápidos](docs/operacion/COPIAR-PEGAR.md) | El comando completo, en qué VM correrlo, resultado que esperar y foto histórica del mismo paso. |
 | **Quiero saber exactamente lo que se probó y cómo lo documentamos** | [Estado del grupo](docs/00-proyecto/ESTADO.md) → [catálogo de pruebas](evidencias/CATALOGO-CAPTURAS.md) → [bitácora](bitacora/README.md) | Diferencia entre ejecución histórica y aceptación, evidencia original contextualizada y pendientes por máquina. |
+| **Voy a armar la entrega o preparar la presentación** | [Lineamientos del profesor](docs/entrega/LINEAMIENTOS-PROFESOR.md) → [paquete de entrega](docs/entrega/PAQUETE-ENTREGA.md) → [guía de la demo](docs/entrega/GUIA-DEMO.md) → [preguntas técnicas](docs/entrega/PREGUNTAS-TECNICAS.md) | Qué se entrega, cómo armarlo desde el servidor con `hashes.txt`, el guion de 3 + 11 minutos y las preguntas para practicar. |
+| **Quiero anticiparme a lo que puede fallar** | [Riesgos y fallos anticipados](docs/operacion/RIESGOS-Y-FALLOS-ANTICIPADOS.md) → [incidentes reales](bitacora/README.md) | 46 casos con cómo detectarlos y qué hacer sin destruir datos. |
 | **Voy a editar una configuración o solucionar un error** | [Archivos de infraestructura](infra/README.md) → [operación de VM](docs/operacion/README.md) → [incidencias](bitacora/README.md) | Qué archivo afecta a qué servicio, validación sintáctica, copia de seguridad, rollback y documentación del error. |
 
 ## 3. Arquitectura y estado que se puede sostener
@@ -28,11 +30,13 @@ El esquema final conecta **Linux Mint (Firefox)** con **Ubuntu Server** por una 
 
 | Componente | Decisión de implementación | Estado que respaldan los documentos |
 |---|---|---|
-| Ubuntu + Mint/VirtualBox | Ubuntu NAT+interna; Mint solo interna | Capturas de ping bidireccional, una VM; inventario grupal pendiente. |
-| Docker + Moodle + MariaDB | `oksigenia/moodle:4.5.15` (revisar compilación segura), `mariadb:11.4.13`; Compose y volúmenes | Hay capturas de ejecución, esquema SQL y volúmenes en una VM. |
-| Cursos y usuarios Moodle | Tres departamentos, cursos, preguntas, usuarios y cohortes | Hay trabajo histórico fotografiado; falta comprobación completa por curso y denegación 3×3. |
-| BIND9 / Nginx / FTPS / Cron | Configuraciones y procedimientos de implementación | **Objetivos documentados**; sin capturas de aceptación de estos servicios en la bitácora recibida. |
-| Incidente de almacenamiento | Raíz llena, ampliación LVM en VM de grupo | Existe captura y explicación de corrección; ver [INC-001](bitacora/incidentes/INC-001-almacenamiento-lvm.md). |
+| Ubuntu + Mint/VirtualBox | Ubuntu NAT+interna; Mint con red interna (y NAT para descargas) | Capturas de ping bidireccional; inventario grupal pendiente. |
+| Docker + Moodle + MariaDB | `oksigenia/moodle:4.5.15`, `mariadb:11.4.13`; Compose y volúmenes | Verificado en VM #1: salud, persistencia tras reinicio (EV-100, EV-106). |
+| Cursos y usuarios Moodle | Tres cursos, cohortes por departamento, profesor por matrícula manual | Verificado en VM #1: participantes por curso y acceso ajeno denegado por URL (EV-085..EV-095, EV-104, EV-105). |
+| BIND9 / Nginx HTTPS / FTPS | Zona `ctcr`, proxy TLS en el host, vsftpd con chroot y TLS | Verificado en VM #1 (EV-063..EV-074, EV-103). |
+| Cron y restauración | `respaldo.sh` diario 02:00; restauración en `moodle_restore_test` | Verificado en VM #1 (EV-096..EV-099); script de restauración nuevo por instalar. |
+| Firewall | iptables persistente; UFW no se usa | EV-102, [ADR-0003](docs/decisiones/ADR-0003-firewall-iptables-sin-ufw.md). |
+| Incidentes | 19 registrados, del disco lleno (INC-001) a APT bloqueado por actualizaciones automáticas (INC-019) | Ver [bitácora](bitacora/README.md). |
 
 ## 4. Estructura razonada del repositorio — no duplicar información
 
@@ -44,7 +48,7 @@ El esquema final conecta **Linux Mint (Firefox)** con **Ubuntu Server** por una 
 | [`infra/`](infra/README.md) | El **qué configura la infraestructura**: Compose, DNS, Nginx, vsftpd, Cron. Son archivos editables de referencia, no duplicados confirmados de `/etc` ni de un servidor real. |
 | [`scripts/`](scripts/README.md) | Operaciones controladas: generación de secretos, inventario, dump de DB y controles documentales. No existe un instalador ciego de todas las fases. |
 | [`bitacora/`](bitacora/README.md) | El **qué pasó de verdad**: sesiones cronológicas, diagnósticos, causas, soluciones y responsables. Una incidencia enlaza al paso afectado y a su evidencia. |
-| [`evidencias/`](evidencias/README.md) | Índice transversal y manifiestos de las **50 capturas**; las imágenes y sus fichas están guardadas en `docs/procedimientos/.../<paso>/evidencias/`. |
+| [`evidencias/`](evidencias/README.md) | Índice transversal y manifiestos de las **130 evidencias**; las imágenes y sus fichas están guardadas en `docs/procedimientos/.../<paso>/evidencias/`. |
 | [`pruebas/`](pruebas/README.md) | Pruebas repetibles con esperado/observado por VM, especialmente denegación de acceso, persistencia, FTP y recuperación. |
 | [`docs/operacion/`](docs/operacion/README.md) | Manual para máquinas **ya instaladas**: iniciar la sesión, diagnosticar, reanudar Compose y recuperar datos sin destruirlos. |
 | [`docs/entrega/`](docs/entrega/README.md) | Adaptación del contenido técnico a la plantilla académica, conclusiones, justificación de software libre y demo del 7 de noviembre. |
@@ -71,4 +75,4 @@ No publicar `.env`, certificados privados, backups ni información de estudiante
 
 Ejecutar `python3 scripts/validate-repository.py` desde la raíz y `bash -n scripts/*.sh` según indica [CI](.github/README.md). Estas comprobaciones **no ejecutan Ubuntu/Moodle**; solo verifican la coherencia de los artefactos. Las pruebas reales se deben completar sobre las VMs.
 
-**Prioridad de grupo:** cerrar contenido Moodle/roles y denegación; luego BIND9/HTTPS, FTPS, backups y recuperación; hacer reproducción cruzada para el 4/11, ensayo el 6/11 y entrega el 7/11. Ver [CAMBIOS-V3.md](CAMBIOS-V3.md) para modificaciones de esta revisión, sin borrar los cambios anteriores.
+**Prioridad de grupo:** decidir el servidor de la demostración, instalar en él los scripts de restauración y verificación, reproducción cruzada el 4/11, ensayo y armado del paquete el 6/11, entrega antes de las 7:59 a. m. del 7/11. Detalle en [PENDIENTES](docs/00-proyecto/PENDIENTES.md). Ver [CAMBIOS-V3.md](CAMBIOS-V3.md) para modificaciones de esta revisión, sin borrar los cambios anteriores.

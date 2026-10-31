@@ -46,3 +46,7 @@ Confirmando que la recreación con `compose.yaml` regeneró correctamente la con
 
 ## Prevención y documentación asociada
 - Documentado en la sesión de trabajo [`bitacora/sesiones/2026-10-28-sesion-paso8-https-nginx.md`](../sesiones/2026-10-28-sesion-paso8-https-nginx.md) y en el procedimiento [`docs/procedimientos/08-https-nginx/08-05.md`](../../docs/procedimientos/08-https-nginx/08-05.md).
+
+## Captura del error en la VM `server@server`
+
+El mismo error, con el comando sin `define("CLI_SCRIPT", true)`, quedó registrado en el documento del grupo (pág. 50): [EV-120](../../docs/procedimientos/08-https-nginx/08-05/evidencias/EV-120.md). La versión corregida y su salida `https://aulavirtual.ctcr` están en [EV-119](../../docs/procedimientos/08-https-nginx/08-05/evidencias/EV-119.md).

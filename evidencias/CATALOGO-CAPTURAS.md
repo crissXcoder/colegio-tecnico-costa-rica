@@ -6,7 +6,7 @@
 
 Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no verifica automáticamente persistencia, autorización, seguridad ni reproducibilidad en cinco VMs. La validación de aceptación requiere resultados observados de las pruebas definidas en cada paso.
 
-## Ubicación y significado de las 106 capturas (EV-001 a EV-106)
+## Ubicación y significado de las 130 capturas (EV-001 a EV-130)
 
 ### [01-01 — PASO 01.01 — Topología NAT e interna y verificación entre Ubuntu y Mint](../docs/procedimientos/01-servidor-red/01-01.md)
 
@@ -179,48 +179,164 @@ Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no
 
 ## Bloque 07 — DNS privado BIND9
 
+### [07-01 — PASO 07.01 — Instalar BIND9 en Ubuntu](../docs/procedimientos/07-dns-bind9/07-01.md)
+
+- **[EV-107 — Versión de BIND9 e interfaces del servidor](../docs/procedimientos/07-dns-bind9/07-01/evidencias/EV-107.md)** (VM `server@server`): `named -v` devuelve `BIND 9.20.24-1ubuntu0.4-Ubuntu (Stable Release)`. `ip -4 addr` muestra `lo` 127.0.0.1, `enp0s3` 10.0.2.15/24 (NAT), `enp0s8` 192.168.50.1/24 (red interna), `docker0` 172.17.0.1/16 en estado DOWN y dos redes de Docker `br-…` (172.18.0.1/16 y 172.19.0.1/16).
+
+  ![EV-107](../docs/procedimientos/07-dns-bind9/07-01/evidencias/EV-107.webp)
+
+- **[EV-108 — Estado de named y puertos 53 antes de configurar](../docs/procedimientos/07-dns-bind9/07-01/evidencias/EV-108.md)** (VM `server@server`): `systemctl status named`: `active (running)` desde el sábado 2026-10-24 16:18:52 CST y `enabled`. Los registros repiten `network unreachable resolving '…/AAAA/IN'`. `ss` muestra a `named` escuchando el puerto 53 en `::1` y en direcciones IPv6 de `enp0s3`, `enp0s8`, los puentes de Docker y varias interfaces `veth`.
+
+  ![EV-108](../docs/procedimientos/07-dns-bind9/07-01/evidencias/EV-108.webp)
+
+### [07-02 — PASO 07.02 — Configurar las opciones DNS](../docs/procedimientos/07-dns-bind9/07-02.md)
+
+- **[EV-109 — Copia de seguridad y bloque options de BIND9](../docs/procedimientos/07-dns-bind9/07-02/evidencias/EV-109.md)** (VM `server@server`): Se copia `named.conf.options` a `named.conf.options.bak` y se reemplaza el bloque `options`: `recursion yes`; `allow-query` y `allow-recursion` para `127.0.0.1` y `192.168.50.0/24`; `listen-on { 192.168.50.1; }`; `listen-on-v6 { none; }`; `forwarders` 8.8.8.8 y 1.1.1.1; `dnssec-validation auto`.
+
+  ![EV-109](../docs/procedimientos/07-dns-bind9/07-02/evidencias/EV-109.webp)
+
+### [07-03 — PASO 07.03 — Registrar la zona del proyecto](../docs/procedimientos/07-dns-bind9/07-03.md)
+
+- **[EV-110 — Zona ctcr registrada junto a zonas de otras prácticas](../docs/procedimientos/07-dns-bind9/07-03/evidencias/EV-110.md)** (VM `server@server`): `named.conf.local` ya contenía las zonas `hobbier.internal`, `salazarchavarria.internal` y `examenkrystel.internal` de prácticas anteriores. Al final se agrega, recuadrada, `zone "ctcr" { type master; file "/etc/bind/db.ctcr"; allow-transfer { none; }; };`.
+
+  ![EV-110](../docs/procedimientos/07-dns-bind9/07-03/evidencias/EV-110.webp)
+
+### [07-04 — PASO 07.04 — Crear el archivo de zona](../docs/procedimientos/07-dns-bind9/07-04.md)
+
+- **[EV-111 — Archivo de zona db.ctcr](../docs/procedimientos/07-dns-bind9/07-04/evidencias/EV-111.md)** (VM `server@server`): `/etc/bind/db.ctcr` con `$TTL 604800`, SOA `ns1.ctcr. admin.ctcr.` con serial `2026102401` y tiempos 604800/86400/2419200/604800, `NS ns1.ctcr.`, `ns1 A 192.168.50.1` y `aulavirtual A 192.168.50.1`.
+
+  ![EV-111](../docs/procedimientos/07-dns-bind9/07-04/evidencias/EV-111.webp)
+
 ### [07-05 — PASO 07.05 — Validar BIND9](../docs/procedimientos/07-dns-bind9/07-05.md)
 
 - **[EV-063 — Validación sintáctica de opciones y zonas en BIND9](../docs/procedimientos/07-dns-bind9/07-05/evidencias/EV-063.md)**: Validación de `named-checkconf` (código 0) y `named-checkzone ctcr /etc/bind/db.ctcr` (`OK`, serial `2026102401`), estado del servicio `active (running)` y socket en `192.168.50.1:53` delimitado para convivir con `systemd-resolved`. **Limitación:** Prueba de configuración y servicio en el servidor; no certifica resolución desde clientes de la red interna.
 
+- **[EV-112 — Validación y reinicio de BIND9](../docs/procedimientos/07-dns-bind9/07-05/evidencias/EV-112.md)** (VM `server@server`): `named-checkconf` sin salida (correcto); `named-checkzone ctcr /etc/bind/db.ctcr` → `zone ctcr/IN: loaded serial 2026102401` y `OK`; `systemctl restart named`; `systemctl is-active named` → `active`.
+
+  ![EV-112](../docs/procedimientos/07-dns-bind9/07-05/evidencias/EV-112.webp)
+
 ### [07-06 — PASO 07.06 — Probar el DNS desde Ubuntu](../docs/procedimientos/07-dns-bind9/07-06.md)
 
 - **[EV-064 — Comprobación de resolución DNS local en Ubuntu Server](../docs/procedimientos/07-dns-bind9/07-06/evidencias/EV-064.md)**: Consultas `dig @192.168.50.1 aulavirtual.ctcr +short` y `ns1.ctcr` devolviendo `192.168.50.1`, con registro SOA autoritativo cargado. **Limitación:** Consulta local en el servidor autoritativo; no valida la configuración del resolver en Linux Mint.
+
+- **[EV-113 — Consulta autoritativa con dig desde Ubuntu](../docs/procedimientos/07-dns-bind9/07-06/evidencias/EV-113.md)** (VM `server@server`): `dig @192.168.50.1 aulavirtual.ctcr`: `status: NOERROR`, banderas `qr aa rd ra`, respuesta `aulavirtual.ctcr. 604800 IN A 192.168.50.1`, `SERVER: 192.168.50.1#53` y fecha `Sat Oct 24 19:21:51 CST 2026`.
+
+  ![EV-113](../docs/procedimientos/07-dns-bind9/07-06/evidencias/EV-113.webp)
 
 ### [07-07 — PASO 07.07 — Configurar Linux Mint para utilizar BIND9](../docs/procedimientos/07-dns-bind9/07-07.md)
 
 - **[EV-065 — Configuración y resolución DNS remota desde Linux Mint](../docs/procedimientos/07-dns-bind9/07-07/evidencias/EV-065.md)**: Resolución exitosa en Mint mediante `dig` y `getent ahostsv4 aulavirtual.ctcr` apuntando a `192.168.50.1`, con ping al 0% de pérdida (2 paquetes transmitidos y recibidos). **Limitación:** Prueba de capa de red y DNS; no certifica disponibilidad de servicios HTTP/HTTPS en ese puerto.
 - **[EV-066 — Captura de escritorio de Linux Mint resolviendo el dominio institucional](../docs/procedimientos/07-dns-bind9/07-07/evidencias/EV-066.md)**: Vista completa de escritorio Cinnamon en Linux Mint demostrando resolución y conectividad hacia el Aula Virtual. **Limitación:** Evidencia visual de terminal en cliente; no sustituye la verificación de certificados TLS ni la navegación en navegador.
 
+- **[EV-114 — Dos clientes Mint del grupo usan el DNS del servidor](../docs/procedimientos/07-dns-bind9/07-07/evidencias/EV-114.md)** (VM `server@server`): En el Mint de Greilyn, `nmcli connection show --active` lista «Wired connection 1» en `enp0s8` y «netplan-enp0s3» en `enp0s3`. En el Mint de Angélica, `nmcli device show enp0s3 | grep IP4.DNS` → `192.168.50.1`; `dig @192.168.50.1 aulavirtual.ctcr +short` → `192.168.50.1`; `getent ahostsv4 aulavirtual.ctcr` → `192.168.50.1` (STREAM, DGRAM, RAW).
+
+  ![EV-114](../docs/procedimientos/07-dns-bind9/07-07/evidencias/EV-114.webp)
+
 ## Bloque 08 — Nginx, VirtualHost y HTTPS
+
+### [08-01 — PASO 08.01 — Instalar Nginx](../docs/procedimientos/08-https-nginx/08-01.md)
+
+- **[EV-115 — Versión de Nginx instalada](../docs/procedimientos/08-https-nginx/08-01/evidencias/EV-115.md)** (VM `server@server`): `nginx -v` → `nginx version: nginx/1.28.3 (Ubuntu)`.
+
+  ![EV-115](../docs/procedimientos/08-https-nginx/08-01/evidencias/EV-115.webp)
+
+### [08-02 — PASO 08.02 — Crear el certificado](../docs/procedimientos/08-https-nginx/08-02.md)
+
+- **[EV-116 — Certificado autofirmado con SAN y clave protegida](../docs/procedimientos/08-https-nginx/08-02/evidencias/EV-116.md)** (VM `server@server`): `mkdir -p /etc/nginx/certs`; `openssl req -x509 -nodes -days 365 -newkey rsa:3072 -keyout /etc/nginx/certs/aulavirtual.ctcr.key -out /etc/nginx/certs/aulavirtual.ctcr.crt -subj "/C=CR/O=Colegio Tecnico de Costa Rica/CN=aulavirtual.ctcr" -addext "subjectAltName=DNS:aulavirtual.ctcr"`; `chmod 600` sobre la clave.
+
+  ![EV-116](../docs/procedimientos/08-https-nginx/08-02/evidencias/EV-116.webp)
+
+### [08-03 — PASO 08.03 — Crear el VirtualHost](../docs/procedimientos/08-https-nginx/08-03.md)
+
+- **[EV-117 — VirtualHost aulavirtual.ctcr](../docs/procedimientos/08-https-nginx/08-03/evidencias/EV-117.md)** (VM `server@server`): `/etc/nginx/sites-available/aulavirtual.ctcr` con dos bloques: `listen 192.168.50.1:80` que responde `return 301 https://$host$request_uri;`, y `listen 192.168.50.1:443 ssl` con el certificado y la clave, `ssl_protocols TLSv1.2 TLSv1.3`, `client_max_body_size 100M`, `proxy_pass http://127.0.0.1:8080`, cabeceras `Host`, `X-Real-IP`, `X-Forwarded-For` y `X-Forwarded-Proto https`, y tiempos de espera de 300 s.
+
+  ![EV-117](../docs/procedimientos/08-https-nginx/08-03/evidencias/EV-117.webp)
 
 ### [08-04 — PASO 08.04 — Habilitar el sitio](../docs/procedimientos/08-https-nginx/08-04.md)
 
 - **[EV-067 — Instalación de Nginx, Certificado SAN y Sintaxis](../docs/procedimientos/08-https-nginx/08-04/evidencias/EV-067.md)**: Instalación de Nginx 1.28.3, creación de certificado X.509 con extensión SAN (`aulavirtual.ctcr` y `moodle.ctcr.test`), verificación sintáctica `nginx -t` y servicio activo sin colisión con Apache2. **Limitación:** Certifica la configuración local y sintaxis en Ubuntu Server; no valida el enrutamiento del backend ni la navegación del cliente.
 
+- **[EV-118 — Sitio habilitado y nginx -t correcto](../docs/procedimientos/08-https-nginx/08-04/evidencias/EV-118.md)** (VM `server@server`): `ln -s /etc/nginx/sites-available/aulavirtual.ctcr /etc/nginx/sites-enabled/aulavirtual.ctcr` y `nginx -t` → `syntax is ok` y `test is successful`.
+
+  ![EV-118](../docs/procedimientos/08-https-nginx/08-04/evidencias/EV-118.webp)
+
+### [08-05 — PASO 08.05 — Cambiar la URL de Moodle](../docs/procedimientos/08-https-nginx/08-05.md)
+
+- **[EV-119 — Compose cambiado a 127.0.0.1:8080 y URL HTTPS](../docs/procedimientos/08-https-nginx/08-05/evidencias/EV-119.md)** (VM `server@server`): Se respalda el compose (`cp compose.yaml compose-http.backup.yaml`) y se edita el servicio `moodle`: `ports: "127.0.0.1:8080:8080"`, `MOODLE_URL: https://aulavirtual.ctcr` y `MOODLE_SSL_PROXY: "yes"`. Luego `docker compose config --quiet`, `up -d` (db Healthy, moodle Started) y `ps` con ambos `healthy` y moodle en `127.0.0.1:8080->8080/tcp`. La prueba por PHP CLI devuelve `https://aulavirtual.ctcr`.
+
+  ![EV-119](../docs/procedimientos/08-https-nginx/08-05/evidencias/EV-119.webp)
+
+- **[EV-120 — Error CLI_SCRIPT al consultar wwwroot](../docs/procedimientos/08-https-nginx/08-05/evidencias/EV-120.md)** (VM `server@server`): `docker compose exec moodle php -r 'require "/var/www/moodle/config.php"; echo $CFG->wwwroot, PHP_EOL;'` responde `Command line scripts must define CLI_SCRIPT before requiring config.php`.
+
+  ![EV-120](../docs/procedimientos/08-https-nginx/08-05/evidencias/EV-120.webp)
+
 ### [08-06 — PASO 08.06 — Probar HTTPS desde Ubuntu](../docs/procedimientos/08-https-nginx/08-06.md)
 
 - **[EV-068 — Docker Compose HTTPS, wwwroot Efectiva y Pruebas Curl](../docs/procedimientos/08-https-nginx/08-06/evidencias/EV-068.md)**: Moodle enlazado a `127.0.0.1:8080`, variable `MOODLE_URL=https://aulavirtual.ctcr`, verificación wwwroot y curl local comprobando redirección 301 en puerto 80 y respuesta 200 OK en 443. **Limitación:** Prueba de cabeceras HTTP locales; no certifica renderizado gráfico de la interfaz ni persistencia de sesión en el navegador cliente.
+
+- **[EV-121 — HTTPS 200 desde Ubuntu con cookie segura](../docs/procedimientos/08-https-nginx/08-06/evidencias/EV-121.md)** (VM `server@server`): `curl -k -I --resolve aulavirtual.ctcr:443:192.168.50.1 https://aulavirtual.ctcr` → `HTTP/1.1 200 OK`, `Server: nginx/1.28.3 (Ubuntu)`, fecha `Tue, 27 Oct 2026 03:41:31 GMT` y `Set-Cookie: MoodleSession=…; path=/; secure; HttpOnly; SameSite=Lax`.
+
+  ![EV-121](../docs/procedimientos/08-https-nginx/08-06/evidencias/EV-121.webp)
 
 ### [08-07 — PASO 08.07 — Abrir Moodle desde Linux Mint](../docs/procedimientos/08-https-nginx/08-07.md)
 
 - **[EV-069 — Navegación Web en Mozilla Firefox bajo HTTPS](../docs/procedimientos/08-https-nginx/08-07/evidencias/EV-069.md)**: Acceso exitoso a `https://aulavirtual.ctcr/` en Firefox desde Linux Mint mostrando portada y cursos institucionales bajo TLS. **Limitación:** Prueba de visualización de portada; no verifica aislamiento de cursos por cohorte ni roles no privilegiados.
 - **[EV-070 — Captura Visual de Escritorio en Linux Mint y Pruebas Curl](../docs/procedimientos/08-https-nginx/08-07/evidencias/EV-070.md)**: Entorno Cinnamon en Linux Mint ejecutando pruebas de terminal con redirección 301 a HTTPS y respuesta 200 OK. **Limitación:** Evidencia puntual de conectividad en cliente; no prueba transferencias seguras por otros protocolos como FTPS.
 
+- **[EV-122 — Mint abre el aula por HTTPS y HTTP redirige](../docs/procedimientos/08-https-nginx/08-07/evidencias/EV-122.md)** (VM `server@server`): En el Mint de Greilyn: `getent ahostsv4 aulavirtual.ctcr` → `192.168.50.1`; Firefox abre `aulavirtual.ctcr` con el sitio «Colegio Tecnico» y la lista de cursos; `curl -I http://aulavirtual.ctcr` → `301 Moved Permanently` con `Location: https://aulavirtual.ctcr/`.
+
+  ![EV-122](../docs/procedimientos/08-https-nginx/08-07/evidencias/EV-122.webp)
+
 ## Bloque 09 — Transferencia de archivos FTPS aislada
+
+### [09-01 — PASO 09.01 — Instalar el servicio](../docs/procedimientos/09-ftps-vsftpd/09-01.md)
+
+- **[EV-123 — Instalación de vsftpd esperando el bloqueo de APT](../docs/procedimientos/09-ftps-vsftpd/09-01/evidencias/EV-123.md)** (VM `server@server`): `apt install -y vsftpd` repite `Waiting for cache lock: Could not get lock /var/lib/dpkg/lock-frontend. It is held by process 3165 (unattended-upgr)`. Después, `vsftpd -v` → `vsftpd: version 3.0.5`.
+
+  ![EV-123](../docs/procedimientos/09-ftps-vsftpd/09-01/evidencias/EV-123.webp)
+
+### [09-02 — PASO 09.02 — Crear usuarios FTP](../docs/procedimientos/09-ftps-vsftpd/09-02.md)
+
+- **[EV-124 — Cuentas FTP con guion bajo y shell nologin](../docs/procedimientos/09-ftps-vsftpd/09-02/evidencias/EV-124.md)** (VM `server@server`): `adduser` crea `marta_jimenez`, `carlos_mendez` (Administración), `sofia_hernandez`, `jose_ramirez` (Docencia), `valeria_sanchez` y `diego_fernandez` (Informática), pidiendo la contraseña sin mostrarla. Luego un ciclo `usermod -s /usr/sbin/nologin` para las seis.
+
+  ![EV-124](../docs/procedimientos/09-ftps-vsftpd/09-02/evidencias/EV-124.webp)
 
 ### [09-03 — PASO 09.03 — Crear los directorios separados](../docs/procedimientos/09-ftps-vsftpd/09-03.md)
 
 - **[EV-071 — Cuentas de Sistema, vsftpd 3.0.5 y Carpetas Privadas](../docs/procedimientos/09-ftps-vsftpd/09-03/evidencias/EV-071.md)**: Creación de las 6 cuentas departamentales con `/usr/sbin/nologin`, lista blanca en `/etc/vsftpd.user_list`, e infraestructura de enjaulamiento chroot con raíz `/srv/ftp/<usuario>` (`0755 root:root`) y carpetas de trabajo `/srv/ftp/<usuario>/archivos` (`0700`). **Limitación:** Prueba de aprovisionamiento de cuentas y permisos en el sistema de archivos; no valida la conexión por red ni la negociación TLS.
 
+- **[EV-125 — Directorios por funcionario con permisos 700](../docs/procedimientos/09-ftps-vsftpd/09-03/evidencias/EV-125.md)** (VM `server@server`): `mkdir -p /srv/ftp` y un ciclo que, por usuario, crea `archivos/`, deja la raíz `/srv/ftp/$u` como `root:root 755`, la subcarpeta `archivos` como `$u:$u 700` y cambia el home con `usermod -d`. `ls -ld /srv/ftp/*/archivos` muestra `drwx------` para las seis cuentas (30 de octubre, 11:58 a 12:10).
+
+  ![EV-125](../docs/procedimientos/09-ftps-vsftpd/09-03/evidencias/EV-125.webp)
+
+### [09-05 — PASO 09.05 — Configurar vsftpd](../docs/procedimientos/09-ftps-vsftpd/09-05.md)
+
+- **[EV-126 — nologin en /etc/shells y respaldo de vsftpd.conf](../docs/procedimientos/09-ftps-vsftpd/09-05/evidencias/EV-126.md)** (VM `server@server`): `grep -Fxq /usr/sbin/nologin /etc/shells || echo /usr/sbin/nologin | sudo tee -a /etc/shells` agrega la línea, y `cp /etc/vsftpd.conf /etc/vsftpd.conf.bak` guarda una copia antes de editar.
+
+  ![EV-126](../docs/procedimientos/09-ftps-vsftpd/09-05/evidencias/EV-126.webp)
+
+### [09-06 — PASO 09.06 — Reiniciar FTP](../docs/procedimientos/09-ftps-vsftpd/09-06.md)
+
+- **[EV-127 — Reinicio de vsftpd](../docs/procedimientos/09-ftps-vsftpd/09-06/evidencias/EV-127.md)** (VM `server@server`): `systemctl restart vsftpd` y `systemctl is-active vsftpd` → `active`.
+
+  ![EV-127](../docs/procedimientos/09-ftps-vsftpd/09-06/evidencias/EV-127.webp)
+
 ### [09-07 — PASO 09.07 — Probar un usuario FTP](../docs/procedimientos/09-ftps-vsftpd/09-07.md)
 
 - **[EV-072 — Carga FTPS TLSv1.3 y Aislamiento en el Sistema de Archivos](../docs/procedimientos/09-ftps-vsftpd/09-07/evidencias/EV-072.md)**: Transferencia FTPS explícita bajo TLSv1.3 hacia la carpeta de trabajo del usuario y comprobación de denegación estricta de lectura (`Permiso denegado`) al intentar acceder a directorios de otros departamentos en Ubuntu Server. **Limitación:** Prueba local en el servidor; no valida la experiencia de conexión de red desde una máquina cliente remota.
+
+- **[EV-128 — Subidas FTPS de tres departamentos](../docs/procedimientos/09-ftps-vsftpd/09-07/evidencias/EV-128.md)** (VM `server@server`): Se crean tres archivos de prueba (`expediente-administrativo.txt`, `planificacion-docente.txt`, `informe-soporte.txt`) y se suben con `curl --ssl-reqd --insecure --user <cuenta> --upload-file … ftp://192.168.50.1/archivos/…` como `marta_jimenez`, `sofia_hernandez` y `valeria_sanchez`. Las tres terminan al 100 % (43, 39 y 48 bytes); curl pide la contraseña sin mostrarla.
+
+  ![EV-128](../docs/procedimientos/09-ftps-vsftpd/09-07/evidencias/EV-128.webp)
 
 ### [09-08 — PASO 09.08 — Comprobar que los permisos funcionan](../docs/procedimientos/09-ftps-vsftpd/09-08.md)
 
 - **[EV-073 — Pruebas Remotas FTPS TLSv1.3 y Bloqueo de Escape Chroot](../docs/procedimientos/09-ftps-vsftpd/09-08/evidencias/EV-073.md)**: Transferencias remotas seguras desde Linux Mint con curl FTPS TLSv1.3 y respuesta de error `550 Failed to change directory` ante intentos de directory traversal (`..`) hacia directorios ajenos. **Limitación:** Prueba por línea de comandos; no evalúa clientes gráficos FTP.
 - **[EV-074 — Entorno de Pruebas y Transferencia FTPS en Escritorio](../docs/procedimientos/09-ftps-vsftpd/09-08/evidencias/EV-074.md)**: Captura de escritorio Cinnamon en Linux Mint demostrando sesión interactiva de validación remota FTPS y verificación de políticas de aislamiento. **Limitación:** Evidencia fotográfica de escritorio; complementa pero no sustituye las respuestas numéricas del protocolo RFC 959 / RFC 4217.
+
+- **[EV-129 — Permiso denegado a la carpeta de otro departamento](../docs/procedimientos/09-ftps-vsftpd/09-08/evidencias/EV-129.md)** (VM `server@server`): `sudo -u marta_jimenez ls /srv/ftp/sofia_hernandez/archivos` → `ls: cannot open directory … Permission denied`.
+
+  ![EV-129](../docs/procedimientos/09-ftps-vsftpd/09-08/evidencias/EV-129.webp)
 
 ## Bloque 10 — Copias verificables y restauración de ensayo
 
@@ -253,6 +369,10 @@ Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no
 ### [11-04 — PASO 11.04 — Configurar y verificar el firewall](../docs/procedimientos/11-verificacion/11-04.md)
 
 - **[EV-102 — Auditoría de reglas iptables, cadenas DOCKER-USER y NAT en Ubuntu Server](../docs/procedimientos/11-verificacion/11-04/evidencias/EV-102.md)**: Inspección de políticas de firewall en `iptables`, cadenas `DOCKER-USER` para tráfico LAN/WAN, persistencia con `netfilter-persistent` y diagnóstico de ausencia de UFW para evitar colisiones con Docker. **Limitación:** Prueba la configuración en el host; el enrutamiento real se valida con tráfico desde el cliente.
+
+- **[EV-130 — UFW: comando no encontrado](../docs/procedimientos/11-verificacion/11-04/evidencias/EV-130.md)** (VM `server@server`): `sudo ufw status verbose` → `sudo: 'ufw': command not found`.
+
+  ![EV-130](../docs/procedimientos/11-verificacion/11-04/evidencias/EV-130.webp)
 
 ### [11-05 — PASO 11.05 — Pruebas desde Linux Mint](../docs/procedimientos/11-verificacion/11-05.md)
 

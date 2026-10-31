@@ -1,2 +1,2 @@
-# Fragmento para crontab de root, reemplazar /opt/elevaquitas por ruta real.
-0 2 * * * /opt/elevaquitas/scripts/backup-db.sh >> /var/log/elevaquitas-backup.log 2>&1
+# Línea del crontab de root en la VM #1 (EV-098). Ajustar la ruta a la carpeta real del proyecto de cada VM.
+0 2 * * * /home/criss/proyecto-moodle/respaldo.sh >> /var/log/moodle-backup.log 2>&1

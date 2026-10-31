@@ -67,3 +67,13 @@ sudo apt install -y nginx=1.28.3-2ubuntu1.12 openssl
 ## Prevención y documentación asociada
 - Documentado en la sesión de trabajo [`bitacora/sesiones/2026-10-28-sesion-paso8-https-nginx.md`](../sesiones/2026-10-28-sesion-paso8-https-nginx.md) y en el procedimiento [`docs/procedimientos/08-https-nginx/08-01.md`](../../docs/procedimientos/08-https-nginx/08-01.md).
 - Regla persistida: Verificar `apt-cache policy <paquete>` antes de forzar revisiones de build de Ubuntu cuando la versión upstream (`1.28.3`) es la requerida.
+
+## Misma falla en la VM `server@server`: otra solución
+
+Según el documento del grupo (pág. 50), en la VM `server@server` apareció el mismo mensaje, `Version '1.28.3-2ubuntu1.11' for 'nginx' was not found`, y `apt-cache policy nginx` solo ofrecía `1.28.3-2ubuntu1.12`. Allí **no** se pasó a la `.12`: se descargaron con `wget`, desde un espejo de Ubuntu, `nginx_1.28.3-2ubuntu1.11_amd64.deb` y `nginx-common_1.28.3-2ubuntu1.11_all.deb`, se instalaron con `sudo apt install ./<archivo>.deb` y se comprobó con `dpkg-query -W nginx nginx-common` que ambos quedaron en `1.28.3-2ubuntu1.11`. Versión resultante: [EV-115](../../docs/procedimientos/08-https-nginx/08-01/evidencias/EV-115.md).
+
+**Consecuencias a tener en cuenta:**
+
+- Las dos VMs quedaron con revisiones distintas (`…1.11` y `…1.12`). Las dos son Nginx 1.28.3; la `.12` incluye la corrección de seguridad más reciente.
+- Un paquete instalado desde `.deb` con versión menor a la del repositorio será **actualizado** por `apt upgrade` o por las actualizaciones automáticas. Si se quiere mantener la `.11`, fijarla: `sudo apt-mark hold nginx nginx-common` (riesgo R-46).
+- Los `.deb` de un espejo deben ser los oficiales de Ubuntu; no instalar paquetes de sitios desconocidos.
