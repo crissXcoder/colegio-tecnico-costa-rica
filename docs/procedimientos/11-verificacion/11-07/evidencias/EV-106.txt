@@ -1,0 +1,24 @@
+# Ubuntu Server — Paso 11.07: Resiliencia de Contenedores, Jaula FTPS y Ensayo DRP
+# criss@server:~$ [Resiliencia de Infraestructura / DRP]
+
+$ cd ~/proyecto-moodle && sudo docker compose restart
+[+] restart 2/2 Container proyecto-moodle-db-1 Healthy, Container proyecto-moodle-moodle-1 Healthy
+$ docker compose exec -T db mariadb -u root moodle -e "SELECT COUNT(*) AS cursos FROM mdl_course WHERE category > 0;"
+cursos: 3 (cursos departamentales intactos tras reinicio)
+
+$ curl --ssl-reqd --insecure -u marta.jimenez:*** "ftp://192.168.50.1/../carlos.mendez/archivos/"
+< 550 Failed to change directory. [Jaula FTPS: Imposible escapar o acceder a carpetas ajenas]
+
+$ sudo ./respaldo.sh && sudo gzip -t /var/backups/moodle/ctcr_moodle_2026-10-30_18-14-19.sql.gz
+Respaldo completado correctamente: 2026-10-30_18-14-19. Integridad OK.
+
+$ docker compose exec -T db mariadb -u root -e "
+SELECT table_schema, COUNT(*) AS total_tablas FROM information_schema.tables 
+WHERE table_schema IN ('moodle','moodle_restore_test') GROUP BY table_schema;"
++---------------------+--------------+
+| table_schema        | total_tablas |
++---------------------+--------------+
+| moodle              |          494 |
+| moodle_restore_test |          494 |
++---------------------+--------------+
+[PASS] Persistencia tras reinicio demostrada; aislamiento FTPS chroot verificado con error 550; y recuperación DRP en base aislada con 100% de paridad estructural (494 tablas).

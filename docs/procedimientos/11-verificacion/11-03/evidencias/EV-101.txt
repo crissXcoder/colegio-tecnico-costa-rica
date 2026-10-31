@@ -1,0 +1,18 @@
+# Ubuntu Server — Paso 11.02 y 11.03: Servicios del Sistema y Auditoría de Puertos
+# criss@server:~$ [systemd & ss -lntup]
+
+$ systemctl is-active named nginx vsftpd cron
+active
+active
+active
+active
+
+$ sudo ss -lntup | grep -E ':(21|53|80|443|8080|3306)'
+udp   UNCONN 0      0       192.168.50.1:53       0.0.0.0:*    users:(("named",pid=1049,fd=39))
+tcp   LISTEN 0      32      192.168.50.1:21       0.0.0.0:*    users:(("vsftpd",pid=1106,fd=3))
+tcp   LISTEN 0      10      192.168.50.1:53       0.0.0.0:*    users:(("named",pid=1049,fd=43))
+tcp   LISTEN 0      511     192.168.50.1:80       0.0.0.0:*    users:(("nginx",pid=1366,fd=5))
+tcp   LISTEN 0      511     192.168.50.1:443      0.0.0.0:*    users:(("nginx",pid=1366,fd=6))
+tcp   LISTEN 0      4096       127.0.0.1:8080     0.0.0.0:*    users:(("docker-proxy",pid=2422,fd=8))
+
+[PASS] Servicios named, nginx, vsftpd y cron en estado active. Puertos 21, 53, 80, 443 expuestos en LAN; Moodle (8080) amarrado a loopback; MariaDB en contenedor sin publicar hacia la LAN.

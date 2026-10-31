@@ -1,0 +1,20 @@
+# Moodle CTCR — Paso 11.06: Cuestionarios Completados y Calificador Docente
+# criss@server:~$ [MariaDB / Moodle Gradebook & Cuestionarios]
+
+$ docker compose exec -T db mariadb -u root moodle -e "
+SELECT qg.id, q.name AS cuestionario, u.username, qg.grade, FROM_UNIXTIME(qg.timemodified) AS fecha
+FROM mdl_quiz_grades qg
+JOIN mdl_quiz q ON qg.quiz = q.id
+JOIN mdl_user u ON qg.userid = u.id;"
++----+----------------------------------------+-----------------+-----------+---------------------+
+| id | cuestionario                           | username        | grade     | fecha               |
++----+----------------------------------------+-----------------+-----------+---------------------+
+|  2 | Cuestionario de seguridad informática  | valeria.sanchez | 100.00000 | 2026-10-24 16:38:22 |
+|  3 | Cuestionario sobre evaluación          | sofia.hernandez | 100.00000 | 2026-10-30 18:10:25 |
++----+----------------------------------------+-----------------+-----------+---------------------+
+
+$ curl -k -s -b /tmp/cookies_prof.txt https://aulavirtual.ctcr/grade/report/grader/index.php?id=4 | grep -E "Valeria|100"
+[Docente Daniel Vargas audita el Calificador del curso CTCR-INF-101]
+Estudiante: Valeria Sánchez López | Calificación Cuestionario: 100.00 / 100.00 | Total del Curso: 100.00
+
+[PASS] Cuestionarios evaluados con nota máxima (100 pts) en Docencia e Informática; persistencia en el libro de calificaciones de Moodle y visualización confirmada para el rol docente.

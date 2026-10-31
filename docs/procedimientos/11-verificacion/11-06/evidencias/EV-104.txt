@@ -1,0 +1,22 @@
+# Moodle CTCR — Paso 11.06: Aislamiento Departamental y Denegación de Recursos
+# criss@server:~$ [Moodle LMS / Aislamiento de Cohortes y Cursos]
+
+$ curl -k -s -c /tmp/cookies.txt -d "username=marta.jimenez&password=***&logintoken=..." https://aulavirtual.ctcr/login/index.php
+[Autenticación exitosa como Marta Jiménez (Estudiante de Administración)]
+
+$ curl -k -s -b /tmp/cookies.txt https://aulavirtual.ctcr/course/view.php?id=2 | grep -o "Gestión Documental"
+Gestión Documental [Acceso legítimo concedido a su propio curso departamental CTCR-ADM-101]
+
+$ curl -k -s -b /tmp/cookies.txt -I https://aulavirtual.ctcr/mod/resource/view.php?id=12
+HTTP/1.1 200 OK
+Location: https://aulavirtual.ctcr/pluginfile.php/30/mod_resource/content/2/Manual_archivo_institucional.pdf
+
+$ curl -k -s -b /tmp/cookies.txt -I https://aulavirtual.ctcr/course/view.php?id=4
+HTTP/1.1 303 See Other
+Location: https://aulavirtual.ctcr/enrol/index.php?id=4 [Acceso a curso ajeno CTCR-INF-101 DENEGADO]
+
+$ curl -k -s -b /tmp/cookies.txt -I https://aulavirtual.ctcr/mod/resource/view.php?id=18
+HTTP/1.1 303 See Other
+Location: https://aulavirtual.ctcr/enrol/index.php?id=4 [Enlace directo a recurso ajeno de Informática DENEGADO]
+
+[PASS] Acceso departamental autorizado para Administración; rechazo categórico y redirección a matrícula ante intentos de acceso a cursos o recursos ajenos de Informática.

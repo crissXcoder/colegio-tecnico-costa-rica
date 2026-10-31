@@ -6,7 +6,7 @@
 
 Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no verifica automáticamente persistencia, autorización, seguridad ni reproducibilidad en cinco VMs. La validación de aceptación requiere resultados observados de las pruebas definidas en cada paso.
 
-## Ubicación y significado de las 99 capturas (EV-001 a EV-099)
+## Ubicación y significado de las 106 capturas (EV-001 a EV-106)
 
 ### [01-01 — PASO 01.01 — Topología NAT e interna y verificación entre Ubuntu y Mint](../docs/procedimientos/01-servidor-red/01-01.md)
 
@@ -239,6 +239,33 @@ Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no
 ### [10-06 — PASO 10.06 — Probar una restauración sin dañar Moodle](../docs/procedimientos/10-respaldos/10-06.md)
 
 - **[EV-099 — Restauración de Ensayo en moodle_restore_test y Validación de Tablas](../docs/procedimientos/10-respaldos/10-06/evidencias/EV-099.md)**: Creación de base de ensayo `moodle_restore_test`, descompresión e importación por tubería, comparación estructural con 494 tablas recuperadas (100% coincidencia) y posterior eliminación de la base de prueba. **Limitación:** Demuestra recuperabilidad del esquema relacional MariaDB; no cubre archivos persistentes de moodledata (archivos adjuntos).
+
+## Bloque 11 — QA funcional y de infraestructura
+
+### [11-01 — PASO 11.01 — Comprobar los contenedores](../docs/procedimientos/11-verificacion/11-01.md)
+
+- **[EV-100 — Comprobación de salud en contenedores Docker y URL canónica wwwroot](../docs/procedimientos/11-verificacion/11-01/evidencias/EV-100.md)**: Salida de `docker compose ps` con ambos servicios (`db` y `moodle`) en estado saludable (`healthy`), y resolución de la URL canónica institucional `https://aulavirtual.ctcr` mediante script CLI superando la validación defensiva `CLI_SCRIPT`. **Limitación:** Prueba la salud interna de los contenedores en el host; la conectividad externa se verifica desde Linux Mint.
+
+### [11-03 — PASO 11.03 — Comprobar los puertos](../docs/procedimientos/11-verificacion/11-03.md)
+
+- **[EV-101 — Auditoría de servicios systemd y verificación de puertos de escucha ss](../docs/procedimientos/11-verificacion/11-03/evidencias/EV-101.md)**: Verificación de estado `active` en `named`, `nginx`, `vsftpd` y `cron`, junto con inventario exhaustivo de sockets abiertos con `ss -lntup` (21, 53, 80, 443 expuestos a la LAN; 8080 en loopback; 3306 de Docker aislado de la red). **Limitación:** Confirma que los procesos están escuchando localmente; la conectividad de transporte se valida desde el cliente.
+
+### [11-04 — PASO 11.04 — Configurar y verificar el firewall](../docs/procedimientos/11-verificacion/11-04.md)
+
+- **[EV-102 — Auditoría de reglas iptables, cadenas DOCKER-USER y NAT en Ubuntu Server](../docs/procedimientos/11-verificacion/11-04/evidencias/EV-102.md)**: Inspección de políticas de firewall en `iptables`, cadenas `DOCKER-USER` para tráfico LAN/WAN, persistencia con `netfilter-persistent` y diagnóstico de ausencia de UFW para evitar colisiones con Docker. **Limitación:** Prueba la configuración en el host; el enrutamiento real se valida con tráfico desde el cliente.
+
+### [11-05 — PASO 11.05 — Pruebas desde Linux Mint](../docs/procedimientos/11-verificacion/11-05.md)
+
+- **[EV-103 — Pruebas de conectividad ICMP, resolución DNS y redirección HTTP 301 desde Linux Mint](../docs/procedimientos/11-verificacion/11-05/evidencias/EV-103.md)**: Comprobaciones remotas desde Linux Mint con ping al 0% de pérdida, resolución DNS autoritativa de `aulavirtual.ctcr` devolviendo `192.168.50.1`, redirección HTTP 301 hacia HTTPS y respuesta TLS 200 OK con cookies de sesión. **Limitación:** Prueba la capa de red y transporte web; no valida la lógica de autenticación ni los permisos de roles.
+
+### [11-06 — PASO 11.06 — Pruebas de los departamentos](../docs/procedimientos/11-verificacion/11-06.md)
+
+- **[EV-104 — Aislamiento departamental: acceso a ADM y rechazo estricto a recurso de INF por URL](../docs/procedimientos/11-verificacion/11-06/evidencias/EV-104.md)**: Ingreso exitoso de Marta Jiménez (Administración) a su curso `CTCR-ADM-101` y su PDF, seguido de rechazo inmediato y redirección a `enrol/index.php` al intentar acceder al curso o recurso directo de Informática. **Limitación:** Prueba el aislamiento entre Administración e Informática; el aislamiento global se verifica con la matriz 3×3 de matrículas.
+- **[EV-105 — Cuestionarios completados en Docencia e Informática y calificador docente revisado](../docs/procedimientos/11-verificacion/11-06/evidencias/EV-105.md)**: Verificación de cuestionarios completados con nota 100/100 para Valeria Sánchez (Informática) y Sofía Hernández (Docencia) en `mdl_quiz_grades`, y auditoría docente de Daniel Vargas en el Calificador del curso. **Limitación:** Muestra la evaluación de los cuestionarios probados; no reemplaza la resolución interactiva de estudiantes futuros.
+
+### [11-07 — PASO 11.07 — Pruebas de infraestructura](../docs/procedimientos/11-verificacion/11-07.md)
+
+- **[EV-106 — Resiliencia de contenedores, jaula FTPS con error 550 y ensayo DRP con 494 tablas](../docs/procedimientos/11-verificacion/11-07/evidencias/EV-106.md)**: Demostración de persistencia tras reinicio de contenedores Docker (3 cursos intactos), bloqueo estricto en FTPS con error `550 Failed to change directory` al intentar salir del chroot, y ciclo de respaldo e importación DRP con 494 tablas recuperadas. **Limitación:** Valida resiliencia y base de datos relacional; la recuperación completa de archivos adjuntos requiere instantáneas del volumen `moodledata`.
 
 ## Alta de evidencias nuevas
 

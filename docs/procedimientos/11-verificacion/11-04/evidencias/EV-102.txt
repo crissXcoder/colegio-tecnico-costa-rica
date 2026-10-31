@@ -1,0 +1,20 @@
+# Ubuntu Server — Paso 11.04: Auditoría de Firewall (iptables / DOCKER-USER y NAT)
+# criss@server:~$ [iptables netfilter-persistent]
+
+$ sudo ufw status verbose
+sudo: 'ufw': command not found
+[Nota: UFW no instalado; filtrado y NAT gestionados nativamente por iptables para evitar colisión con Docker]
+
+$ sudo iptables -S FORWARD
+-P FORWARD ACCEPT
+-A FORWARD -j DOCKER-USER
+-A FORWARD -j DOCKER-FORWARD
+-A FORWARD -i enp0s3 -o enp0s8 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A FORWARD -i enp0s8 -o enp0s3 -j ACCEPT
+
+$ sudo iptables -S DOCKER-USER
+-N DOCKER-USER
+-A DOCKER-USER -i enp0s8 -o enp0s3 -j ACCEPT
+-A DOCKER-USER -i enp0s3 -o enp0s8 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+
+[PASS] Cadena DOCKER-USER preserva tráfico LAN enp0s8 y salida WAN enp0s3. Reglas persistentes en /etc/iptables/rules.v4.

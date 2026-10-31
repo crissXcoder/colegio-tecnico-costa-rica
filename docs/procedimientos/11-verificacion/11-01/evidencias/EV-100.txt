@@ -1,0 +1,12 @@
+# Ubuntu Server — Paso 11.01: Comprobación de Docker Compose y URL Canónica
+# criss@server:~/proyecto-moodle$ [Docker 29.9 / Moodle 4.5.15 LTS]
+
+$ cd ~/proyecto-moodle && sudo docker compose ps
+NAME                       IMAGE                     COMMAND                  SERVICE   CREATED        STATUS                   PORTS
+proyecto-moodle-db-1       mariadb:11.4.13           "docker-entrypoint.s…"   db        8 days ago     Up 12 minutes (healthy)  3306/tcp
+proyecto-moodle-moodle-1   oksigenia/moodle:4.5.15   "/usr/bin/tini -g --…"   moodle    46 hours ago   Up 12 minutes (healthy)  80/tcp, 8443/tcp, 127.0.0.1:8080->8080/tcp
+
+$ sudo docker compose exec moodle php -r 'define("CLI_SCRIPT", true); require "/var/www/moodle/config.php"; echo $CFG->wwwroot, PHP_EOL;'
+https://aulavirtual.ctcr
+
+[PASS] Ambos contenedores operativos y en estado saludable (healthy). URL wwwroot canónica validada en https://aulavirtual.ctcr

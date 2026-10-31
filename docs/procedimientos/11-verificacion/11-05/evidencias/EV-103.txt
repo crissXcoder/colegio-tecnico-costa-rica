@@ -1,0 +1,28 @@
+# Linux Mint — Paso 11.05: Pruebas Remotas de Red, DNS y Redirección HTTPS
+# criss@criss-VirtualBox:~$ [Linux Mint 22.3 -> Ubuntu Server 192.168.50.1]
+
+criss@criss-VirtualBox:~$ ping -c 4 192.168.50.1
+PING 192.168.50.1 (192.168.50.1) 56(84) bytes of data.
+64 bytes from 192.168.50.1: icmp_seq=1 ttl=64 time=1.28 ms
+64 bytes from 192.168.50.1: icmp_seq=2 ttl=64 time=1.23 ms
+64 bytes from 192.168.50.1: icmp_seq=3 ttl=64 time=1.10 ms
+64 bytes from 192.168.50.1: icmp_seq=4 ttl=64 time=1.12 ms
+--- 192.168.50.1 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3003ms
+
+criss@criss-VirtualBox:~$ getent ahostsv4 aulavirtual.ctcr
+192.168.50.1    STREAM aulavirtual.ctcr
+192.168.50.1    DGRAM  
+192.168.50.1    RAW    
+
+criss@criss-VirtualBox:~$ curl -sSI http://aulavirtual.ctcr
+HTTP/1.1 301 Moved Permanently
+Server: nginx/1.28.3 (Ubuntu)
+Location: https://aulavirtual.ctcr/
+
+criss@criss-VirtualBox:~$ curl -k -I https://aulavirtual.ctcr
+HTTP/1.1 200 OK
+Server: nginx/1.28.3 (Ubuntu)
+Set-Cookie: MoodleSession=...; path=/; secure; HttpOnly; SameSite=Lax
+
+[PASS] Ping 0% packet loss, resolución DNS autoritativa a 192.168.50.1, redirección HTTP 301 a HTTPS y respuesta TLS 200 OK.
