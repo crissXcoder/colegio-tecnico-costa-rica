@@ -19,6 +19,8 @@ Este directorio registra **pruebas funcionales y negativas**, no impresiones de 
 
 ## Dónde guardar cada resultado y cómo enlazarlo
 
+Los resultados detallados de ejecución, comandos, salidas de terminal y trazabilidad con las capturas de pantalla están documentados en la [Matriz Integral de QA y Pruebas de Aceptación Final](MATRIZ-QA-FINAL.md), donde los 10 criterios cuentan con estado **PASS** verificado en el laboratorio.
+
 Las capturas pertenecen al procedimiento del servicio, con ficha EV que explique **lo que muestran y lo que no muestran**. Este archivo ofrece una perspectiva transversal de QA y enlaza a la [matriz oficial](../docs/00-proyecto/matriz-requisitos.md). Un estado histórico o un screenshot de un selector abierto es insuficiente para pasar una prueba funcional.
 
 ## Reglas de reporte

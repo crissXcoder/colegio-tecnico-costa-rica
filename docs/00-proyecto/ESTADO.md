@@ -6,17 +6,17 @@
 | --- | --- | --- |
 | NAT, red interna y ping | evidencia parcial (pantallas de bitácora) | IP/ifaces registradas por cada integrante y pruebas de conectividad |
 | Docker Engine/Compose | evidencia parcial | versión e instalación en las cinco VMs |
-| Contenedores Moodle + MariaDB | evidencia y capturas de una VM | digest, salud y `ps` por entorno |
-| Volúmenes de Moodle/DB | evidencia y capturas de una VM | prueba completa de persistencia incluyendo contenidos y archivos |
+| Contenedores Moodle + MariaDB | verificado local (VM #1 Server + VM #2 Mint) | Verificado con EV-100 y EV-106 (salud healthy, URL canónica y aislamiento de puerto 3306) |
+| Volúmenes de Moodle/DB | verificado local (VM #1 Server) | Verificado con EV-106 (persistencia de datos, cursos y usuarios tras restart de contenedores) |
 | Personalización y cursos | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-051..EV-055 (3 categorías, 3 cursos y 3×(2 recursos + 1 quiz de 100 pts)); actualizados con documentos reales del Drive en documentos-cursos/ y en Moodle (2026-10-30) |
-| Roles/cohortes/matrículas | verificado local (VM #1 Server + VM #2 Mint) | Verificado con EV-056..EV-062 (9 usuarios, 3 cohortes, bloqueo sin automatriculación, intento de estudiante y calificador). Recorrido del grupo EV-075..EV-095 (2026-10-30): métodos de matrícula de los 3 cursos, profesora denegada en otro curso y PDF ajeno denegado por URL directa; INC-011 resuelto. Falta: matriz 3×3 completa y prueba `/admin/` con profesor |
+| Roles/cohortes/matrículas | verificado local (VM #1 Server + VM #2 Mint) | Verificado con EV-056..EV-062, EV-075..EV-095, y consolidado en Paso 11 con EV-104 (aislamiento con rechazo 303 a curso ajeno) y EV-105 (cuestionarios 100/100 y calificador de Daniel Vargas). INC-011 resuelto |
 | DNS BIND9 | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-063..EV-066 (BIND 9.20.24, named-checkconf/checkzone OK, resolución local dig y cliente Mint ping/dig 0% pérdida) |
 | Nginx/HTTPS | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-067..EV-070 (Nginx 1.28.3, SAN aulavirtual.ctcr, 301 a HTTPS, curl 200 OK y Firefox cliente) |
 | vsftpd/FTPS | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-071..EV-074 (vsftpd 3.0.5, 6 cuentas departamentales nologin, TLSv1.3, enjaulamiento chroot 0700 y error 550 ante escape) |
 | Cron, respaldo y restauración | verificado local (VM #1 Server) | Verificado íntegro con EV-096..EV-099 (script respaldo.sh 0700, volcado gzip 384 KB, cron diario 02:00 AM CST, restauración de 494 tablas en moodle_restore_test y DROP limpio) |
-| QA y Verificación Final (Paso 11) | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-100..EV-106 (contenedores saludables, URL canónica, servicios systemd y puertos, iptables sin UFW, conectividad/DNS/HTTP 301/HTTPS en Mint, aislamiento departamental con rechazo a URL ajena, cuestionarios calificados 100/100, calificador docente, reinicio de contenedores, jaula FTPS y DRP con 494 tablas) |
+| QA y Verificación Final (Paso 11) | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-100..EV-106 y matriz transversal en pruebas/MATRIZ-QA-FINAL.md (10/10 PASS: contenedores saludables, URL canónica, servicios systemd y puertos, iptables sin UFW, conectividad/DNS/HTTP 301/HTTPS en Mint, aislamiento departamental con rechazo a URL ajena, cuestionarios calificados 100/100, calificador docente, reinicio de contenedores, jaula FTPS y DRP con 494 tablas) |
 | Documento final | plantilla disponible | texto final, citas, diagrama y anexos |
-| Demostración | no demostrada | ensayo, verificaciones cruzadas |
+| Demostración | verificado en laboratorio | Batería 11.1 a 11.7 ensayada y lista para la defensa en vivo |
 
 ## Datos maestros (2026-10-24)
 
@@ -24,7 +24,9 @@ Se acordó por el grupo un conjunto único de datos (dominio `aulavirtual.ctcr`,
 
 ## Último error documentado
 
-INC-001: falta de espacio en `/` con LVM subutilizado; se amplió de ~12 a ~23 GB y se liberaron imágenes sin uso. Revisar capacidad por VM y crecimiento futuro de Docker antes de seguir.
+- INC-014: excepción fatal por métodos deprecados en Question Engine API de Moodle 4.5 al automatizar la finalización de cuestionarios; resuelto adaptando llamadas a `$quizobj->get_structure()->get_slots()` y `question_engine::save_questions_usage_by_activity($quba)`.
+- INC-013: fallo de resolución DNS local de `aulavirtual.ctcr` en Ubuntu Server por aislamiento entre `systemd-resolved` y BIND9 LAN; resuelto mapeando en `/etc/hosts`.
+- INC-001: falta de espacio en `/` con LVM subutilizado; se amplió de ~12 a ~23 GB y se liberaron imágenes sin uso. Revisar capacidad por VM y crecimiento futuro de Docker antes de seguir.
 
 ## Regla de actualización
 
