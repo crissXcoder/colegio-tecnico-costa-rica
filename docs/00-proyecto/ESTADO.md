@@ -14,6 +14,7 @@
 | Nginx/HTTPS | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-067..EV-070 (Nginx 1.28.3, SAN aulavirtual.ctcr, 301 a HTTPS, curl 200 OK y Firefox cliente) |
 | vsftpd/FTPS | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-071..EV-074 (vsftpd 3.0.5, 6 cuentas departamentales nologin, TLSv1.3, enjaulamiento chroot 0700 y error 550 ante escape) |
 | Cron, respaldo y restauración | verificado local (VM #1 Server) | Verificado íntegro con EV-096..EV-099 (script respaldo.sh 0700, volcado gzip 384 KB, cron diario 02:00 AM CST, restauración de 494 tablas en moodle_restore_test y DROP limpio) |
+| QA y Verificación Final (Paso 11) | verificado local (VM #1 Server + VM #2 Mint) | Verificado íntegro con EV-100..EV-106 (contenedores saludables, URL canónica, servicios systemd y puertos, iptables sin UFW, conectividad/DNS/HTTP 301/HTTPS en Mint, aislamiento departamental con rechazo a URL ajena, cuestionarios calificados 100/100, calificador docente, reinicio de contenedores, jaula FTPS y DRP con 494 tablas) |
 | Documento final | plantilla disponible | texto final, citas, diagrama y anexos |
 | Demostración | no demostrada | ensayo, verificaciones cruzadas |
 
