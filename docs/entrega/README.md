@@ -8,6 +8,7 @@
 | [PAQUETE-ENTREGA.md](PAQUETE-ENTREGA.md) | Cómo armar la carpeta comprimida desde el servidor, con `hashes.txt`, y errores típicos al hacerlo. |
 | [GUIA-DEMO.md](GUIA-DEMO.md) | Guion de 3 minutos de contexto y 11 de demostración, con plan B para cada parte. |
 | [PREGUNTAS-TECNICAS.md](PREGUNTAS-TECNICAS.md) | Banco de preguntas con comando y cómo leer la salida, para practicar los cinco. |
+| [GUIA-PREGUNTAS-DEFENSA-EXPO.md](../../GUIA-PREGUNTAS-DEFENSA-EXPO.md) | Guía exhaustiva de preguntas y defensa oral ante el profesor, basada en ejemplos de examen y rúbrica. |
 | [comparativa-software.md](comparativa-software.md) | Justificación del software libre con criterios técnicos y de costo. |
 | [PENDIENTES.md](../00-proyecto/PENDIENTES.md) | Lo que falta hasta la entrega, con fecha meta. |
 
