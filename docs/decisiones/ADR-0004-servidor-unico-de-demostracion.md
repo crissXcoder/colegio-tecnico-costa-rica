@@ -1,8 +1,8 @@
 # ADR-0004 — Un único servidor para la entrega y la demostración
 
 - ADR-ID: ADR-0004
-- Estado: **propuesta**. El grupo debe confirmarla antes del ensayo del 06/11/2026.
-- Fecha / Autores / Revisores: 2026-10-31 / redactada al contrastar el repositorio con el anexo técnico del 31/10 / revisión pendiente.
+- Estado: **aceptada**. Confirmada oficialmente para la entrega y presentación del 07/11/2026. Servidor oficial: VM #1 (`criss@server`, IP 192.168.50.1).
+- Fecha / Autores / Revisores: 2026-10-31 / equipo CTCR EIF431O / ratificado en auditoría de producción.
 
 ## Contexto y problema
 
