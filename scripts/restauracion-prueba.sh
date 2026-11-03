@@ -2,12 +2,12 @@
 # Restauración de ENSAYO del último respaldo SQL de Moodle en una base aparte.
 #
 # Nunca escribe sobre la base real `moodle`: crea `moodle_restore_test`, importa,
-# compara tablas y cursos con la base real y borra la base de ensayo al final.
+# compara tablas, cursos y usuarios con la base real y borra la base de ensayo al final.
 #
 # Se instala junto a respaldo.sh, en la carpeta del proyecto del servidor
 # (por ejemplo /home/criss/proyecto-moodle), y se ejecuta con sudo:
 #   sudo ./restauracion-prueba.sh                      # usa el respaldo más reciente
-#   sudo ./restauracion-prueba.sh /var/backups/moodle/ctcr_moodle_2026-10-30_16-46-51.sql.gz
+#   sudo ./restauracion-prueba.sh /var/backups/moodle/ctcr_moodle_2026-11-02_21-53-37.sql.gz
 #   sudo ./restauracion-prueba.sh --conservar          # no borra la base de ensayo
 # Para guardar evidencia con fecha:
 #   sudo ./restauracion-prueba.sh 2>&1 | tee "restauracion_$(date +%F_%H-%M).log"
@@ -69,6 +69,7 @@ log "Respaldo seleccionado: $BACKUP ($(du -h "$BACKUP" | cut -f1), modificado $(
 gzip -t "$BACKUP" || falla "el archivo está dañado (gzip -t falló)"
 log "gzip -t: OK"
 
+# Si la base temporal ya existía antes de comenzar, el script se detiene sin borrarla.
 existe="$(sql -e "SELECT COUNT(*) FROM information_schema.schemata WHERE schema_name='$DB_TEST';")"
 if [[ "$existe" != "0" ]]; then
     falla "ya existe $DB_TEST de una prueba anterior; revisarla y borrarla a mano con DROP DATABASE $DB_TEST antes de repetir"
@@ -88,20 +89,39 @@ log "Importando en $DB_TEST (puede tardar un minuto)..."
 gzip -dc "$BACKUP" | docker compose exec -T -e MYSQL_PWD="$DB_ROOT_PASSWORD" db mariadb -u root "$DB_TEST"
 log "Importación terminada."
 
+# 1. Comparar tablas
 tablas_real="$(sql -e "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='$DB_REAL';")"
 tablas_test="$(sql -e "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='$DB_TEST';")"
+
+# 2. Comparar cursos
+cursos_real="$(sql "$DB_REAL" -e "SELECT GROUP_CONCAT(shortname ORDER BY shortname) FROM mdl_course WHERE id>1;")"
 cursos_test="$(sql "$DB_TEST" -e "SELECT GROUP_CONCAT(shortname ORDER BY shortname) FROM mdl_course WHERE id>1;")"
+
+# 3. Comparar usuarios activos
+usuarios_real="$(sql "$DB_REAL" -e "SELECT COUNT(*) FROM mdl_user WHERE deleted=0;")"
 usuarios_test="$(sql "$DB_TEST" -e "SELECT COUNT(*) FROM mdl_user WHERE deleted=0;")"
 
-log "Tablas en $DB_REAL: $tablas_real | en $DB_TEST: $tablas_test"
-log "Cursos restaurados: ${cursos_test:-ninguno}"
-log "Usuarios activos restaurados: $usuarios_test"
+log "--- Comparación de Integridad: Base Original vs Base Restaurada ---"
+log "Tablas: en $DB_REAL: $tablas_real | en $DB_TEST: $tablas_test"
+log "Cursos originales ($DB_REAL): ${cursos_real:-ninguno}"
+log "Cursos restaurados ($DB_TEST): ${cursos_test:-ninguno}"
+log "Usuarios activos: en $DB_REAL: $usuarios_real | en $DB_TEST: $usuarios_test"
 
 if [[ "$tablas_test" -eq 0 ]]; then
     falla "la restauración no creó tablas"
 elif [[ "$tablas_real" != "$tablas_test" ]]; then
-    log "AVISO: el número de tablas difiere. Puede ser normal si Moodle cambió después del respaldo; revisar antes de dar la prueba por buena."
+    log "AVISO: el número de tablas difiere ($DB_REAL=$tablas_real vs $DB_TEST=$tablas_test)."
     exit 2
 fi
 
-log "RESULTADO: restauración de ensayo correcta. La base real $DB_REAL no se modificó."
+if [[ "$cursos_real" != "$cursos_test" ]]; then
+    log "AVISO: la lista de cursos difiere ($DB_REAL=$cursos_real vs $DB_TEST=$cursos_test)."
+    exit 2
+fi
+
+if [[ "$usuarios_real" != "$usuarios_test" ]]; then
+    log "AVISO: el número de usuarios activos difiere ($DB_REAL=$usuarios_real vs $DB_TEST=$usuarios_test)."
+    exit 2
+fi
+
+log "RESULTADO: restauración de ensayo correcta. Todas las tablas, cursos y usuarios coinciden al 100%. La base real $DB_REAL no se modificó."
