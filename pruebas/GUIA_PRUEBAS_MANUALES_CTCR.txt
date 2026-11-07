@@ -1,0 +1,562 @@
+================================================================================
+GUIA MAESTRA DE PRUEBAS MANUALES — COLEGIO TECNICO DE COSTA RICA (CTCR)
+AULA VIRTUAL MOODLE LMS + NGINX HTTPS + BIND9 + FTPS VSFTPD + DOCKER COMPOSE
+Proyecto Final EIF431O — Administracion de Servidores (UNA Nicoya)
+================================================================================
+Fecha de actualizacion: Noviembre 2026
+Entorno: VM #1 Ubuntu Server 26.04 (192.168.50.1) <--> VM #2 Linux Mint 22.3 (192.168.50.101)
+FQDN Canónico: https://aulavirtual.ctcr  |  Zona secundaria: https://moodle.ctcr.test
+================================================================================
+
+INDICE DE CONTENIDOS:
+1. TOPOLOGIA DE RED Y PARAMETROS DE ACCESO
+2. DIRECTORIO COMPLETO DE USUARIOS, CREDENCIALES Y ROLES REALES
+3. MAPA DE RUTAS CANONICAS, CURSOS Y MODULOS EN MOODLE
+4. GUIA PASO A PASO DETALLADA DE PRUEBAS MANUALES (BLOQUES 1 AL 9)
+   - BLOQUE 1: Conectividad LAN, Salida a Internet y DNS BIND9
+   - BLOQUE 2: Redireccion HTTP 301 y Certificado Nginx HTTPS TLSv1.3
+   - BLOQUE 3: Identidad Institucional y Auditoria como Superadministrador
+   - BLOQUE 4: Flujo Positivo de Estudiantes (Recursos y Cuestionarios)
+   - BLOQUE 5: Pruebas Negativas de Aislamiento Interdepartamental (Matriz 3x3)
+   - BLOQUE 6: Rol Profesor Auditor (Calificador vs Denegacion de Admin)
+   - BLOQUE 7: Almacenamiento Departamental FTPS (Enjaulamiento Chroot y Permisos)
+   - BLOQUE 8: Resiliencia en Docker y Persistencia de Volumenes
+   - BLOQUE 9: Plan de Continuidad Operativa (Respaldos Cron y DRP)
+5. MATRIZ DE CRITERIOS DE ACEPTACION (CHECKLIST PASS / FAIL)
+6. COMANDOS DE DIAGNOSTICO RAPIDO Y RESOLUCION DE INCIDENTES
+
+================================================================================
+1. TOPOLOGIA DE RED Y PARAMETROS DE ACCESO
+================================================================================
+- Servidor (Ubuntu Server 26.04 LTS):
+  * IP WAN (NAT salida a Internet): 10.0.2.15/24 (enp0s3)
+  * IP LAN Interna (intnet): 192.168.50.1/24 (enp0s8)
+  * Gateway / Router de la LAN: 192.168.50.1 (IP Forwarding y Masquerade activos)
+  * Servidor DNS Autoritativo: 192.168.50.1:53 (BIND 9.20.24)
+  * Reverse Proxy Seguro: Nginx 1.28.3 (:80 -> 301, :443 TLSv1.3)
+  * Backend Moodle: oksigenia/moodle:4.5.15 en 127.0.0.1:8080 (aislado del exterior)
+  * Base de Datos Moodle: MariaDB 11.4.13 en red interna docker 'backend' (:3306)
+
+- Cliente (Linux Mint 22.3 Zena):
+  * IP LAN Interna: 192.168.50.101/24 (enp0s3 via DHCP)
+  * Gateway por defecto: 192.168.50.1
+  * Servidor DNS: 192.168.50.1
+  * Usuario local: criss (Contraseña SO: 123456)
+
+================================================================================
+2. DIRECTORIO COMPLETO DE USUARIOS, CREDENCIALES Y ROLES REALES
+================================================================================
+
+[A] SUPERADMINISTRADOR DE MOODLE (Acceso tecnico global)
+--------------------------------------------------------------------------------
+Usuario:        admin
+Contrasena:     d6964de2b242ca9ad65bd070eda49134
+URL de login:   https://aulavirtual.ctcr/login/index.php
+Uso exclusivo:  Auditar politicas, categorias, cohortes, certificados y respaldos.
+                NUNCA usar para probar aislamiento (el admin tiene bypass total).
+
+[B] LAS 9 CUENTAS DEPARTAMENTALES DE MOODLE
+--------------------------------------------------------------------------------
+REGLA MAESTRA DE CONTRASENA:
+Todas las cuentas institucionales usan la misma clave acordada:
+==> Contrasena Unica: Ctcr2026!Segura#
+
+* DEPARTAMENTO 1: ADMINISTRACION (DEP-ADM)
+  - Laura Rodriguez Vargas (Direccion General)
+    Usuario:    laura.rodriguez
+    Clave:      Ctcr2026!Segura#
+    Correo:     laura.rodriguez@ctcr.example
+    Rol Moodle: Profesor con permiso de edicion en CTCR-ADM-101 (Matricula manual)
+  - Marta Jimenez Solano (Asistente Administrativa)
+    Usuario:    marta.jimenez
+    Clave:      Ctcr2026!Segura#
+    Correo:     marta.jimenez@ctcr.example
+    Rol Moodle: Estudiante en CTCR-ADM-101 (por cohorte CTCR-COH-ADM)
+  - Carlos Mendez Rojas (Encargado de Archivo)
+    Usuario:    carlos.mendez
+    Clave:      Ctcr2026!Segura#
+    Correo:     carlos.mendez@ctcr.example
+    Rol Moodle: Estudiante en CTCR-ADM-101 (por cohorte CTCR-COH-ADM)
+
+* DEPARTAMENTO 2: DOCENCIA (DEP-DOC)
+  - Andrea Castillo Mora (Coordinadora Docente)
+    Usuario:    andrea.castillo
+    Clave:      Ctcr2026!Segura#
+    Correo:     andrea.castillo@ctcr.example
+    Rol Moodle: Profesor con permiso de edicion en CTCR-DOC-101 (Matricula manual)
+  - Sofia Hernandez Vega (Docente de Especialidad)
+    Usuario:    sofia.hernandez
+    Clave:      Ctcr2026!Segura#
+    Correo:     sofia.hernandez@ctcr.example
+    Rol Moodle: Estudiante en CTCR-DOC-101 (por cohorte CTCR-COH-DOC)
+  - Jose Ramirez Salazar (Docente de Apoyo)
+    Usuario:    jose.ramirez
+    Clave:      Ctcr2026!Segura#
+    Correo:     jose.ramirez@ctcr.example
+    Rol Moodle: Estudiante en CTCR-DOC-101 (por cohorte CTCR-COH-DOC)
+
+* DEPARTAMENTO 3: INFORMATICA (DEP-INF)
+  - Daniel Vargas Chacon (Encargado de Soporte)
+    Usuario:    daniel.vargas
+    Clave:      Ctcr2026!Segura#
+    Correo:     daniel.vargas@ctcr.example
+    Rol Moodle: Profesor con permiso de edicion en CTCR-INF-101 (Matricula manual)
+  - Valeria Sanchez Lopez (Tecnica Informatica)
+    Usuario:    valeria.sanchez
+    Clave:      Ctcr2026!Segura#
+    Correo:     valeria.sanchez@ctcr.example
+    Rol Moodle: Estudiante en CTCR-INF-101 (por cohorte CTCR-COH-INF)
+  - Diego Fernandez Ruiz (Asistente de Tecnologias)
+    Usuario:    diego.fernandez
+    Clave:      Ctcr2026!Segura#
+    Correo:     diego.fernandez@ctcr.example
+    Rol Moodle: Estudiante en CTCR-INF-101 (por cohorte CTCR-COH-INF)
+
+[C] CUENTAS DE ALMACENAMIENTO DEPARTAMENTAL FTPS (vsftpd)
+--------------------------------------------------------------------------------
+Servidor FTPS:     192.168.50.1  |  Puerto: 21 (Pasivos 40000-40010)
+Tipo de cifrado:   FTP explicito sobre TLS (TLSv1.3 obligatorio)
+Chroot Seguro:     /srv/ftp/<usuario> (root:root, 0755)
+Carpeta de datos:  /srv/ftp/<usuario>/archivos (<usuario>:<usuario>, 0700 estricto)
+Shell en el SO:    /usr/sbin/nologin (autentica via PAM pero bloquea SSH/Consola)
+Contrasena Unica:  Ctcr2026!Segura#
+
+Cuentas activas en vsftpd.user_list:
+  1. marta.jimenez     (Administracion)
+  2. carlos.mendez    (Administracion)
+  3. sofia.hernandez   (Docencia)
+  4. jose.ramirez      (Docencia)
+  5. valeria.sanchez   (Informatica)
+  6. diego.fernandez   (Informatica)
+
+[D] CREDENCIALES DEL SISTEMA OPERATIVO Y BASE DE DATOS
+--------------------------------------------------------------------------------
+- Usuario SO Servidor y Cliente Mint: criss
+  Contrasena SO / SSH / Sudo: 123456 (NOPASSWD habilitado en sudoers)
+- Base de datos MariaDB (Contenedor proyecto-moodle-db-1):
+  Base: moodle | Usuario: moodle | Pass: 2e74f1ed8717893a049d2319d27e8132d4c035f2
+  Root MariaDB: ac528cc8f7687946d726e04cda0d693fe1af9421
+
+================================================================================
+3. MAPA DE RUTAS CANONICAS, CURSOS Y MODULOS EN MOODLE
+================================================================================
+
+PAGINA PRINCIPAL / LOGIN:
+- URL Oficial: https://aulavirtual.ctcr
+- URL Alternativa: https://moodle.ctcr.test
+- Login: https://aulavirtual.ctcr/login/index.php
+
+CURSO 1: ADMINISTRACION (Categoria: DEP-ADM)
+- Nombre: Gestion Documental y Procesos Administrativos (CTCR-ADM-101)
+- URL Directa Curso:    https://aulavirtual.ctcr/course/view.php?id=2
+- Recurso 1 (PDF):      https://aulavirtual.ctcr/mod/resource/view.php?id=12  (Manual Archivo)
+- Recurso 2 (PDF):      https://aulavirtual.ctcr/mod/resource/view.php?id=21  (Guia Clasificacion)
+- Cuestionario Eval.:   https://aulavirtual.ctcr/mod/quiz/view.php?id=14      (Quiz Expedientes)
+- Calificador Docente:  https://aulavirtual.ctcr/grade/report/grader/index.php?id=2
+
+CURSO 2: DOCENCIA (Categoria: DEP-DOC)
+- Nombre: Planificacion Didactica y Evaluacion de los Aprendizajes (CTCR-DOC-101)
+- URL Directa Curso:    https://aulavirtual.ctcr/course/view.php?id=3
+- Recurso 1 (PDF):      https://aulavirtual.ctcr/mod/resource/view.php?id=15  (Presentacion Evaluacion)
+- Recurso 2 (PDF):      https://aulavirtual.ctcr/mod/resource/view.php?id=22  (Guia Rubricas)
+- Cuestionario Eval.:   https://aulavirtual.ctcr/mod/quiz/view.php?id=17      (Quiz Evaluacion)
+- Calificador Docente:  https://aulavirtual.ctcr/grade/report/grader/index.php?id=3
+
+CURSO 3: INFORMATICA (Categoria: DEP-INF)
+- Nombre: Seguridad Digital y Proteccion de la Informacion (CTCR-INF-101)
+- URL Directa Curso:    https://aulavirtual.ctcr/course/view.php?id=4
+- Recurso 1 (PDF):      https://aulavirtual.ctcr/mod/resource/view.php?id=18  (Guia Contrasenas)
+- Recurso 2 (PDF):      https://aulavirtual.ctcr/mod/resource/view.php?id=23  (PDF Phishing)
+- Cuestionario Eval.:   https://aulavirtual.ctcr/mod/quiz/view.php?id=20      (Quiz Ciberseguridad)
+- Calificador Docente:  https://aulavirtual.ctcr/grade/report/grader/index.php?id=4
+
+================================================================================
+4. GUIA PASO A PASO DETALLADA DE PRUEBAS MANUALES
+================================================================================
+
+--------------------------------------------------------------------------------
+BLOQUE 1: CONECTIVIDAD DE RED Y RESOLUCION DNS (BIND9)
+--------------------------------------------------------------------------------
+Donde ejecutar: Terminal en Linux Mint (192.168.50.101)
+
+Paso 1.1: Comprobar conectividad IP local con el Servidor
+  Comando:
+    ping -c 3 192.168.50.1
+  Resultado esperado:
+    3 packets transmitted, 3 received, 0% packet loss.
+
+Paso 1.2: Comprobar salida a Internet a traves del Gateway NAT (Ubuntu Server)
+  Comando:
+    ping -c 3 8.8.8.8
+  Resultado esperado:
+    0% packet loss. Confirma que la regla MASQUERADE de iptables en el servidor funciona.
+
+Paso 1.3: Comprobar resolucion autoritativa del dominio institucional
+  Comandos:
+    dig @192.168.50.1 aulavirtual.ctcr A +short
+    getent ahostsv4 aulavirtual.ctcr
+  Resultado esperado:
+    Devuelve exactamente '192.168.50.1'.
+
+Paso 1.4: Comprobar resolucion de dominio secundario de pruebas
+  Comando:
+    dig @192.168.50.1 moodle.ctcr.test A +short
+  Resultado esperado:
+    Devuelve exactamente '192.168.50.1'.
+
+--------------------------------------------------------------------------------
+BLOQUE 2: REDIRECCION HTTP 301 Y SEGURIDAD NGINX HTTPS (TLSv1.3)
+--------------------------------------------------------------------------------
+Donde ejecutar: Navegador Firefox / Terminal en Linux Mint
+
+Paso 2.1: Probar redireccion forzosa 301 (HTTP a HTTPS)
+  En Terminal de Mint:
+    curl -sSI http://aulavirtual.ctcr
+  Resultado esperado:
+    HTTP/1.1 301 Moved Permanently
+    Location: https://aulavirtual.ctcr/
+
+Paso 2.2: Probar respuesta segura HTTPS TLSv1.3
+  En Terminal de Mint:
+    curl -k -I https://aulavirtual.ctcr
+  Resultado esperado:
+    HTTP/1.1 200 OK
+    Server: nginx/1.28.3 (Ubuntu)
+    Set-Cookie: MoodleSession=...; path=/; secure; HttpOnly; SameSite=Lax
+
+Paso 2.3: Validar certificado en Firefox
+  - Abrir Firefox en Linux Mint y navegar a: https://aulavirtual.ctcr
+  - Clic en el candado de la barra de direcciones -> 'Conexion segura' -> 'Mas informacion'.
+  - Verificar:
+    * Nombre comun (CN): aulavirtual.ctcr
+    * Nombres alternativos (SAN): DNS:aulavirtual.ctcr, DNS:moodle.ctcr.test
+    * Version TLS: TLSv1.3, Cifrado: TLS_AES_256_GCM_SHA384
+
+Paso 2.4: Verificar blindaje del puerto backend 8080 (Seguridad de red)
+  En Firefox o Terminal de Mint intentar acceder directamente al backend:
+    curl -m 3 http://192.168.50.1:8080
+  Resultado esperado:
+    Fallo de conexion (Connection refused o timeout).
+    Esto demuestra que Moodle solo atiende en loopback 127.0.0.1 tras Nginx.
+
+--------------------------------------------------------------------------------
+BLOQUE 3: AUDITORIA INSTITUCIONAL COMO SUPERADMINISTRADOR
+--------------------------------------------------------------------------------
+Donde ejecutar: Navegador Firefox en Linux Mint
+
+Paso 3.1: Acceso con cuenta de Administrador
+  - Navegar a: https://aulavirtual.ctcr/login/index.php
+  - Usuario:     admin
+  - Contrasena:  d6964de2b242ca9ad65bd070eda49134
+  - Iniciar sesion.
+
+Paso 3.2: Verificar identidad visual y personalizacion
+  - En la barra superior debe verse el logo y titulo: 'Colegio Tecnico de Costa Rica'.
+  - Paleta institucional visible: Azul corporativo (#17365D), Gris claro y Blanco.
+  - Portada con texto descriptivo de los 3 departamentos tecnicos.
+
+Paso 3.3: Verificar arbol de Categorias
+  - Ir a: Administracion del sitio -> Cursos -> Administrar cursos y categorias.
+  - Constatar que existen exactamente las 3 categorias oficiales:
+    1. Administracion (ID: DEP-ADM)
+    2. Docencia (ID: DEP-DOC)
+    3. Informatica (ID: DEP-INF)
+
+Paso 3.4: Verificar Cohortes institucionales
+  - Ir a: Administracion del sitio -> Usuarios -> Cuentas -> Cohortes.
+  - Constatar que existen las 3 cohortes con sus integrantes:
+    * CTCR-COH-ADM: marta.jimenez, carlos.mendez (2 miembros)
+    * CTCR-COH-DOC: sofia.hernandez, jose.ramirez (2 miembros)
+    * CTCR-COH-INF: valeria.sanchez, diego.fernandez (2 miembros)
+  - Notar que los 3 profesores (Laura, Andrea, Daniel) NO estan en cohortes.
+
+Paso 3.5: Cerrar la sesion de admin antes de continuar con las pruebas departamentales.
+  - Clic en el avatar superior derecho -> 'Cerrar sesion'.
+
+--------------------------------------------------------------------------------
+BLOQUE 4: FLUJO POSITIVO DE ESTUDIANTES (RECURSOS Y CUESTIONARIOS)
+--------------------------------------------------------------------------------
+Donde ejecutar: Navegador Firefox en Linux Mint
+
+Paso 4.1: Login con Estudiante de Administracion
+  - URL: https://aulavirtual.ctcr/login/index.php
+  - Usuario:     marta.jimenez
+  - Contrasena:  Ctcr2026!Segura#
+  - Clic en 'Acceder'.
+
+Paso 4.2: Comprobacion de cursos matriculados
+  - Ir a la pestaña 'Mis cursos' en la barra superior.
+  - Verificar que UNICAMENTE aparece su curso asignado:
+    'Gestion Documental y Procesos Administrativos' (CTCR-ADM-101).
+  - No debe aparecer ningun curso de Docencia ni de Informatica.
+
+Paso 4.3: Apertura y descarga de recursos legitimos
+  - Clic en el curso 'Gestion Documental y Procesos Administrativos'.
+  - Clic en Recurso 1: 'Manual de archivo institucional' (id=12).
+    Resultado: El documento PDF se abre y se descarga limpiamente.
+  - Clic en Recurso 2: 'Guia de clasificacion documental' (id=21).
+    Resultado: El segundo PDF se visualiza correctamente en Firefox.
+
+Paso 4.4: Cerrar sesion de Marta e iniciar con Valeria Sanchez (Informatica)
+  - Cerrar sesion de marta.jimenez.
+  - Iniciar sesion con:
+    * Usuario:    valeria.sanchez
+    * Contrasena: Ctcr2026!Segura#
+
+Paso 4.5: Resolucion y evaluacion de cuestionario formativo
+  - Entrar al curso 'Seguridad Digital y Proteccion de la Informacion' (id=4).
+  - Abrir: 'Cuestionario de seguridad informatica' (id=20).
+  - Clic en 'Continuar el ultimo intento' o 'Comenzar una nueva vista previa / intento'.
+  - Responder las 5 preguntas del cuestionario:
+    1. Pregunta de contrasenas seguras / longitud.
+    2. Pregunta de ataques de phishing y verificacion de remitente.
+    3. Pregunta sobre autenticacion multifactor (MFA).
+    4. Pregunta sobre politicas de respaldo de datos.
+    5. Pregunta sobre navegacion segura y cifrado SSL/TLS.
+  - Clic en 'Terminar intento...' -> 'Enviar todo y terminar'.
+  - Resultado esperado:
+    * Estado: Finalizado / Finished.
+    * Calificacion registrada: 100.00 / 100.00 (o 10.00 / 10.00 segun ponderacion).
+    * Retroalimentacion visible con respuestas correctas.
+
+--------------------------------------------------------------------------------
+BLOQUE 5: PRUEBAS NEGATIVAS DE AISLAMIENTO INTERDEPARTAMENTAL (CRITICO)
+--------------------------------------------------------------------------------
+Donde ejecutar: Navegador Firefox en Linux Mint
+
+OBJETIVO: Demostrar que Moodle bloquea cualquier intento de salto curricular,
+incluso cuando el usuario introduce manualmente la URL directa del objeto ajeno.
+
+Paso 5.1: Establecer sesion con Marta Jimenez (Departamento de Administracion)
+  - Iniciar sesion como 'marta.jimenez' (Clave: Ctcr2026!Segura#).
+
+Paso 5.2: Prueba Negativa A - Intento de entrada al curso ajeno de Informatica
+  - Estando autenticado como Marta, pegar en la barra de URL de Firefox:
+    https://aulavirtual.ctcr/course/view.php?id=4
+  - Presionar Enter.
+  - Resultado esperado (PASS):
+    * Moodle emite una redireccion inmediata HTTP 303 hacia 'enrol/index.php?id=4'.
+    * Pantalla de error que indica: 'No puede matricularse en este curso'.
+    * NO aparece ningun boton de auto-matriculacion.
+    * NO se muestra el temario, ni los nombres de archivos, ni los recursos.
+
+Paso 5.3: Prueba Negativa B - Intento forzado de acceso a recurso directo ajeno
+  - Estando autenticado como Marta, pegar en la barra de URL:
+    https://aulavirtual.ctcr/mod/resource/view.php?id=18  (PDF Contrasenas de Informatica)
+  - Presionar Enter.
+  - Resultado esperado (PASS):
+    * Moodle intercepta la peticion en el contexto del modulo.
+    * Redirecciona con error de autorizacion. El archivo no se descarga.
+  - Probar con segundo recurso ajeno:
+    https://aulavirtual.ctcr/mod/resource/view.php?id=23  (PDF Phishing de Informatica)
+  - Resultado esperado (PASS): Bloqueado con mensaje de falta de permisos.
+
+Paso 5.4: Prueba Negativa C - Intento forzado de acceso a cuestionario ajeno
+  - Estando autenticado como Marta, pegar en la barra de URL:
+    https://aulavirtual.ctcr/mod/quiz/view.php?id=20  (Quiz Informatica)
+  - Presionar Enter.
+  - Resultado esperado (PASS):
+    * Bloqueo inmediato. Marta no puede visualizar ni contestar el examen ajeno.
+  - Probar contra cuestionario de Docencia:
+    https://aulavirtual.ctcr/mod/quiz/view.php?id=17  (Quiz Docencia)
+  - Resultado esperado (PASS): Bloqueado categoricamente.
+
+Paso 5.5: Prueba Negativa D - Intento forzado cruzado desde Docencia
+  - Cerrar sesion e iniciar como 'sofia.hernandez' (Clave: Ctcr2026!Segura#).
+  - Intentar abrir Curso de Administracion:
+    https://aulavirtual.ctcr/course/view.php?id=2
+  - Intentar abrir Recursos de Administracion:
+    https://aulavirtual.ctcr/mod/resource/view.php?id=12
+  - Resultado esperado (PASS): Acceso terminantemente rechazado en ambos casos.
+
+--------------------------------------------------------------------------------
+BLOQUE 6: ROL PROFESOR AUDITOR (CALIFICADOR VS DENEGACION DE ADMIN)
+--------------------------------------------------------------------------------
+Donde ejecutar: Navegador Firefox en Linux Mint
+
+Paso 6.1: Inicio de sesion como Profesor de Informatica
+  - URL: https://aulavirtual.ctcr/login/index.php
+  - Usuario:     daniel.vargas
+  - Contrasena:  Ctcr2026!Segura#
+  - Iniciar sesion.
+
+Paso 6.2: Verificacion del Libro de Calificaciones de su curso
+  - Entrar al curso 'Seguridad Digital y Proteccion de la Informacion' (id=4).
+  - En el menu superior del curso, hacer clic en 'Calificaciones'.
+    (URL directa: https://aulavirtual.ctcr/grade/report/grader/index.php?id=4)
+  - Resultado esperado:
+    * Se despliega el reporte del calificador (Grader Report).
+    * Aparecen listados los estudiantes de su departamento: Valeria Sanchez y Diego Fernandez.
+    * Se visualiza la calificacion obtenida por Valeria (ej. 100.00) en el Cuestionario.
+
+Paso 6.3: Capacidad de edicion docente en su curso propio
+  - Volver a la portada del curso (id=4).
+  - En la esquina superior derecha, activar el conmutador 'Modo de edicion'.
+  - Resultado esperado:
+    * Aparecen los botones 'Anadir una actividad o un recurso' y los iconos de lapiz.
+    * El docente tiene plenos poderes pedagogicos sobre su materia.
+
+Paso 6.4: Prueba Negativa E - Intento del profesor de entrar a Administracion del Sitio
+  - Con la sesion activa de daniel.vargas, escribir manualmente en la barra de URL:
+    https://aulavirtual.ctcr/admin/index.php
+  - Presionar Enter.
+  - Resultado esperado (PASS):
+    * Moodle rechaza la conexion con pantalla de advertencia: 'Acceso denegado'.
+    * Demuestra que el rol 'Profesor' no escala a privilegios de superadministrador.
+
+Paso 6.5: Prueba Negativa F - Intento del profesor de invadir curso de otro departamento
+  - Con daniel.vargas, intentar abrir el curso de Administracion:
+    https://aulavirtual.ctcr/course/view.php?id=2
+  - Resultado esperado (PASS):
+    * Acceso denegado. Daniel no es profesor de Administracion ni pertenece a su cohorte.
+
+--------------------------------------------------------------------------------
+BLOQUE 7: ALMACENAMIENTO DEPARTAMENTAL FTPS (VSFTPD)
+--------------------------------------------------------------------------------
+Donde ejecutar: Terminal de Linux Mint y Terminal de Ubuntu Server
+
+Paso 7.1: Conexion FTPS legitima y subida de archivo
+  En Terminal de Linux Mint ejecutar:
+    lftp -u carlos.mendez,'Ctcr2026!Segura#' -e 'set ssl:verify-certificate no; ls; quit' ftps://192.168.50.1:21
+  (O con curl desde Mint):
+    curl -k --ssl-reqd --user "carlos.mendez:Ctcr2026!Segura#" ftp://192.168.50.1:21/
+  Resultado esperado:
+    drwx------    2 1007     1007         4096 Oct 29 02:28 archivos
+    Muestra la carpeta de trabajo 'archivos' con permisos restringidos.
+
+Paso 7.2: Prueba de subida de archivo personal a FTPS
+  En Terminal de Linux Mint:
+    echo "Documento oficial del departamento de Administracion" > /tmp/memo_carlos.txt
+    curl -k --ssl-reqd --user "carlos.mendez:Ctcr2026!Segura#" -T /tmp/memo_carlos.txt ftp://192.168.50.1:21/archivos/
+  Resultado esperado:
+    Subida exitosa (100% transferido sin errores).
+
+Paso 7.3: Prueba Negativa G - Intento de fuga del confinamiento (Directory Traversal)
+  Desde la sesion FTPS intentar saltar a la raiz del sistema o a otra cuenta:
+    curl -k --ssl-reqd --user "carlos.mendez:Ctcr2026!Segura#" ftp://192.168.50.1:21/../etc/
+  Resultado esperado (PASS):
+    curl: (9) Server denied you to change to the given directory
+    Error 550 Failed to change directory. El usuario esta enjaulado en chroot.
+
+Paso 7.4: Prueba Negativa H - Permisos cruzados en el Host (Ubuntu Server)
+  En Terminal de Ubuntu Server ejecutar:
+    sudo -u marta.jimenez ls /srv/ftp/valeria.sanchez/archivos
+  Resultado esperado (PASS):
+    ls: cannot open directory '/srv/ftp/valeria.sanchez/archivos': Permission denied
+    Los permisos 0700 impiden que usuarios locales lean datos de otros departamentos.
+
+Paso 7.5: Prueba Negativa I - Bloqueo de consola interactiva SSH
+  En Terminal de Linux Mint intentar abrir consola remota:
+    ssh marta.jimenez@192.168.50.1
+  Resultado esperado (PASS):
+    Connection closed by 192.168.50.1 (debido a la shell /usr/sbin/nologin).
+    Las cuentas FTP no pueden utilizar la terminal del servidor bajo ninguna forma.
+
+--------------------------------------------------------------------------------
+BLOQUE 8: RESILIENCIA EN DOCKER Y PERSISTENCIA DE VOLUMENES
+--------------------------------------------------------------------------------
+Donde ejecutar: Terminal de Ubuntu Server (192.168.50.1)
+
+Paso 8.1: Comprobar salud de los contenedores
+  Comando:
+    cd ~/proyecto-moodle && sudo docker compose ps
+  Resultado esperado:
+    proyecto-moodle-db-1       mariadb:11.4.13   Up (healthy)
+    proyecto-moodle-moodle-1   moodle:4.5.15     Up (healthy)   127.0.0.1:8080->8080/tcp
+
+Paso 8.2: Ejecutar reinicio de la pila Docker
+  Comando:
+    sudo docker compose restart
+  Resultado esperado:
+    Restarting proyecto-moodle-moodle-1 ... done
+    Restarting proyecto-moodle-db-1     ... done
+
+Paso 8.3: Comprobar persistencia absoluta
+  - Regresar a Firefox en Linux Mint y recargar: https://aulavirtual.ctcr
+  - Iniciar sesion con cualquier usuario (ej. daniel.vargas o valeria.sanchez).
+  - Constatar que:
+    * Todos los cursos permanecen intactos.
+    * Las cohortes y matriculas no se perdieron.
+    * Las calificaciones y respuestas del cuestionario siguen registradas.
+    (Garantizado por los volumenes 'moodle_data', 'moodle_code' y 'mariadb_data').
+
+--------------------------------------------------------------------------------
+BLOQUE 9: PLAN DE CONTINUIDAD OPERATIVA (RESPALDOS CRON Y DRP)
+--------------------------------------------------------------------------------
+Donde ejecutar: Terminal de Ubuntu Server (192.168.50.1)
+
+Paso 9.1: Verificar programacion automatica en Crontab de root
+  Comando:
+    sudo crontab -l
+  Resultado esperado:
+    0 2 * * * /home/criss/proyecto-moodle/respaldo.sh
+    (Ejecucion programada todos los dias a las 02:00 AM CST).
+
+Paso 9.2: Ejecutar respaldo manual bajo demanda
+  Comando:
+    sudo /home/criss/proyecto-moodle/respaldo.sh
+  Comprobar archivo generado:
+    ls -lh /var/backups/moodle/
+    gzip -t /var/backups/moodle/backup_moodle_*.sql.gz && echo "ARCHIVO GZIP VALIDO"
+  Resultado esperado:
+    Genera un archivo comprimido .sql.gz integro, rotando copias antiguas (>7 dias).
+
+Paso 9.3: Prueba de Recuperacion ante Desastres (DRP) en Base Aislada
+  Comando:
+    sudo /home/criss/proyecto-moodle/restauracion-prueba.sh
+  Resultado esperado:
+    - Descomprime el ultimo volcado en memoria.
+    - Crea la base de datos temporal 'moodle_restore_test'.
+    - Inyecta el volcado y cuenta las tablas recuperadas.
+    - Salida comprobada: 'Tablas restauradas: 494 / 494 (100% EXITO)'.
+    - Elimina la base de prueba limpiamente dejando el servidor impecable.
+
+================================================================================
+5. MATRIZ DE CRITERIOS DE ACEPTACION (CHECKLIST PASS / FAIL)
+================================================================================
+
+| ID  | Criterio Evaluado                      | Metodo de Comprobacion             | Estado Esperado |
+|-----|----------------------------------------|------------------------------------|-----------------|
+| T01 | Contenedores saludables y Moodle up    | docker compose ps                  | PASS            |
+| T02 | Persistencia tras docker restart       | docker compose restart + F5        | PASS            |
+| T03 | 3 cursos con 2 PDFs + 1 Quiz c/u       | Recorrido en Moodle Firefox        | PASS            |
+| T04 | Aislamiento cruzado interdepartamental | Marta (ADM) entra a Curso INF (id4)| PASS (Error 303)|
+| T05 | Rol Profesor limitado (sin /admin/)    | Daniel Vargas accede a /admin/     | PASS (Denegado) |
+| T06 | Resolucion autoritativa DNS BIND9      | dig @192.168.50.1 aulavirtual.ctcr | PASS (192.168.50.1)
+| T07 | Nginx HTTP->HTTPS 301 forzoso + TLS1.3 | curl -sSI http://aulavirtual.ctcr  | PASS (301->200) |
+| T08 | FTPS enjaulado chroot (Error 550)      | curl FTPS con ruta /../etc         | PASS (Error 550)|
+| T09 | Respaldos Cron y DRP 494 tablas        | restauracion-prueba.sh             | PASS (494/494)  |
+| T10 | Reproduccion integral desde Linux Mint | Firefox y Terminal en VM Cliente   | PASS            |
+
+================================================================================
+6. COMANDOS DE DIAGNOSTICO RAPIDO Y RESOLUCION DE INCIDENTES
+================================================================================
+
+1. Si Moodle no responde en Firefox:
+   En Ubuntu Server:
+     sudo systemctl status nginx
+     cd ~/proyecto-moodle && sudo docker compose ps
+     sudo docker compose logs --tail=50 moodle
+
+2. Si el dominio 'aulavirtual.ctcr' no resuelve desde Linux Mint:
+   En Linux Mint:
+     cat /etc/resolv.conf  (Debe decir 'nameserver 192.168.50.1')
+   En Ubuntu Server:
+     sudo systemctl status named
+     sudo named-checkzone ctcr /etc/bind/db.ctcr
+
+3. Si FTPS no permite conectar:
+   En Ubuntu Server:
+     sudo systemctl status vsftpd
+     cat /etc/vsftpd.user_list  (Verificar que el usuario este en la lista)
+     grep "/usr/sbin/nologin" /etc/shells  (Debe estar listada)
+     sudo iptables -L -n -v | grep 40000   (Verificar puertos pasivos abiertos)
+
+4. Si se requiere inspeccionar los logs de acceso en tiempo real:
+   En Ubuntu Server:
+     sudo tail -f /var/log/nginx/access.log
+     sudo tail -f /var/log/vsftpd.log
+
+================================================================================
+FIN DE LA GUIA MAESTRA DE PRUEBAS MANUALES — PROYECTO CTCR
+================================================================================

@@ -7,6 +7,8 @@ El [`compose.yaml`](compose.yaml) es el **diseño compartido revisado** para eje
 ## Archivo por archivo
 
 - [`compose.yaml`](compose.yaml): configuración versionable de ambos servicios, dependencia `service_healthy`, red, nombres de volúmenes, puerto de Moodle y variables suministradas desde un archivo externo. **No se debe interpretar como copia exacta del Compose capturado en Word.**
+- [`compose.vm1-moodle.yaml`](compose.vm1-moodle.yaml): plantilla Compose para VM 1 (Moodle Web Tier) en la Fase Opcional multi-VM, apuntando a base remota en `192.168.56.104`.
+- [`compose.vm2-mariadb.yaml`](compose.vm2-mariadb.yaml): plantilla Compose para VM 2 (MariaDB Data Tier) en la Fase Opcional multi-VM, publicando únicamente en la interfaz Host-Only privada.
 - [`.env.example`](.env.example): contrato de variables para **etapa HTTP local**; muestra imagen Moodle objetivo, IP interna de ejemplo, etiquetas, nombres de credenciales sin valores privados. No se debe ejecutar como archivo de credenciales.
 - [`.env.https.example`](.env.https.example): ejemplo de modificaciones de la URL `https://aulavirtual.ctcr`, publicación solo en `127.0.0.1` y modo proxy TLS. Sirve para comparar campos; **no sustituir el `.env` real**.
 - [`scripts/generate-env.sh`](../../scripts/generate-env.sh): crea `infra/compose/.env` con claves aleatorias en una instalación nueva, se niega a sobrescribir uno existente.

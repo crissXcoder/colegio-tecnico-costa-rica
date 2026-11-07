@@ -1,6 +1,6 @@
 # Evidencias: significado, procedencia y límites de verificación
 
-Las capturas de la bitácora están colocadas **en el procedimiento que documentan**. Ejemplo: [`EV-010`](../docs/procedimientos/04-contenedores/04-07/evidencias/EV-010.md) y su imagen se encuentran dentro del paso de arranque Docker. El lector ve primero el comando, luego la captura y después la explicación de qué prueba y qué falta probar. El [`catálogo`](CATALOGO-CAPTURAS.md) es solo una referencia transversal para localizar y auditar las 50 imágenes.
+Las capturas de la bitácora están colocadas **en el procedimiento que documentan**. Ejemplo: [`EV-010`](../docs/procedimientos/04-contenedores/04-07/evidencias/EV-010.md) y su imagen se encuentran dentro del paso de arranque Docker. El lector ve primero el comando, luego la captura y después la explicación de qué prueba y qué falta probar. El [`catálogo`](CATALOGO-CAPTURAS.md) es solo una referencia transversal para localizar y auditar las 138 imágenes.
 
 ## Archivos de esta carpeta
 

@@ -6,6 +6,7 @@ Los ADR explican opciones consideradas y consecuencias antes/después de impleme
 - [`ADR-0002-proxy-https.md`](ADR-0002-proxy-https.md): razones y limitaciones de terminar TLS en Nginx frente a servir HTTPS dentro del contenedor Moodle.
 - [`ADR-0003-firewall-iptables-sin-ufw.md`](ADR-0003-firewall-iptables-sin-ufw.md): por qué no se activa UFW antes de la entrega y qué se entrega como `ufw.txt`.
 - [`ADR-0004-servidor-unico-de-demostracion.md`](ADR-0004-servidor-unico-de-demostracion.md) (**propuesta**): una sola VM para armar el paquete y presentar, porque hay VMs del grupo con configuraciones distintas.
+- [`ADR-0005-arquitectura-distribuida-multi-vm.md`](ADR-0005-arquitectura-distribuida-multi-vm.md): arquitectura distribuida multi-VM para desacoplar Moodle (Web Tier) y MariaDB (Data Tier) sobre red Host-Only privada en la Fase Opcional.
 - [`plantillas/adr.md`](../../plantillas/adr.md): registrar contexto, alternativas, criterios, trade-offs, seguridad, consecuencias y cómo se verificó la decisión.
 
 ## Cuándo crear un ADR

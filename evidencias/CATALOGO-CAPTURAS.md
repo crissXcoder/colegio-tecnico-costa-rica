@@ -370,9 +370,7 @@ Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no
 
 - **[EV-102 — Auditoría de reglas iptables, cadenas DOCKER-USER y NAT en Ubuntu Server](../docs/procedimientos/11-verificacion/11-04/evidencias/EV-102.md)**: Inspección de políticas de firewall en `iptables`, cadenas `DOCKER-USER` para tráfico LAN/WAN, persistencia con `netfilter-persistent` y diagnóstico de ausencia de UFW para evitar colisiones con Docker. **Limitación:** Prueba la configuración en el host; el enrutamiento real se valida con tráfico desde el cliente.
 
-- **[EV-130 — UFW: comando no encontrado](../docs/procedimientos/11-verificacion/11-04/evidencias/EV-130.md)** (VM `server@server`): `sudo ufw status verbose` → `sudo: 'ufw': command not found`.
-
-  ![EV-130](../docs/procedimientos/11-verificacion/11-04/evidencias/EV-130.webp)
+- **[EV-130 — UFW: comando no encontrado](../docs/procedimientos/11-verificacion/11-04/evidencias/EV-130.md)** (VM `server@server`): `sudo ufw status verbose` → `sudo: 'ufw': command not found`. **Limitación:** Prueba la ausencia de UFW en la VM secundaria; en la primaria se gestiona con iptables.
 
 ### [11-05 — PASO 11.05 — Pruebas desde Linux Mint](../docs/procedimientos/11-verificacion/11-05.md)
 
@@ -386,6 +384,31 @@ Una captura de una interfaz muestra que se abrió o editó esa pantalla, pero no
 ### [11-07 — PASO 11.07 — Pruebas de infraestructura](../docs/procedimientos/11-verificacion/11-07.md)
 
 - **[EV-106 — Resiliencia de contenedores, jaula FTPS con error 550 y ensayo DRP con 494 tablas](../docs/procedimientos/11-verificacion/11-07/evidencias/EV-106.md)**: Demostración de persistencia tras reinicio de contenedores Docker (3 cursos intactos), bloqueo estricto en FTPS con error `550 Failed to change directory` al intentar salir del chroot, y ciclo de respaldo e importación DRP con 494 tablas recuperadas. **Limitación:** Valida resiliencia y base de datos relacional; la recuperación completa de archivos adjuntos requiere instantáneas del volumen `moodledata`.
+
+## Bloque 13 — Fase Opcional: Arquitectura Distribuida Multi-VM
+
+### [13-01 — PASO 13.01 — Configurar adaptadores e IP Host-Only](../docs/procedimientos/13-fase-opcional/13-01.md)
+
+- **[EV-131 — Asignación IP Host-Only y Ping Bidireccional (VM 1 <-> VM 2)](../docs/procedimientos/13-fase-opcional/13-01/evidencias/EV-131.md)**: Asignación de IP fija en `enp0s9` (`192.168.56.103/24` en VM 1 Moodle y `192.168.56.104/24` en VM 2 MariaDB) y comprobación bidireccional mediante `ping -c 4` con 0% de pérdida de paquetes y latencia sub-milisegundo. **Limitación:** Valida la conectividad IP punto a punto en la capa de red; no garantiza apertura de sockets TCP en capas superiores.
+
+### [13-02 — PASO 13.02 — Preparar y aislar MariaDB en VM 2](../docs/procedimientos/13-fase-opcional/13-02.md)
+
+- **[EV-132 — Aislamiento del Servicio MariaDB y Desactivación de Host](../docs/procedimientos/13-fase-opcional/13-02/evidencias/EV-132.md)**: Detención del contenedor Moodle en VM 2, deshabilitación de servicios perimetrales no requeridos (`nginx`, `named`, `vsftpd`) y publicación exclusiva de puerto `192.168.56.104:3306` en el Compose de MariaDB. **Limitación:** Acredita el aislamiento del rol de base de datos y la exposición de puerto; no certifica por sí sola el contenido de los esquemas.
+- **[EV-133 — Verificación de Integridad de Base de Datos y Salud del Contenedor](../docs/procedimientos/13-fase-opcional/13-02/evidencias/EV-133.md)**: Estado saludable `healthy` de `proyecto-moodle-db-1` en VM 2 y verificación relacional de 494 tablas en esquema `moodle`, 12 usuarios activos y 3 cursos departamentales intactos. **Limitación:** Demuestra integridad local en el volumen `mariadb_data` de VM 2; la alcanzabilidad remota se verifica en EV-134.
+
+### [13-03 — PASO 13.03 — Conectar Moodle con MariaDB remota](../docs/procedimientos/13-fase-opcional/13-03.md)
+
+- **[EV-134 — Conexión Remota a MariaDB y config.php en VM 1](../docs/procedimientos/13-fase-opcional/13-03/evidencias/EV-134.md)**: Comprobación de socket TCP remoto a `192.168.56.104:3306`, reconfiguración de `compose.yaml` en VM 1 (`MOODLE_DB_HOST: 192.168.56.104`), regeneración dinámica de `/var/www/moodle/config.php` y arranque saludable de Moodle. **Limitación:** Certifica la integración entre Moodle y MariaDB; el acceso web por HTTPS se valida en EV-135.
+
+### [13-04 — PASO 13.04 — Verificación funcional, tolerancia a fallos y FTPS](../docs/procedimientos/13-fase-opcional/13-04.md)
+
+- **[EV-135 — Verificación HTTPS Nginx 200 OK y Consulta de Cursos](../docs/procedimientos/13-fase-opcional/13-04/evidencias/EV-135.md)**: Petición HTTPS a `https://aulavirtual.ctcr/` respondiendo 200 OK con cookies seguras de sesión, redirección permanente 301 desde HTTP 80 y consulta PHP CLI de los 3 cursos departamentales. **Limitación:** Muestra la respuesta HTTPS del proxy; la prueba de dependencia estricta de VM 2 se realiza en EV-136.
+- **[EV-136 — Prueba Controlada de Tolerancia a Fallos y Dependencia Remota](../docs/procedimientos/13-fase-opcional/13-04/evidencias/EV-136.md)**: Demostración concluyente de desacoplamiento: al detener MariaDB en VM 2, Moodle en VM 1 reporta error 500 (`Database connection failed`); al reiniciar MariaDB en VM 2, Moodle restablece el servicio 200 OK automáticamente. **Limitación:** Prueba de corte temporal ejecutada en ventana sin usuarios escribiendo.
+- **[EV-137 — Persistencia tras Reinicio y Comprobación de Servicios FTPS](../docs/procedimientos/13-fase-opcional/13-04/evidencias/EV-137.md)**: Reinicio rápido de Moodle en 0.6s manteniendo conectividad, verificación de servicios `vsftpd`, `nginx`, `named` y `cron` activos en VM 1, y autenticación FTPS segura con directorio enjaulado 700. **Limitación:** Valida persistencia y servicios colocalizados en VM 1; los respaldos se trasladan a VM 2.
+
+### [13-05 — PASO 13.05 — Respaldos, DRP, Cron y reversión](../docs/procedimientos/13-fase-opcional/13-05.md)
+
+- **[EV-138 — Ejecución de Respaldo, Restauración DRP y Verificación de Cron](../docs/procedimientos/13-fase-opcional/13-05/evidencias/EV-138.md)**: Ejecución de `respaldo.sh` en VM 2 generando volcado comprimido de 748 KB, ensayo exitoso de `restauracion-prueba.sh` con 494 tablas coincidentes en `moodle_restore_test`, y verificación de Crontab activo a las 02:00 AM en VM 2. **Limitación:** El ensayo DRP prueba la base de datos relacional; los archivos estáticos de moodledata se respaldan por separado.
 
 ## Alta de evidencias nuevas
 

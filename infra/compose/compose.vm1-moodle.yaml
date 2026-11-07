@@ -1,0 +1,34 @@
+# Compose para VM 1 (Ubuntu Server Moodle — Web Tier) — Fase Opcional CTCR
+# Ejecuta Moodle con proxy inverso local Nginx y conexión remota a MariaDB en VM 2.
+services:
+  moodle:
+    image: ${MOODLE_IMAGE:-oksigenia/moodle:4.5.15}
+    restart: unless-stopped
+
+    ports:
+      - "${MOODLE_BIND_IP:-127.0.0.1}:${MOODLE_BIND_PORT:-8080}:8080"
+
+    environment:
+      MOODLE_URL: ${MOODLE_URL:-https://aulavirtual.ctcr}
+      MOODLE_SSL_PROXY: "yes"
+      MOODLE_DB_TYPE: mariadb
+      MOODLE_DB_HOST: ${MOODLE_DB_HOST:-192.168.56.104}
+      MOODLE_DB_PORT: "${MOODLE_DB_PORT:-3306}"
+      MOODLE_DB_NAME: ${MOODLE_DB_NAME:-moodle}
+      MOODLE_DB_USER: ${MOODLE_DB_USER:-moodle}
+      MOODLE_DB_PASSWORD: ${DB_PASSWORD:?Definir DB_PASSWORD}
+      MOODLE_ADMIN_USER: ${MOODLE_ADMIN_USER:-admin}
+      MOODLE_ADMIN_PASSWORD: ${MOODLE_ADMIN_PASSWORD:?Definir MOODLE_ADMIN_PASSWORD}
+      MOODLE_SITE_NAME: Colegio Tecnico
+      MOODLE_SITE_SHORTNAME: Colegio
+      MOODLE_LANG: es
+      MOODLE_TIMEZONE: America/Costa_Rica
+
+    volumes:
+      - moodle_code:/var/www/moodle
+      - moodle_data:/var/www/moodledata
+
+volumes:
+  mariadb_data:
+  moodle_code:
+  moodle_data:

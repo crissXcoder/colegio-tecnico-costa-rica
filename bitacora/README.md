@@ -6,6 +6,8 @@ Aquí se registra **lo que pasó realmente** en las reuniones del equipo: fecha,
 
 ### [`sesiones/`](sesiones/)
 
+- [`2026-11-07-implementacion-fase-opcional-multi-vm.md`](sesiones/2026-11-07-implementacion-fase-opcional-multi-vm.md): despliegue y verificación integral de la **Fase Opcional Multi-VM**: red Host-Only (`192.168.56.0/24`), segregación de servicios (Moodle en VM 1 `192.168.56.103` y MariaDB en VM 2 `192.168.56.104`), consistencia de 494 tablas / 12 usuarios / 3 cursos, prueba controlada de corte y tolerancia a fallos, reubicación de Cron/respaldos/DRP, y evidencias `EV-131` a `EV-138`.
+- [`2026-10-31-auditoria-general-y-ejecucion-scripts.md`](sesiones/2026-10-31-auditoria-general-y-ejecucion-scripts.md): auditoría integral de repositorio y VMs, ejecución de scripts DRP y verificación de correspondencia de entrega.
 - [`2026-10-31-incorporacion-vm-server-pasos-7-9.md`](sesiones/2026-10-31-incorporacion-vm-server-pasos-7-9.md): capturas de los pasos 7, 8 y 9 de la VM `server@server` (EV-107 a EV-130), errores de esa VM (INC-019 y ampliación de INC-003/005/007/018), riesgos R-41 a R-46 y fuentes de la comparativa.
 
 - [`2026-10-31-preparacion-entrega.md`](sesiones/2026-10-31-preparacion-entrega.md): sesión documental para la entrega del 07/11: lineamientos del profesor, anexo técnico, scripts de restauración, verificación y armado del paquete, guía de la demo, preguntas técnicas, riesgos anticipados, ADR-0003/0004 e incidentes INC-015 a INC-018.

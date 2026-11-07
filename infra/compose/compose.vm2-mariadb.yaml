@@ -1,0 +1,27 @@
+# Compose para VM 2 (Ubuntu Server MariaDB — Data Tier) — Fase Opcional CTCR
+# Ejecuta MariaDB enlazada exclusivamente a la interfaz Host-Only privada.
+services:
+  db:
+    image: ${MARIADB_IMAGE:-mariadb:11.4.13}
+    restart: unless-stopped
+
+    ports:
+      - "${MARIADB_BIND_IP:-192.168.56.104}:3306:3306"
+
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?Definir DB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE:-moodle}
+      MARIADB_USER: ${MARIADB_USER:-moodle}
+      MARIADB_PASSWORD: ${DB_PASSWORD:?Definir DB_PASSWORD}
+
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+
+volumes:
+  mariadb_data:

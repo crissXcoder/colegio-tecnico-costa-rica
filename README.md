@@ -34,7 +34,8 @@ El esquema final conecta **Linux Mint (Firefox)** con **Ubuntu Server** por una 
 | Docker + Moodle + MariaDB | `oksigenia/moodle:4.5.15`, `mariadb:11.4.13`; Compose y volúmenes | Verificado en VM #1: salud, persistencia tras reinicio (EV-100, EV-106). |
 | Cursos y usuarios Moodle | Tres cursos, cohortes por departamento, profesor por matrícula manual | Verificado en VM #1: participantes por curso y acceso ajeno denegado por URL (EV-085..EV-095, EV-104, EV-105). |
 | BIND9 / Nginx HTTPS / FTPS | Zona `ctcr`, proxy TLS en el host, vsftpd con chroot y TLS | Verificado en VM #1 (EV-063..EV-074, EV-103). |
-| Cron y restauración | `respaldo.sh` diario 02:00; restauración en `moodle_restore_test` | Verificado en VM #1 (EV-096..EV-099); script de restauración nuevo por instalar. |
+| Cron y restauración | `respaldo.sh` diario 02:00; restauración en `moodle_restore_test` | Verificado en VM #1 (EV-096..EV-099) y reubicado a VM #2 en la Fase Opcional (EV-138). |
+| Fase Opcional (Clúster Multi-VM) | Separación Moodle (Web Tier en VM 1) y MariaDB (Data Tier en VM 2) sobre red Host-Only privada | Verificado integralmente (EV-131..EV-138, [ADR-0005](docs/decisiones/ADR-0005-arquitectura-distribuida-multi-vm.md)) con prueba de corte controlado y tolerancia a fallos. |
 | Firewall | iptables persistente; UFW no se usa | EV-102, [ADR-0003](docs/decisiones/ADR-0003-firewall-iptables-sin-ufw.md). |
 | Incidentes | 19 registrados, del disco lleno (INC-001) a APT bloqueado por actualizaciones automáticas (INC-019) | Ver [bitácora](bitacora/README.md). |
 
@@ -48,7 +49,7 @@ El esquema final conecta **Linux Mint (Firefox)** con **Ubuntu Server** por una 
 | [`infra/`](infra/README.md) | El **qué configura la infraestructura**: Compose, DNS, Nginx, vsftpd, Cron. Son archivos editables de referencia, no duplicados confirmados de `/etc` ni de un servidor real. |
 | [`scripts/`](scripts/README.md) | Operaciones controladas: generación de secretos, inventario, dump de DB y controles documentales. No existe un instalador ciego de todas las fases. |
 | [`bitacora/`](bitacora/README.md) | El **qué pasó de verdad**: sesiones cronológicas, diagnósticos, causas, soluciones y responsables. Una incidencia enlaza al paso afectado y a su evidencia. |
-| [`evidencias/`](evidencias/README.md) | Índice transversal y manifiestos de las **130 evidencias**; las imágenes y sus fichas están guardadas en `docs/procedimientos/.../<paso>/evidencias/`. |
+| [`evidencias/`](evidencias/README.md) | Índice transversal y manifiestos de las **138 evidencias**; las imágenes y sus fichas están guardadas en `docs/procedimientos/.../<paso>/evidencias/`. |
 | [`pruebas/`](pruebas/README.md) | Pruebas repetibles con esperado/observado por VM, especialmente denegación de acceso, persistencia, FTP y recuperación. |
 | [`docs/operacion/`](docs/operacion/README.md) | Manual para máquinas **ya instaladas**: iniciar la sesión, diagnosticar, reanudar Compose y recuperar datos sin destruirlos. |
 | [`docs/entrega/`](docs/entrega/README.md) | Adaptación del contenido técnico a la plantilla académica, conclusiones, justificación de software libre y demo del 7 de noviembre. |

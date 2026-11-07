@@ -29,6 +29,7 @@ Un `04-04.md`, por ejemplo, indica que se debe editar Compose, enlaza el archivo
 | [10-respaldos](10-respaldos/README.md) | Cron, dump SQL, retención y restauración de ensayo; datos Moodle aparte. | 0 |
 | [11-verificacion](11-verificacion/README.md) | Integración end-to-end, firewall, puertos, permisos y pruebas negativas. | 0 |
 | [12-entrega](12-entrega/README.md) | Inventario para el informe técnico y demostración reproducible. | 0 |
+| [13-fase-opcional](13-fase-opcional/README.md) | Despliegue distribuido multi-VM: separación de Moodle (Web Tier) y MariaDB (Data Tier) sobre red Host-Only privada. | 8 |
 
 ## 4. Regla de seguridad de comandos
 
