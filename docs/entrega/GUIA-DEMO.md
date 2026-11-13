@@ -64,6 +64,21 @@ Orden pensado para que el reinicio de los contenedores (que tarda) ocurra **mien
 | 7:30–10:30 | **Escenario 3: acceso denegado entre departamentos** | Ventana privada → iniciar sesión como `marta.jimenez` (Administración).<br>1. «Mis cursos»: solo ve Gestión Documental.<br>2. Pegar la URL del curso de Informática.<br>3. Pegar la URL del PDF de Informática.<br>Cerrar sesión → iniciar como `valeria.sanchez` (Informática): ve solo Seguridad Digital y abre el PDF. | 1. Un solo curso.<br>2. «No se puede matricular en este curso», sin botón para matricularse.<br>3. «Lo sentimos, el archivo solicitado no se encuentra».<br>Valeria sí entra a su curso y al PDF. | Si aparece un botón «Matricularme» o el PDF se abre: hay un método de matrícula abierto. Decirlo, explicar la causa (INC-011) y mostrar Participantes → Métodos de matriculación. |
 | 10:30–11:00 | **Cierre** | Una frase: qué se demostró y qué quedó fuera (por ejemplo, `moodledata` no está en el respaldo diario). | | |
 
+## 2.1. Bonus Opcional — Demostración de Alta Disponibilidad (HA / Failover en vivo)
+
+> **Lineamiento:** «Bonus opcional, disponible para los seis escenarios: Alta disponibilidad: al menos dos instancias del mismo servicio (dos contenedores, o dos VMs) sirviendo el mismo sitio, con demostración de que si una cae la otra responde.»
+
+Si el profesor o el equipo deciden demostrar el **Bonus Opcional**, se ejecuta en 60 a 90 segundos con el siguiente flujo probado:
+
+| Paso | Acción en terminal | Qué muestra / Qué explica |
+|---|---|---|
+| **1. Coexistencia** | `docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"`<br>`ssh criss@192.168.56.104 "docker compose ps"` | «Tenemos dos instancias de Moodle activas concurrentemente: VM 1 en `:8080` y VM 2 en `192.168.56.104:8080`, conectadas a MariaDB con sesiones compartidas en base de datos (`dbsessions = 1`).» |
+| **2. Upstream Nginx** | `cat /etc/nginx/sites-available/aulavirtual.ctcr \| grep -A 5 "upstream moodle_ha_cluster"` | Muestra el bloque upstream con `max_fails=1 fail_timeout=3s` y directivas `proxy_next_upstream error timeout http_502`. |
+| **3. Prueba de Failover** | `./scripts/verificar-alta-disponibilidad.sh` | El script automatizado detiene la Instancia 1; Nginx conmuta inmediatamente a VM 2 respondiendo `HTTP 200 OK` en 0.16s. Luego detiene la Instancia 2 y VM 1 responde con `HTTP 200 OK`. Finalmente valida que Mint navega sin cortes. |
+| **4. Evidencia en Logs** | `tail -n 4 /var/log/nginx/moodle_ha_access.log` | Muestra la traza `upstream: 127.0.0.1:8080, 192.168.56.104:8080 (502, 200)` certificando la conmutación automática en tiempo sub-segundo. |
+
+
+
 **Si el tiempo se acaba antes:** el escenario 3 es lo único que **no** puede faltar. Si a los 7:00 todavía no empezó, saltar directo a la sección de denegación y mencionar en una frase lo que se omitió.
 
 ## 3. Después del turno
