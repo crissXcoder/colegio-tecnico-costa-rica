@@ -14,4 +14,3 @@ ns1         IN A 192.168.50.1
 aulavirtual IN A 192.168.50.1
 moodle      IN A 192.168.50.1
 @           IN A 192.168.50.1
-

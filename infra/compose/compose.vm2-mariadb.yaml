@@ -1,18 +1,16 @@
-# Compose para VM 2 (Ubuntu Server MariaDB + Moodle Instancia 2) — Fase Opcional CTCR
-# Ejecuta MariaDB enlazada a la interfaz Host-Only y la segunda instancia web de Moodle para Alta Disponibilidad.
 services:
   db:
-    image: ${MARIADB_IMAGE:-mariadb:11.4.13}
+    image: mariadb:11.4.13
     restart: unless-stopped
 
     ports:
-      - "${MARIADB_BIND_IP:-192.168.56.104}:3306:3306"
+      - "192.168.56.104:3306:3306"
 
     environment:
-      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?Definir DB_ROOT_PASSWORD}
-      MARIADB_DATABASE: ${MARIADB_DATABASE:-moodle}
-      MARIADB_USER: ${MARIADB_USER:-moodle}
-      MARIADB_PASSWORD: ${DB_PASSWORD:?Definir DB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_DATABASE: moodle
+      MARIADB_USER: moodle
+      MARIADB_PASSWORD: ${DB_PASSWORD}
 
     volumes:
       - mariadb_data:/var/lib/mysql
@@ -24,7 +22,7 @@ services:
       retries: 15
 
   moodle:
-    image: ${MOODLE_IMAGE:-oksigenia/moodle:4.5.15}
+    image: oksigenia/moodle:4.5.15
     restart: unless-stopped
 
     depends_on:
@@ -32,19 +30,19 @@ services:
         condition: service_healthy
 
     ports:
-      - "${MOODLE2_BIND_IP:-192.168.56.104}:8080:8080"
+      - "192.168.56.104:8080:8080"
 
     environment:
-      MOODLE_URL: ${MOODLE_URL:-https://aulavirtual.ctcr}
+      MOODLE_URL: https://aulavirtual.ctcr
       MOODLE_SSL_PROXY: "yes"
       MOODLE_DB_TYPE: mariadb
-      MOODLE_DB_HOST: ${MOODLE_DB_HOST:-192.168.56.104}
-      MOODLE_DB_PORT: "${MOODLE_DB_PORT:-3306}"
-      MOODLE_DB_NAME: ${MOODLE_DB_NAME:-moodle}
-      MOODLE_DB_USER: ${MOODLE_DB_USER:-moodle}
-      MOODLE_DB_PASSWORD: ${DB_PASSWORD:?Definir DB_PASSWORD}
-      MOODLE_ADMIN_USER: ${MOODLE_ADMIN_USER:-admin}
-      MOODLE_ADMIN_PASSWORD: ${MOODLE_ADMIN_PASSWORD:?Definir MOODLE_ADMIN_PASSWORD}
+      MOODLE_DB_HOST: 192.168.56.104
+      MOODLE_DB_PORT: "3306"
+      MOODLE_DB_NAME: moodle
+      MOODLE_DB_USER: moodle
+      MOODLE_DB_PASSWORD: ${DB_PASSWORD}
+      MOODLE_ADMIN_USER: admin
+      MOODLE_ADMIN_PASSWORD: ${MOODLE_ADMIN_PASSWORD}
       MOODLE_SITE_NAME: Colegio Tecnico
       MOODLE_SITE_SHORTNAME: Colegio
       MOODLE_LANG: es

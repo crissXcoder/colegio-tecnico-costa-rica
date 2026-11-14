@@ -9,35 +9,43 @@
 - [ ] La configuración está **congelada**: después de armar el paquete no se edita nada en el servidor. Si hay que corregir algo, se vuelve a armar el paquete.
 - [ ] `restauracion-prueba.sh` y `verificar-servicios.sh` están copiados en la carpeta del proyecto del servidor y se probaron (sección 3).
 
-## 2. Estructura final de la carpeta
+## 2. Estructura final de la carpeta oficial (`entrega-final/`)
 
 ```text
-entrega-ctcr/
+entrega-final/
 ├── LEEME.txt                      # qué es cada cosa y de dónde salió
-├── docker-compose.yml             # copia byte a byte del compose del servidor
-├── .env.example                   # solo nombres de variables, sin valores
+├── docker-compose.yml             # copia byte a byte del compose de VM 1
 ├── configuraciones/
-│   ├── bind/named.conf.local
-│   ├── bind/named.conf.options
-│   ├── bind/db.ctcr
-│   ├── nginx/aulavirtual.ctcr.conf
-│   ├── nginx/sites-enabled.txt    # qué sitios están habilitados
-│   └── vsftpd/vsftpd.conf
+│   ├── VM1/
+│   │   ├── docker-compose.yml     # compose específico de VM 1 (Moodle :8080)
+│   │   └── netplan-hostonly.yaml  # Netplan 192.168.56.103/24
+│   ├── VM2/
+│   │   ├── docker-compose.yml     # compose específico de VM 2 (MariaDB :3306 + Moodle 2 :8080)
+│   │   ├── crontab.txt            # crontab de root en VM 2
+│   │   └── netplan-hostonly.yaml  # Netplan 192.168.56.104/24
+│   ├── named.conf.local           # BIND9 zonas maestras
+│   ├── named.conf.options         # BIND9 reenviadores
+│   ├── db.ctcr                    # BIND9 zona aulavirtual.ctcr -> 192.168.50.1
+│   ├── aulavirtual.ctcr           # Nginx TLS + upstream moodle_ha_cluster
+│   ├── vsftpd.conf                # vsftpd con TLSv1.3 y chroot local_root
+│   ├── vsftpd.user_list           # lista de usuarios FTP autorizados
+│   ├── firewall-iptables.txt      # reglas reales de iptables (sudo iptables-save)
+│   ├── ufw.txt                    # nota explicativa de que UFW no está instalado
+│   └── .env.example               # solo nombres de variables, sin contraseñas
 ├── scripts/
-│   ├── respaldo.sh
-│   ├── restauracion-prueba.sh
-│   └── verificar-servicios.sh
-├── crontab.txt                    # crontab de root
-├── ufw.txt                        # estado de UFW (o aviso de que no se usa)
-├── firewall-iptables.txt          # reglas reales si el filtrado es con iptables
-├── versiones.txt                  # SO, Docker, imágenes con digest, paquetes
-├── documentacion/                 # documento técnico (PDF) y diagramas
-├── evidencia/                     # capturas y salidas con fecha
-├── mapa-origen.txt                # archivo del paquete → ruta en el servidor
-└── hashes.txt                     # SHA-256 de todo lo anterior
+│   ├── respaldo.sh                # volcado MariaDB y retención 7 días
+│   ├── restauracion-prueba.sh     # ensayo no destructivo en moodle_restore_test
+│   ├── verificar-servicios.sh     # chequeo pre-demostración de servicios
+│   └── verificar-alta-disponibilidad.sh # automatización de conmutación failover
+├── evidencias/
+│   ├── restauracion_2026-11-13_21-40.log # log real fechado en VM 2 (494 tablas)
+│   └── ha_failover_2026-11-13.log        # registro Nginx de conmutación sub-segundo
+├── documentacion/
+│   └── README-INSTALACION.md      # guía de reproducción de la topología
+└── hashes.txt                     # sumas SHA-256 de todos los archivos anteriores (todos OK)
 ```
 
-No va: `Dockerfile` (no construimos imágenes propias), `.env`, claves `.key`, respaldos `.sql.gz`, contraseñas ni datos personales.
+No va: `.env` con contraseñas, claves privadas `.key`, respaldos `.sql.gz` ni datos personales. Todos los archivos se verifican con `sha256sum -c hashes.txt`.
 
 ## 3. Instalar los scripts nuevos en el servidor
 

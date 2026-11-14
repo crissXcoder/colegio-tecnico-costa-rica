@@ -1,89 +1,133 @@
-# Guía de la presentación — 3 minutos de contexto y 11 de demostración
+# Guion y Reparto de la Demostración — Proyecto CTCR (Escenario 3: Moodle)
+## EIF431O — Administración de Servidores Basados en Software Libre (25 Minutos Exactos)
 
-**Para quién:** los cinco integrantes, para ensayar el 06/11 y presentar el 07/11/2026.
-**Regla de oro:** todo se muestra en el **servidor de la demostración** (ver [ADR-0004](../decisiones/ADR-0004-servidor-unico-de-demostracion.md)) y debe coincidir con el paquete entregado. Si algo falla, se dice qué falló, se explica por qué y se sigue: el reloj no se detiene.
+**Servidor de demostración:** VM #1 (`criss@server`, IP `192.168.50.1` / `192.168.56.103`)  
+**Servidor de base de datos y réplica:** VM #2 (`criss@server`, IP `192.168.56.104`)  
+**Cliente de red interna:** Linux Mint (`criss-VirtualBox`, IP `192.168.50.101`)  
+**Regla de oro:** Lo que corre en el servidor coincide al 100% con lo entregado según `hashes.txt`. Si algo falla, se indica la causa técnica, se cita la figura del documento y se continúa; el reloj no se detiene.
 
-## 0. Preparación (antes del turno, no en pantalla)
+---
 
-**Una hora antes**
+## 1. Reparto Minuto a Minuto
 
-1. Encender Ubuntu Server y Linux Mint. Esperar a que los contenedores estén `healthy` (el arranque de Moodle tarda alrededor de un minuto).
-2. En Ubuntu, correr el chequeo y no presentarse con fallos sin entenderlos:
-   ```bash
-   cd ~/proyecto-moodle
-   sudo ./verificar-servicios.sh "$PWD" ~/entrega-ctcr
-   ```
-3. Si el último respaldo es de días atrás (la VM estuvo apagada a las 02:00), correr `sudo ./respaldo.sh` para que la lista muestre uno de hoy.
-4. En Mint, comprobar `getent hosts aulavirtual.ctcr` → `192.168.50.1`.
+De los 25 minutos, **solo 14 dependen del grupo**: 3 de contexto y 11 de demostración (2:45 cada persona). Las preguntas no se pueden preasignar porque el profesor elige al azar quién responde.
 
-**Diez minutos antes**
+| Tiempo | Segmento | Quién | Rúbrica |
+| --- | --- | --- | --- |
+| **0:00 – 3:00** | Contexto y solución (máx. 4 diapositivas) | **Persona 1** | Claridad de decisiones (3%) |
+| **3:00 – 5:45** | Lo entregado = lo que corre, DNS y HTTPS | **Persona 2** | Demostración en vivo (5%) |
+| **5:45 – 8:30** | Contenedores, versiones y persistencia | **Persona 3** |  |
+| **8:30 – 11:15** | Respaldo y restauración | **Persona 4** |  |
+| **11:15 – 14:00** | Control de acceso entre departamentos (Escenario 3) | **Persona 5** |  |
+| **14:00 – 19:00** | Preguntas de conocimiento con comandos | **Quien elija el profesor** | Manejo de preguntas (2%) |
+| **19:00 – 23:00** | Preguntas de los demás grupos y del profesor | **Responsable del tema** |  |
+| **23:00 – 25:00** | Conclusiones y cambio de grupo | **Equipo completo** |  |
 
-- Terminal de Ubuntu con letra grande (Ctrl + Shift + +), ubicada en `~/proyecto-moodle`. Limpiar la pantalla con `clear`.
-- Firefox en Mint con dos ventanas preparadas:
-  - **Ventana normal:** administrador, en «Mis cursos». Tener copiadas en un archivo de texto las dos URL de prueba: el curso de Informática (`https://aulavirtual.ctcr/course/view.php?id=4`) y su PDF (`https://aulavirtual.ctcr/pluginfile.php/26/mod_resource/content/1/Curso_Informatica_Seguridad_Basica.pdf`). Confirmar que siguen siendo esas URL en el servidor de la demo.
-  - **Ventana privada:** en la página de inicio de sesión, sin sesión iniciada.
-  - Ojo: **todas las ventanas privadas de Firefox comparten la misma sesión**. Para el segundo usuario se cierra la sesión del primero; no se abre «otra» ventana privada.
-- Cerrar WhatsApp, correo y cualquier pestaña personal. Cerrar el desplegable de historial de la barra de direcciones antes de compartir pantalla.
-- Tener a mano la contraseña de laboratorio de las cuentas de prueba (no escribirla en pantalla visible ni en diapositivas).
+---
 
-## 1. Contexto y solución — 3 minutos
+## 2. Asignación Detallada por Persona
 
-Máximo cuatro diapositivas.
+### Persona 1. Contexto y Solución [0:00 – 3:00 · 3:00 min]
+Cuatro diapositivas (~45 segundos por diapositiva):
+1. **El problema en una frase:** Tres departamentos (Administración, Docencia e Informática) en la misma red sin control de acceso; un profesor dejó su sesión abierta y un estudiante alteró notas.
+2. **Por qué Moodle y software libre:** Cohortes nativas que resuelven el requisito curricular, soberanía de datos dentro del colegio y **USD 0 en licencias** frente a más de USD 9 000 en la opción propietaria. Presentar a Canvas como *«servicio en la nube de Instructure»* (no como software propietario, ya que Canvas LMS es de código abierto).
+3. **Diagrama de infraestructura (Fig. 1):** BIND9 DNS autoritativo, Nginx como proxy TLS y balanceador HA, contenedores Moodle y MariaDB divididos en dos VMs por red privada Host-only, FTPS con aislamiento y Cron de respaldo.
+4. **Decisiones y trade-offs:** Nginx reverse proxy frente a HTTPS dentro del contenedor; cohortes frente a grupos simples. Problema real resuelto: ampliación de LVM en caliente al 100% de disco y optimización de restauración.
+*Al terminar su turno, Persona 1 actúa como cronometrador oficial de la demo levantando la mano a los 2:00 y a los 2:30 de cada turno.*
 
-| # | Diapositiva | Qué decir (resumen) |
-|---|---|---|
-| 1 | **Problema** | «El colegio tiene tres departamentos —Administración, Docencia e Informática— y cada uno necesita capacitación y materiales que los otros no deben poder ver.» Solución: un aula virtual Moodle en `https://aulavirtual.ctcr`, con un curso por departamento y acceso separado. |
-| 2 | **Por qué software libre y por qué Moodle** | Moodle trae de fábrica cohortes, matrícula por cohorte y roles por curso, que es exactamente la separación que pide el escenario; licencia GPL sin costo por usuario; corre en Docker con MariaDB. Frente a Chamilo (también libre) y a plataformas propietarias: ver [comparativa](comparativa-software.md). Aclarar que «libre» no significa costo cero: el costo está en administrarlo. |
-| 3 | **Diagrama** | Mint → DNS BIND9 (`192.168.50.1:53`) → Nginx HTTPS (`:443`) → Moodle en Docker (`127.0.0.1:8080`) → MariaDB en Docker (red interna, sin puerto publicado). FTPS en `:21` + pasivos `40000–40010`. Cron de root → `respaldo.sh` → `/var/backups/moodle`. |
-| 4 | **Decisiones, contrapartidas y problemas reales** | Ver tabla de abajo. Elegir **dos** decisiones y **un** problema; no leer todo. |
+---
 
-**Decisiones con su contrapartida (elegir dos para decir en voz alta):**
+### Persona 2. Lo Entregado es lo que Corre, DNS y HTTPS [3:00 – 5:45 · 2:45 min]
 
-| Decisión | Qué ganamos | Qué perdimos o aceptamos |
-|---|---|---|
-| HTTPS en Nginx, delante del contenedor ([ADR-0002](../decisiones/ADR-0002-proxy-https.md)) | Certificado y redirección 301 en un solo lugar del host; Moodle no queda expuesto (escucha solo en `127.0.0.1:8080`). | Un componente más; hubo que alinear `MOODLE_URL` y `MOODLE_SSL_PROXY`, y durante la transición apareció un 502 ([INC-015](../../bitacora/incidentes/INC-015-nginx-502-moodle-no-disponible.md)). |
-| Separación por **cohorte + matrícula**, no por categoría | Es lo que realmente niega el acceso, incluso por URL directa. | Hay que revisar los métodos de matrícula de cada curso: un método de más rompe el aislamiento ([INC-011](../../bitacora/incidentes/INC-011-moodle-matricula-cohorte-incorrecta.md)). |
-| Moodle y MariaDB en contenedores con volúmenes | Versiones fijas, se recrean sin perder datos. | La persistencia depende de no usar `down -v` y de respaldar. |
-| Respaldo SQL diario con Cron + restauración de ensayo | Recuperable y comprobado (494 tablas, EV-099). | El SQL no incluye los archivos de `moodledata`; se documentó el procedimiento aparte (10-07). |
-| Firewall con iptables, sin UFW ([ADR-0003](../decisiones/ADR-0003-firewall-iptables-sin-ufw.md)) | No se rompen las cadenas de Docker ni el NAT de Mint. | Reglas menos legibles que UFW. |
+```bash
+cd ~/proyecto-moodle
+sha256sum -c hashes.txt                    # todos OK: lo que corre es lo entregado
+cat docker-compose.yml                     # señalar versiones fijas, 127.0.0.1:8080 y volúmenes
+dig @192.168.50.1 aulavirtual.ctcr +short
+curl -vk https://aulavirtual.ctcr -o /dev/null 2>&1 | grep -E "subject|issuer|expire|HTTP/"
+```
 
-**Problemas reales (elegir uno):** la raíz del disco se llenó y hubo que ampliar LVM en caliente ([INC-001](../../bitacora/incidentes/INC-001-almacenamiento-lvm.md)); dos estudiantes de Docencia aparecieron dentro del curso de Administración ([INC-011](../../bitacora/incidentes/INC-011-moodle-matricula-cohorte-incorrecta.md)).
+**Acción posterior en navegador:**  
+Abrir Firefox en Linux Mint en `https://aulavirtual.ctcr`, hacer clic en el candado de la barra de direcciones y seleccionar **Ver certificado** para demostrar que es un certificado institucional propio emitido para `CN=aulavirtual.ctcr` por el Colegio Técnico de Costa Rica.
 
-## 2. Demostración en vivo — 11 minutos
+---
 
-Orden pensado para que el reinicio de los contenedores (que tarda) ocurra **mientras** se muestra otra cosa.
+### Persona 3. Contenedores, Versiones y Persistencia [5:45 – 8:30 · 2:45 min]
 
-| Min | Qué se muestra | Comandos o acciones | Qué debe verse | Si falla |
-|---|---|---|---|---|
-| 0:00–1:30 | **Lo que corre es lo entregado** | `cat docker-compose.yml` (o `compose.yaml`)<br>`sha256sum compose.yaml`<br>`grep docker-compose.yml ~/entrega-ctcr/hashes.txt` | Dos servicios (`db`, `moodle`), imágenes con etiqueta fija, puerto `127.0.0.1:8080`, volúmenes. **El mismo hash** en ambas líneas. | Si el hash difiere: decirlo con honestidad («se editó después de armar el paquete») y mostrar `diff`. |
-| 1:30–2:30 | **Contenedores y versiones** | `sudo docker compose ps`<br>`sudo docker images` | `db` y `moodle` en `Up (healthy)`; `oksigenia/moodle 4.5.15` y `mariadb 11.4.13`. | Si dice `starting`: explicar el healthcheck y volver al final. |
-| 2:30–4:00 | **Persistencia (parte 1)** | `sudo docker volume ls`<br>En el navegador, mostrar los 3 cursos en «Mis cursos».<br>`sudo docker compose restart` | Tres volúmenes `proyecto-moodle_*`. El reinicio arranca. | **Nunca** `down -v`. Si alguien lo sugiere, explicar que borra los volúmenes. |
-| 4:00–5:30 | **Respaldo y restauración** (mientras reinicia) | `sudo crontab -l`<br>`sudo ls -lh /var/backups/moodle`<br>Mostrar el log de `restauracion-prueba.sh` con fecha (o EV-099). | Línea `0 2 * * * .../respaldo.sh`; archivos `ctcr_moodle_*.sql.gz`; restauración en `moodle_restore_test` con el mismo número de tablas que `moodle`. | Si la lista está vacía: correr `sudo ./respaldo.sh` (tarda segundos) y volver a listar. |
-| 5:30–6:00 | **Persistencia (parte 2)** | `sudo docker compose ps`; recargar «Mis cursos». | De nuevo `healthy`; los 3 cursos siguen ahí. | Si Nginx muestra **502**, Moodle aún no terminó de arrancar: esperar 30 s y recargar (INC-015). |
-| 6:00–7:30 | **HTTPS con certificado propio** | En Firefox: candado → ver certificado (`CN=aulavirtual.ctcr`).<br>En Mint: `curl -vk https://aulavirtual.ctcr 2>&1 \| grep -E "subject:\|issuer:\|SSL connection\|HTTP/"`<br>`curl -I http://aulavirtual.ctcr` | `subject: ... CN=aulavirtual.ctcr`, conexión TLSv1.3 o 1.2, `HTTP/1.1 200` (o `303` hacia el login si está activo el inicio de sesión obligatorio) y `301` desde HTTP. | Si Mint no resuelve el nombre: `getent hosts aulavirtual.ctcr` y revisar DNS (ver riesgos R-12). Plan B: `--resolve aulavirtual.ctcr:443:192.168.50.1`. |
-| 7:30–10:30 | **Escenario 3: acceso denegado entre departamentos** | Ventana privada → iniciar sesión como `marta.jimenez` (Administración).<br>1. «Mis cursos»: solo ve Gestión Documental.<br>2. Pegar la URL del curso de Informática.<br>3. Pegar la URL del PDF de Informática.<br>Cerrar sesión → iniciar como `valeria.sanchez` (Informática): ve solo Seguridad Digital y abre el PDF. | 1. Un solo curso.<br>2. «No se puede matricular en este curso», sin botón para matricularse.<br>3. «Lo sentimos, el archivo solicitado no se encuentra».<br>Valeria sí entra a su curso y al PDF. | Si aparece un botón «Matricularme» o el PDF se abre: hay un método de matrícula abierto. Decirlo, explicar la causa (INC-011) y mostrar Participantes → Métodos de matriculación. |
-| 10:30–11:00 | **Cierre** | Una frase: qué se demostró y qué quedó fuera (por ejemplo, `moodledata` no está en el respaldo diario). | | |
+```bash
+sudo docker compose ps
+sudo docker images
+sudo docker volume ls
+sudo docker compose restart               # lanzarlo apenas empieza el turno (tarda ~1.5 s)
+```
 
-## 2.1. Bonus Opcional — Demostración de Alta Disponibilidad (HA / Failover en vivo)
+**Explicación en vivo:**  
+Mientras Moodle vuelve a estado `healthy` (tarda 2 segundos en el healthcheck), explicar los tres volúmenes (`mariadb_data`, `moodle_code`, `moodle_data`) y enfatizar por qué **nunca** se ejecuta `down -v`. Al finalizar, recargar el curso en el navegador para evidenciar que todo el contenido y las configuraciones persisten intactas.
 
-> **Lineamiento:** «Bonus opcional, disponible para los seis escenarios: Alta disponibilidad: al menos dos instancias del mismo servicio (dos contenedores, o dos VMs) sirviendo el mismo sitio, con demostración de que si una cae la otra responde.»
+---
 
-Si el profesor o el equipo deciden demostrar el **Bonus Opcional**, se ejecuta en 60 a 90 segundos con el siguiente flujo probado:
+### Persona 4. Respaldo y Restauración [8:30 – 11:15 · 2:45 min]
 
-| Paso | Acción en terminal | Qué muestra / Qué explica |
-|---|---|---|
-| **1. Coexistencia** | `docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"`<br>`ssh criss@192.168.56.104 "docker compose ps"` | «Tenemos dos instancias de Moodle activas concurrentemente: VM 1 en `:8080` y VM 2 en `192.168.56.104:8080`, conectadas a MariaDB con sesiones compartidas en base de datos (`dbsessions = 1`).» |
-| **2. Upstream Nginx** | `cat /etc/nginx/sites-available/aulavirtual.ctcr \| grep -A 5 "upstream moodle_ha_cluster"` | Muestra el bloque upstream con `max_fails=1 fail_timeout=3s` y directivas `proxy_next_upstream error timeout http_502`. |
-| **3. Prueba de Failover** | `./scripts/verificar-alta-disponibilidad.sh` | El script automatizado detiene la Instancia 1; Nginx conmuta inmediatamente a VM 2 respondiendo `HTTP 200 OK` en 0.16s. Luego detiene la Instancia 2 y VM 1 responde con `HTTP 200 OK`. Finalmente valida que Mint navega sin cortes. |
-| **4. Evidencia en Logs** | `tail -n 4 /var/log/nginx/moodle_ha_access.log` | Muestra la traza `upstream: 127.0.0.1:8080, 192.168.56.104:8080 (502, 200)` certificando la conmutación automática en tiempo sub-segundo. |
+En terminal conectada a VM 2 (`ssh criss@192.168.56.104`):
 
+```bash
+sudo crontab -l
+cd ~/proyecto-moodle
+sudo ./respaldo.sh                         # en vivo, tarda unos 8-15 segundos
+sudo ls -lh /var/backups/moodle            # aparece el archivo nuevo con la hora actual
+cat evidencias/restauracion_2026-11-13_21-40.log
+```
 
+**Explicación en vivo:**  
+Explicar la frecuencia diaria a las 02:00 AM y la política de retención automática de 7 días. No se ejecuta la restauración en vivo para no consumir tiempo de la demo; se muestra el log real fechado que certifica la recuperación de las **494 tablas**, **3 cursos** y **12 usuarios activos** en la base temporal `moodle_restore_test` sin tocar la base de producción.
 
-**Si el tiempo se acaba antes:** el escenario 3 es lo único que **no** puede faltar. Si a los 7:00 todavía no empezó, saltar directo a la sección de denegación y mencionar en una frase lo que se omitió.
+---
 
-## 3. Después del turno
+### Persona 5. Control de Acceso entre Departamentos [11:15 – 14:00 · 2:45 min]
 
-- Cerrar las sesiones de Moodle de las cuentas de prueba.
-- No apagar el servidor hasta terminar la sesión: el profesor puede pedir revisar algo después.
+Demostración práctica del aislamiento departamental con 3 navegadores o perfiles independientes:
+1. **Marta Jiménez (Administración):** En *«Mis cursos»* solo aparece Gestión Documental (`CTCR-ADM-101`).
+2. **Marta intenta entrar al curso de Docencia:** Pega `https://aulavirtual.ctcr/course/view.php?id=3` y Moodle rechaza: *«No se puede auto matricular en este curso»*.
+3. **Marta abre la URL directa del PDF de Informática:** Pega `https://aulavirtual.ctcr/mod/resource/view.php?id=18` y Moodle niega la entrega del archivo (*«Error: Lo sentimos, el archivo solicitado no se encuentra»*).
+4. **Prueba de control con Valeria Sánchez (Informática):** En su navegador abre exactamente esa misma URL (`https://aulavirtual.ctcr/mod/resource/view.php?id=18`) y el PDF **sí abre de inmediato**. Esto demuestra de forma irrefutable que lo anterior fue una denegación de permisos y no un enlace roto.
+5. **Daniel Vargas (Profesor de Informática):** En su sesión privada abre *Calificaciones → Informe del calificador* de su curso, pero al intentar abrir `https://aulavirtual.ctcr/admin/`, Moodle le niega el acceso administrativo (*«No se han encontrado resultados»*).
 
-Preguntas que puede hacer el profesor: [PREGUNTAS-TECNICAS.md](PREGUNTAS-TECNICAS.md). Problemas que pueden aparecer y cómo resolverlos: [RIESGOS-Y-FALLOS-ANTICIPADOS.md](../operacion/RIESGOS-Y-FALLOS-ANTICIPADOS.md).
+*Credencial unificada de prueba para todos los usuarios:* `Ctcr2026!Segura#`
+
+---
+
+## 3. Preguntas de Conocimiento con Comandos (9 Minutos)
+
+El profesor elige a cualquier persona para ejecutar e interpretar los comandos de diagnóstico:
+
+| Comando a Ejecutar | Qué se evalúa y qué responder |
+|---|---|
+| `sudo named-checkconf && sudo named-checkzone ctcr /etc/bind/db.ctcr` | Sintaxis BIND9 y serial de la zona `ctcr` cargada con respuesta autoritativa. |
+| `sudo nginx -t && systemctl is-active named nginx vsftpd cron` | Integridad de Nginx y verificación de que los cuatro servicios del host están `active`. |
+| `sudo iptables-save` (o `sudo ufw status verbose`) | **Pregunta trampa:** UFW no está instalado en VM 1 (`command not found`). Se responde: *«El lineamiento pide ufw.txt solo si se usa; en este servidor el filtrado y el NAT se gestionan con iptables persistente para no colisionar con las cadenas de Docker»*. |
+| `ls -ld /srv/ftp/*/archivos` | Permisos `0700` por usuario; raíz del chroot en `root:root 755` para evitar el error 500 de vsftpd por raíz escribible. |
+| `curl -k --ssl-reqd -u marta.jimenez:Ctcr2026!Segura# ftp://192.168.50.1/` | Conexión FTPS explícita con TLSv1.3 obligatoria y listado de su carpeta `archivos`. |
+| `./scripts/verificar-alta-disponibilidad.sh` | Demostración del Bonus HA: caída forzada de una instancia Moodle y respuesta inmediata en 0.165 s de la segunda instancia manteniendo HTTP 200 continuo. |
+
+---
+
+## 4. Preguntas Difíciles del Escenario
+
+| Pregunta probable | Respuesta técnica exacta |
+|---|---|
+| **¿Corrió alguna vez el respaldo de las 02:00?** | Sí, en VM 2 existe el archivo `ctcr_moodle_2026-11-07_02-00-01.sql.gz` en `/var/backups/moodle/`. Si la máquina estuvo apagada de madrugada, se reconoce con honestidad y se explica la alternativa de usar `anacron`. |
+| **Si Docker solo publica 127.0.0.1, ¿qué riesgo había en activar UFW?** | El riesgo hacia Moodle era bajo, pero UFW podía alterar la cadena `FORWARD` y las reglas de `MASQUERADE` que dan salida a Internet a Linux Mint, además de bloquear los puertos pasivos dinámicos de FTPS. |
+| **Si el código está en el volumen `moodle_code`, ¿qué pasa al cambiar la imagen a 4.5.16?** | El volumen conserva el código anterior: cambiar el tag de la imagen no actualiza Moodle automáticamente. Se requiere ejecutar el asistente de actualización (`admin/cli/upgrade.php`). |
+| **¿Por qué se usa `oksigenia/moodle`?** | Imagen mantenida de software libre elegida tras el fin de soporte de Bitnami. En el entregable se fija por tag y por digest SHA-256 en `versiones.txt`. |
+
+---
+
+## 5. Lista de Verificación Inmediata antes de Presentar
+
+- [x] VM 1 y VM 2 encendidas; `docker compose ps` muestra todos los contenedores en estado `healthy`.
+- [x] `sha256sum -c hashes.txt` devuelve `OK` en todos los archivos.
+- [x] Cliente Linux Mint con DNS apuntando a `192.168.50.1`; `https://aulavirtual.ctcr` carga con candado válido.
+- [x] Marta Jiménez (Firefox), Valeria Sánchez (Chromium) y Daniel Vargas (ventana privada) con sesiones ya iniciadas.
+- [x] URL directa del PDF de Informática copiada en el portapapeles: `https://aulavirtual.ctcr/mod/resource/view.php?id=18`.
+- [x] Terminales abiertas y ordenadas por pestaña para cada expositor.
+- [x] Documento técnico en PDF abierto como respaldo ante cualquier contingencia.
