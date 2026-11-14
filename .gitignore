@@ -31,3 +31,4 @@ __pycache__/
 .tmp/
 logs/
 # La carpeta de bitácora pública contiene exclusivamente capturas revisadas.
+audit-doc/
